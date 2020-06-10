@@ -108,6 +108,58 @@ namespace Eaglegroup_project.Data.EF.Migrations
                     b.ToTable("AppUsers");
                 });
 
+            modelBuilder.Entity("Eaglegroup_project.Data.Entities.Function", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("IconCss");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.Property<string>("ParentId")
+                        .HasMaxLength(128);
+
+                    b.Property<int>("SortOrder");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("URL")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Functions");
+                });
+
+            modelBuilder.Entity("Eaglegroup_project.Data.Entities.Permission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("CanCreate");
+
+                    b.Property<bool>("CanDelete");
+
+                    b.Property<bool>("CanRead");
+
+                    b.Property<bool>("CanUpdate");
+
+                    b.Property<string>("FunctionId")
+                        .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.Property<Guid>("RoleId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permissions");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")

@@ -130,6 +130,41 @@ namespace Eaglegroup_project.Data.EF.Migrations
                 {
                     table.PrimaryKey("PK_AppUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Functions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    URL = table.Column<string>(maxLength: 250, nullable: false),
+                    ParentId = table.Column<string>(maxLength: 128, nullable: true),
+                    IconCss = table.Column<string>(nullable: true),
+                    SortOrder = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Functions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Permissions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<Guid>(nullable: false),
+                    FunctionId = table.Column<string>(maxLength: 128, nullable: false),
+                    CanCreate = table.Column<bool>(nullable: false),
+                    CanRead = table.Column<bool>(nullable: false),
+                    CanUpdate = table.Column<bool>(nullable: false),
+                    CanDelete = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Permissions", x => x.Id);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -154,6 +189,12 @@ namespace Eaglegroup_project.Data.EF.Migrations
 
             migrationBuilder.DropTable(
                 name: "AppUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Functions");
+
+            migrationBuilder.DropTable(
+                name: "Permissions");
         }
     }
 }

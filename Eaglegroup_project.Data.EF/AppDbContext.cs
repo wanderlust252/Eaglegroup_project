@@ -20,6 +20,11 @@ namespace Eaglegroup_project.Data.EF
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }
+        public DbSet<AppRole> AppRoles { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; } 
+        public DbSet<Function> Functions { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             #region Identity Config

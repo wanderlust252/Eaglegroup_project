@@ -30,7 +30,6 @@ namespace Eaglegroup_project.Data.Entities
             CompanyId = companyId;
         }
 
-        [Required]
         [StringLength(50)]
         public string FullName { get; set; }
 
@@ -39,8 +38,6 @@ namespace Eaglegroup_project.Data.Entities
 
         [StringLength(255)]
         public string Avatar { get; set; }
-
-        [Required]
         [StringLength(255)]
         public string CreatedBy { get; set; }
         public DateTime DateCreated { get; set; }

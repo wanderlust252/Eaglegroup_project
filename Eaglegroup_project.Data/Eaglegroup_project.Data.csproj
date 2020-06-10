@@ -19,4 +19,9 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Eaglegroup_project.Infrastructure\Eaglegroup_project.Infrastructure.csproj" />
+    <ProjectReference Include="..\Eaglegroup_project.Utilities\Eaglegroup_project.Utilities.csproj" />
+  </ItemGroup>
+
 </Project>

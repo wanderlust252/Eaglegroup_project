@@ -106,6 +106,45 @@ namespace Eaglegroup_project.Data.EF.Migrations
                     b.ToTable("AppUsers");
                 });
 
+            modelBuilder.Entity("Eaglegroup_project.Data.Entities.Customer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("CreatorNote");
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<DateTime?>("DateModified");
+
+                    b.Property<DateTime?>("DateSendByCustomer");
+
+                    b.Property<DateTime?>("Deal");
+
+                    b.Property<string>("FullName");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<Guid>("StaffId");
+
+                    b.Property<string>("StaffNote");
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Customer");
+                });
+
             modelBuilder.Entity("Eaglegroup_project.Data.Entities.Function", b =>
                 {
                     b.Property<string>("Id")

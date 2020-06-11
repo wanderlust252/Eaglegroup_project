@@ -13,7 +13,7 @@ namespace Eaglegroup_project.Controllers
     {
         public IActionResult Index()
         {
-            var email = User.GetSpecificClaim("FullName");
+            //var email = User.GetSpecificClaim("FullName");
             return View();
         }
 

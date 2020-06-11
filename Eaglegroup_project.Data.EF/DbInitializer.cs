@@ -23,22 +23,6 @@ namespace Eaglegroup_project.Data.EF
         public async Task Seed()
         {
 
-            if (!_userManager.Users.Any())
-            {
-                var user = await _userManager.FindByNameAsync("admin");
-                await _userManager.CreateAsync(new AppUser()
-                {
-                    UserName = "admin",
-                    FullName = "Administrator",
-                    Email = "admin@gmail.com",
-                    CreatedBy = "admin",
-                    DateCreated = DateTime.Now,
-                    DateModified = DateTime.Now,
-                    Status = Status.Active
-                }, "12345678");
-
-                await _userManager.AddToRoleAsync(user, "Admin");
-            }
             if (!_roleManager.Roles.Any())
             {
                 await _roleManager.CreateAsync(new AppRole()
@@ -60,6 +44,23 @@ namespace Eaglegroup_project.Data.EF
                     Description = "Nhan vien Marketing"
                 });
             }
+
+            if (!_userManager.Users.Any())
+            {
+                var user = await _userManager.FindByNameAsync("admin");
+                await _userManager.CreateAsync(new AppUser()
+                {
+                    UserName = "admin",
+                    FullName = "Administrator",
+                    Email = "admin@gmail.com",
+                    CreatedBy = "admin",
+                    DateCreated = DateTime.Now,
+                    DateModified = DateTime.Now,
+                    Status = Status.Active
+                }, "12345678");
+
+                await _userManager.AddToRoleAsync(user, "Admin");
+            }          
           
             if (_context.Functions.Count() == 0)
             {

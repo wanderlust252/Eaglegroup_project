@@ -47,7 +47,7 @@ namespace Eaglegroup_project.Data.EF
 
             if (!_userManager.Users.Any())
             {
-                var user = await _userManager.FindByNameAsync("admin");
+                
                 await _userManager.CreateAsync(new AppUser()
                 {
                     UserName = "admin",
@@ -58,7 +58,7 @@ namespace Eaglegroup_project.Data.EF
                     DateModified = DateTime.Now,
                     Status = Status.Active
                 }, "12345678");
-
+                var user = await _userManager.FindByNameAsync("admin");
                 await _userManager.AddToRoleAsync(user, "Admin");
             }          
           

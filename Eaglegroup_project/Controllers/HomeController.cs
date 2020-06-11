@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Eaglegroup_project.Models;
+using Eaglegroup_project.Extensions;
 
 namespace Eaglegroup_project.Controllers
 {
@@ -12,6 +13,7 @@ namespace Eaglegroup_project.Controllers
     {
         public IActionResult Index()
         {
+            var email = User.GetSpecificClaim("FullName");
             return View();
         }
 

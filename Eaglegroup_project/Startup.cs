@@ -6,6 +6,7 @@ using AutoMapper;
 using Eaglegroup_project.Application.AutoMapper;
 using Eaglegroup_project.Data.EF;
 using Eaglegroup_project.Data.Entities;
+using Eaglegroup_project.Helpers;
 using Eaglegroup_project.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,6 +50,8 @@ namespace Eaglegroup_project
             services.AddAutoMapper(typeof(Startup).Assembly);
 
             services.AddSingleton<AutoMapper.IConfigurationProvider>(AutoMapperConfig.RegisterMappings());
+
+            services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, CustomClaimsPrincipalFactory>();
 
             services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<AutoMapper.IConfigurationProvider>(), sp.GetService));
 

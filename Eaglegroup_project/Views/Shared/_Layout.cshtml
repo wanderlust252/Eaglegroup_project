@@ -1,8 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity;
-@using Eaglegroup_project.Data.Entities;
-
-@model AppUser;
-@inject SignInManager<AppUser> signInManager;
+﻿
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,10 +43,6 @@
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
-            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-            {
-                <h1>Le Hieu An Cut Cho</h1>
-            }
             @RenderBody()
         </main>
     </div>

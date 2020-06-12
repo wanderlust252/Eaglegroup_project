@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 
 namespace Eaglegroup_project
 {
@@ -69,6 +70,13 @@ namespace Eaglegroup_project
             services.AddScoped<IEmailSender, EmailSender>();
             // Seeding data
             services.AddTransient<DbInitializer>();
+
+            services.AddRecaptcha(new RecaptchaOptions()
+            {
+                SiteKey = Configuration["Recaptcha:SiteKey"],
+                SecretKey = Configuration["Recaptcha:SecretKey"]
+            });
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
@@ -125,6 +133,9 @@ namespace Eaglegroup_project
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(name: "areaRoute",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

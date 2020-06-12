@@ -30,9 +30,4 @@
     <ProjectReference Include="..\Eaglegroup_project.Utilities\Eaglegroup_project.Utilities.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Views\" />
-  </ItemGroup>
-
 </Project>

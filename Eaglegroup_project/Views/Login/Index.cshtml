@@ -13,7 +13,9 @@
     <link href="~/lib/css/style.css" rel="stylesheet" />
     <link href="~/lib/notifyjs/dist/styles/metro/notify-metro.css" rel="stylesheet" />
     @*<link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />*@
-
+    @{ 
+        Layout = null;
+    }
 </head>
 
 <body class="gray-bg">
@@ -43,7 +45,7 @@
             </div>
             <div class="col-md-6">
                 <div class="ibox-content">
-                    <form class="m-t" id="frmLogin">
+                    <form class="m-t" id="frmLogin" method="post">
                         @Html.AntiForgeryToken()
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Tài Khoản" id="txtUserName" name="txtUserName" required="">

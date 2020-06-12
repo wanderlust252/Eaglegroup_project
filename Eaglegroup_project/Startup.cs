@@ -4,9 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Eaglegroup_project.Application.AutoMapper;
+using Eaglegroup_project.Application.Implementation;
+using Eaglegroup_project.Application.Interfaces;
 using Eaglegroup_project.Data.EF;
+using Eaglegroup_project.Data.EF.Repositories;
 using Eaglegroup_project.Data.Entities;
+using Eaglegroup_project.Data.IRepositories;
 using Eaglegroup_project.Helpers;
+using Eaglegroup_project.Infrastructure.Interfaces;
 using Eaglegroup_project.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -63,11 +68,16 @@ namespace Eaglegroup_project
                 options.IdleTimeout = TimeSpan.FromHours(2);
                 options.Cookie.HttpOnly = true;
             });
-
+            //Repositories
             services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<IFunctionRepository, FunctionRepository>();
+            services.AddTransient(typeof(IRepository<,>), typeof(EFRepository<,>));
+            services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
+            //Services
+            services.AddScoped<IFunctionService, FunctionService>();
             // Seeding data
             services.AddTransient<DbInitializer>();
 

@@ -21,6 +21,8 @@ namespace Eaglegroup_project.Application.AutoMapper
             CreateMap<PermissionViewModel, Permission>()
             .ConstructUsing(c => new Permission(c.RoleId, c.FunctionId, c.CanCreate, c.CanRead, c.CanUpdate, c.CanDelete));
 
+            CreateMap<FunctionViewModel, Function>()
+          .ConstructUsing(c => new Function(c.Name, c.URL, c.ParentId, c.IconCss, c.SortOrder));
         }
     }
 }

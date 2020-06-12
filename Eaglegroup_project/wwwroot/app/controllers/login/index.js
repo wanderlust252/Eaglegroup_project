@@ -65,8 +65,8 @@
                     $('body').addClass('sk-loading');
                 },
                 success: function (res) {
-                    if (res.Success) {
-                        console.log("SUCCESS");
+                    if (res.success) {
+                        window.location.href = '/Home/Index';
                     }
                     else {
                         javi.notify("Tài khoản hoặc mật khẩu không đúng", 'error');

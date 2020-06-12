@@ -23,7 +23,7 @@ namespace Eaglegroup_project.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var result = await _authorizationService.AuthorizeAsync(User, "MANAGER", Operations.Read);
+            var result = await _authorizationService.AuthorizeAsync(User, "ADMIN", Operations.Read);
             if (result.Succeeded == false)  // Nếu không có quyền trả về trang Login
                 return new RedirectResult("/Login/Index");
 

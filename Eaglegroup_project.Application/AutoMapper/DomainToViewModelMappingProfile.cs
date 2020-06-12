@@ -12,7 +12,8 @@ namespace Eaglegroup_project.Application.AutoMapper
         public DomainToViewModelMappingProfile()
         { 
             CreateMap<AppUser, AppUserViewModel>();
-            CreateMap<AppRole, AppRoleViewModel>(); 
+            CreateMap<AppRole, AppRoleViewModel>();
+            CreateMap<Function, FunctionViewModel>();
         }
     }
 }

@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Eaglegroup_project.Models;
 using Eaglegroup_project.Extensions;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace Eaglegroup_project.Controllers
 {
+
     public class HomeController : Controller
     {
+        [Authorize]
         public IActionResult Index()
         {
             //var email = User.GetSpecificClaim("FullName");

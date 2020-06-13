@@ -127,7 +127,14 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <script src="~/app/shared/tedu.js"></script>
+    <script src="~/app/shared/base.js"></script>
+    <script src="~/app/shared/javi.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script>
+        var baseObj = new BaseController();
+        baseObj.initialize();
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

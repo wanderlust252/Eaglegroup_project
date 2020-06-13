@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Eaglegroup_project.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class AccountController : Controller
     {
         private readonly SignInManager<AppUser> _signInManager;

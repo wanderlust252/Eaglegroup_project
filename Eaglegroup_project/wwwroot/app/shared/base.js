@@ -1,47 +1,16 @@
 ﻿var BaseController = function () {
 
     this.initialize = function () {
-        loadAnnouncement();
-        loadEmail();
-        loadReminder();
+        //loadAnnouncement();
+        //loadEmail();
+        //loadReminder();
         registerEvents();
         registerControls();
     };
 
     //ckediter
     function registerControls() {
-        CKEDITOR.replace('txtContent1', {});
-
-        $.fn.modal.Constructor.prototype.enforceFocus = function () {
-            modal_this = this;
-            $(document).on('focusin.modal', function (e) {
-                if (modal_this.$element[0] !== e.target && !modal_this.$element.has(e.target).length
-                    && $(e.target.parentNode).hasClass('cke_contents cke_reset')) {
-                    modal_this.$element.focus();
-                }
-                if (modal_this.$element[0] !== e.target && !modal_this.$element.has(e.target).length
-                    && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_select')
-                    && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_text')) {
-                    modal_this.$element.focus();
-                }
-            });
-        };
-
-        //Fix: cannot click on element ck in modal
-        $.fn.modal.Constructor.prototype.enforceFocus = function () {
-            $(document)
-                .off('focusin.bs.modal') // guard against infinite focus loop
-                .on('focusin.bs.modal', $.proxy(function (e) {
-                    if (
-                        this.$element[0] !== e.target && !this.$element.has(e.target).length
-                        // CKEditor compatibility fix start.
-                        && !$(e.target).closest('.cke_dialog, .cke').length
-                        // CKEditor compatibility fix end.
-                    ) {
-                        this.$element.trigger('focus');
-                    }
-                }, this));
-        };
+      
     }
 
     function resetFormMaintainance() {
@@ -187,138 +156,138 @@
         });
     };
 
-    function loadAnnouncement() {
-        $.ajax({
-            type: "GET",
-            url: "/Announcement/GetAllUnReadPaging",
-            data: {
-                page: 1,
-                pageSize: 50
-            },
-            dataType: "json",
-            beforeSend: function () {
-                javi.startLoading();
-            },
-            success: function (response) {
-                var template = $('#announcement-template').html();
-                var render = "";
-                if (response.RowCount > 0) {
-                    $('#announcementArea').show();
-                    $.each(response.Results, function (i, item) {
-                        render += Mustache.render(template, {
-                            Link: item.Link !== null ? item.Link : '',
-                            Title: item.Title,
-                            Content: item.Content.length < 50 ? item.Content : item.Content.substring(0, 50) + '...',
-                            Id: item.Id,
-                            Avatar: item.Avatar !== null ? item.Avatar : '/images/user.jpg',
-                            DateCreated: javi.dateTimeFormatJson(item.DateCreated)
-                        });
-                    });
-                    render += $('#announcement-tag-template').html();
-                    $("#totalAnnouncement").text(response.RowCount);
-                    if (render != undefined) {
-                        $('#annoncementList').html(render);
-                    }
-                }
-                else {
-                    $('#announcementArea').hide();
-                    $('#annoncementList').html('');
-                }
-                javi.stopLoading();
-            },
-            error: function (status) {
-                console.log(status);
-            }
-        });
-    };
+    //function loadAnnouncement() {
+    //    $.ajax({
+    //        type: "GET",
+    //        url: "/Announcement/GetAllUnReadPaging",
+    //        data: {
+    //            page: 1,
+    //            pageSize: 50
+    //        },
+    //        dataType: "json",
+    //        beforeSend: function () {
+    //            javi.startLoading();
+    //        },
+    //        success: function (response) {
+    //            var template = $('#announcement-template').html();
+    //            var render = "";
+    //            if (response.RowCount > 0) {
+    //                $('#announcementArea').show();
+    //                $.each(response.Results, function (i, item) {
+    //                    render += Mustache.render(template, {
+    //                        Link: item.Link !== null ? item.Link : '',
+    //                        Title: item.Title,
+    //                        Content: item.Content.length < 50 ? item.Content : item.Content.substring(0, 50) + '...',
+    //                        Id: item.Id,
+    //                        Avatar: item.Avatar !== null ? item.Avatar : '/images/user.jpg',
+    //                        DateCreated: javi.dateTimeFormatJson(item.DateCreated)
+    //                    });
+    //                });
+    //                render += $('#announcement-tag-template').html();
+    //                $("#totalAnnouncement").text(response.RowCount);
+    //                if (render != undefined) {
+    //                    $('#annoncementList').html(render);
+    //                }
+    //            }
+    //            else {
+    //                $('#announcementArea').hide();
+    //                $('#annoncementList').html('');
+    //            }
+    //            javi.stopLoading();
+    //        },
+    //        error: function (status) {
+    //            console.log(status);
+    //        }
+    //    });
+    //};
 
-    function loadEmail() {
-        $.ajax({
-            type: "GET",
-            url: "/Email/GetAllByReceiveEmail",
-            dataType: "json",
-            beforeSend: function () {
-                javi.startLoading();
-            },
-            success: function (response) {
-                var template = $('#email-template').html();
-                var render = "";
+    //function loadEmail() {
+    //    $.ajax({
+    //        type: "GET",
+    //        url: "/Email/GetAllByReceiveEmail",
+    //        dataType: "json",
+    //        beforeSend: function () {
+    //            javi.startLoading();
+    //        },
+    //        success: function (response) {
+    //            var template = $('#email-template').html();
+    //            var render = "";
                
-                if (response.length > 0) {
-                    $('#EmailArea').show();
-                    var d = 0;
-                    $.each(response, function (i, item) {
-                        if (item.HasRead == false)
-                            d++;
+    //            if (response.length > 0) {
+    //                $('#EmailArea').show();
+    //                var d = 0;
+    //                $.each(response, function (i, item) {
+    //                    if (item.HasRead == false)
+    //                        d++;
 
-                        render += Mustache.render(template, {
-                            EmailId: item.Id,
-                            EmailToId: item.EmailToId,
-                            Sender: item.From,
-                            EmailDate: javi.dateTimeFormatJson(item.DateCreated),
-                            IsReaded: item.HasRead ? "" : "unread"
-                        });
-                    });
-                    render += $('#email-tag-template').html();
-                    $("#totalEmail").text(d);
-                    if (render != undefined) {
-                        $('#emailList').html(render);
-                    }
-                }
-                else {
-                    $('#EmailArea').hide();
-                    $('#emailList').html('');
-                }
-                javi.stopLoading();
-            },
-            error: function (status) {
-                console.log(status);
-            }
-        });
-    };
+    //                    render += Mustache.render(template, {
+    //                        EmailId: item.Id,
+    //                        EmailToId: item.EmailToId,
+    //                        Sender: item.From,
+    //                        EmailDate: javi.dateTimeFormatJson(item.DateCreated),
+    //                        IsReaded: item.HasRead ? "" : "unread"
+    //                    });
+    //                });
+    //                render += $('#email-tag-template').html();
+    //                $("#totalEmail").text(d);
+    //                if (render != undefined) {
+    //                    $('#emailList').html(render);
+    //                }
+    //            }
+    //            else {
+    //                $('#EmailArea').hide();
+    //                $('#emailList').html('');
+    //            }
+    //            javi.stopLoading();
+    //        },
+    //        error: function (status) {
+    //            console.log(status);
+    //        }
+    //    });
+    //};
 
-    function loadReminder() {
-        $.ajax({
-            type: "GET",
-            url: "/Reminder/GetAllByUser",
-            dataType: "json",
-            beforeSend: function () {
-                javi.startLoading();
-            },
-            success: function (response) {
-                var template = $('#reminder-template').html();
-                var render = "";
-                if (response.length > 0) {
-                    $('#reminderArea').show();
-                    var d = 0;
-                    $.each(response, function (i, item) {
-                        if (item.HasRead == false)
-                            d++;
-                        render += Mustache.render(template, {
-                            Link: item.Link !== null ? item.Link : '',
-                            Title: item.Title,
-                            Content: item.Content.length < 50 ? item.Content : item.Content.substring(0, 50) + '...',
-                            Id: item.Id,
-                            Avatar: item.Avatar !== null ? item.Avatar : '/images/user.jpg',
-                            DateCreated: javi.dateTimeFormatJson(item.DateCreated),
-                            IsReaded: item.HasRead ? "" : "unread"
-                        });
-                    });
-                    render += $('#reminder-tag-template').html();
-                    $("#totalReminder").text(d);
-                    if (render != undefined) {
-                        $('#reminderList').html(render);
-                    }
-                }
-                else {
-                    $('#reminderArea').hide();
-                    $('#reminderList').html('');
-                }
-                javi.stopLoading();
-            },
-            error: function (status) {
-                console.log(status);
-            }
-        });
-    };
+    //function loadReminder() {
+    //    $.ajax({
+    //        type: "GET",
+    //        url: "/Reminder/GetAllByUser",
+    //        dataType: "json",
+    //        beforeSend: function () {
+    //            javi.startLoading();
+    //        },
+    //        success: function (response) {
+    //            var template = $('#reminder-template').html();
+    //            var render = "";
+    //            if (response.length > 0) {
+    //                $('#reminderArea').show();
+    //                var d = 0;
+    //                $.each(response, function (i, item) {
+    //                    if (item.HasRead == false)
+    //                        d++;
+    //                    render += Mustache.render(template, {
+    //                        Link: item.Link !== null ? item.Link : '',
+    //                        Title: item.Title,
+    //                        Content: item.Content.length < 50 ? item.Content : item.Content.substring(0, 50) + '...',
+    //                        Id: item.Id,
+    //                        Avatar: item.Avatar !== null ? item.Avatar : '/images/user.jpg',
+    //                        DateCreated: javi.dateTimeFormatJson(item.DateCreated),
+    //                        IsReaded: item.HasRead ? "" : "unread"
+    //                    });
+    //                });
+    //                render += $('#reminder-tag-template').html();
+    //                $("#totalReminder").text(d);
+    //                if (render != undefined) {
+    //                    $('#reminderList').html(render);
+    //                }
+    //            }
+    //            else {
+    //                $('#reminderArea').hide();
+    //                $('#reminderList').html('');
+    //            }
+    //            javi.stopLoading();
+    //        },
+    //        error: function (status) {
+    //            console.log(status);
+    //        }
+    //    });
+    //};
 }

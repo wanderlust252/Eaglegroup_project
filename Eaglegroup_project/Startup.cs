@@ -6,6 +6,7 @@ using AutoMapper;
 using Eaglegroup_project.Application.AutoMapper;
 using Eaglegroup_project.Application.Implementation;
 using Eaglegroup_project.Application.Interfaces;
+using Eaglegroup_project.Authorization;
 using Eaglegroup_project.Data.EF;
 using Eaglegroup_project.Data.EF.Repositories;
 using Eaglegroup_project.Data.Entities;
@@ -13,6 +14,7 @@ using Eaglegroup_project.Data.IRepositories;
 using Eaglegroup_project.Helpers;
 using Eaglegroup_project.Infrastructure.Interfaces;
 using Eaglegroup_project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -76,10 +78,15 @@ namespace Eaglegroup_project
             services.AddScoped<IFunctionRepository, FunctionRepository>();
             services.AddTransient(typeof(IRepository<,>), typeof(EFRepository<,>));
             services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
+            services.AddScoped<IPermissionRepository, PermissionRepository>();
             //Services
             services.AddScoped<IFunctionService, FunctionService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IAuthorizationHandler, BaseResourceAuthorizationHandler>();
             // Seeding data
             services.AddTransient<DbInitializer>();
+           
 
             services.AddRecaptcha(new RecaptchaOptions()
             {

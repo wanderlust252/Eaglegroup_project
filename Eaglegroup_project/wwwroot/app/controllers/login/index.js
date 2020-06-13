@@ -66,6 +66,7 @@
                 },
                 success: function (res) {
                     if (res.success) {
+                        console.log("SUCCESS")
                         window.location.href = '/Home/Index';
                     }
                     else {

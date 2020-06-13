@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Eaglegroup_project.Application.Interfaces;
 using Eaglegroup_project.Application.ViewModels.System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Eaglegroup_project.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserService _userService;

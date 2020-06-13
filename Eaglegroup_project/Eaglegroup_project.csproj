@@ -30,4 +30,9 @@
     <ProjectReference Include="..\Eaglegroup_project.Utilities\Eaglegroup_project.Utilities.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\app\admin\" />
+  </ItemGroup>
+
 </Project>

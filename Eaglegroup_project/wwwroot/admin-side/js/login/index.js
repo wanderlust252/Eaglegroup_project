@@ -55,7 +55,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: 'Login/Authen',
+                url: 'Account/Authen',
                 data: {
                     UserName: user,
                     Password: pass
@@ -66,7 +66,6 @@
                 },
                 success: function (res) {
                     if (res.success) {
-                        console.log("SUCCESS")
                         window.location.href = 'Home/Index';
                     }
                     else {

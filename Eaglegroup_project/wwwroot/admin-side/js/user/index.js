@@ -37,8 +37,8 @@
             loadData();
         });
         $("#ddl-show-page").on('change', function () {
-            tedu.configs.pageSize = $(this).val();
-            tedu.configs.pageIndex = 1;
+            eagle.configs.pageSize = $(this).val();
+            eagle.configs.pageIndex = 1;
             loadData(true);
         });
 
@@ -58,7 +58,7 @@
                 data: { id: that },
                 dataType: "json",
                 beforeSend: function () {
-                    tedu.startLoading();
+                    eagle.startLoading();
                 },
                 success: function (response) {
                     var data = response;
@@ -73,12 +73,12 @@
 
                     disableFieldEdit(true);
                     $('#modal-add-edit').modal('show');
-                    tedu.stopLoading();
+                    eagle.stopLoading();
 
                 },
                 error: function () {
-                    tedu.notify('Có lỗi xảy ra', 'error');
-                    tedu.stopLoading();
+                    eagle.notify('Có lỗi xảy ra', 'error');
+                    eagle.stopLoading();
                 }
             });
         });
@@ -115,19 +115,19 @@
                     },
                     dataType: "json",
                     beforeSend: function () {
-                        tedu.startLoading();
+                        eagle.startLoading();
                     },
                     success: function () {
-                        tedu.notify('Save user succesful', 'success');
+                        eagle.notify('Save user succesful', 'success');
                         $('#modal-add-edit').modal('hide');
                         resetFormMaintainance();
 
-                        tedu.stopLoading();
+                        eagle.stopLoading();
                         loadData(true);
                     },
                     error: function () {
-                        tedu.notify('Has an error', 'error');
-                        tedu.stopLoading();
+                        eagle.notify('Has an error', 'error');
+                        eagle.stopLoading();
                     }
                 });
             }
@@ -137,22 +137,22 @@
         $('body').on('click', '.btn-delete', function (e) {
             e.preventDefault();
             var that = $(this).data('id');
-            tedu.confirm('Are you sure to delete?', function () {
+            eagle.confirm('Are you sure to delete?', function () {
                 $.ajax({
                     type: "POST",
                     url: "/Admin/User/Delete",
                     data: { id: that },
                     beforeSend: function () {
-                        tedu.startLoading();
+                        eagle.startLoading();
                     },
                     success: function () {
-                        tedu.notify('Delete successful', 'success');
-                        tedu.stopLoading();
+                        eagle.notify('Delete successful', 'success');
+                        eagle.stopLoading();
                         loadData();
                     },
                     error: function () {
-                        tedu.notify('Has an error', 'error');
-                        tedu.stopLoading();
+                        eagle.notify('Has an error', 'error');
+                        eagle.stopLoading();
                     }
                 });
             });
@@ -215,33 +215,33 @@
             data: {
                 categoryId: $('#ddl-category-search').val(),
                 keyword: $('#txt-search-keyword').val(),
-                page: tedu.configs.pageIndex,
-                pageSize: tedu.configs.pageSize
+                page: eagle.configs.pageIndex,
+                pageSize: eagle.configs.pageSize
             },
             dataType: "json",
             beforeSend: function () {
-                tedu.startLoading();
+                eagle.startLoading();
             },
             success: function (response) {
                 var template = $('#table-template').html();
                 var render = "";
-                if (response.RowCount > 0) {
-                    $.each(response.Results, function (i, item) {
+                if (response.rowCount > 0) {
+                    $.each(response.results, function (i, item) {
                         render += Mustache.render(template, {
-                            FullName: item.FullName,
-                            Id: item.Id,
-                            UserName: item.UserName,
-                            Avatar: item.Avatar === undefined ? '<img src="/admin-side/images/user.png" width=25 />' : '<img src="' + item.Avatar + '" width=25 />',
-                            DateCreated: tedu.dateTimeFormatJson(item.DateCreated),
-                            Status: tedu.getStatus(item.Status)
+                            FullName: item.fullName,
+                            Id: item.id,
+                            UserName: item.userName,
+                            Avatar: item.avatar === undefined ? '<img src="/admin-side/images/user.png" width=25 />' : '<img src="' + item.avatar + '" width=25 />',
+                            DateCreated: eagle.dateTimeFormatJson(item.dateCreated),
+                            Status: eagle.getStatus(item.status)
                         });
                     });
-                    $("#lbl-total-records").text(response.RowCount);
+                    $("#lbl-total-records").text(response.rowCount);
                     if (render !== undefined) {
                         $('#tbl-content').html(render);
 
                     }
-                    wrapPaging(response.RowCount, function () {
+                    wrapPaging(response.rowCount, function () {
                         loadData();
                     }, isPageChanged);
 
@@ -250,7 +250,7 @@
                 else {
                     $('#tbl-content').html('');
                 }
-                tedu.stopLoading();
+                eagle.stopLoading();
             },
             error: function (status) {
                 console.log(status);
@@ -259,7 +259,7 @@
     };
 
     function wrapPaging(recordCount, callBack, changePageSize) {
-        var totalsize = Math.ceil(recordCount / tedu.configs.pageSize);
+        var totalsize = Math.ceil(recordCount / eagle.configs.pageSize);
         //Unbind pagination if it existed or click change pagesize
         if ($('#paginationUL a').length === 0 || changePageSize === true) {
             $('#paginationUL').empty();
@@ -275,7 +275,7 @@
             next: 'Tiếp',
             last: 'Cuối',
             onPageClick: function (event, p) {
-                tedu.configs.pageIndex = p;
+                eagle.configs.pageIndex = p;
                 setTimeout(callBack(), 200);
             }
         });

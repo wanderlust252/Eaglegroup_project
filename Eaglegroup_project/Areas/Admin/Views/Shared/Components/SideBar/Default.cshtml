@@ -13,14 +13,11 @@
                         <ul class="nav child_menu">
                             @foreach (var jitem in Model.Where(x => x.ParentId == item.Id))
                             {
-                                <li><a href="@jitem.URL">@jitem.Name</a></li>
-
+                                <li><a href="@jitem.URL"><i class="fa @jitem.IconCss"></i>@jitem.Name</a></li>
                             }
                         </ul>
                     }
-
                 </li>
-
             }
 
         </ul>

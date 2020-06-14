@@ -1,4 +1,4 @@
-﻿var tedu = {
+﻿var eagle = {
     configs: {
         pageSize: 10,
         pageIndex: 1

@@ -62,14 +62,14 @@
                 },
                 success: function (response) {
                     var data = response;
-                    $('#hidId').val(data.Id);
-                    $('#txtFullName').val(data.FullName);
-                    $('#txtUserName').val(data.UserName);
-                    $('#txtEmail').val(data.Email);
-                    $('#txtPhoneNumber').val(data.PhoneNumber);
-                    $('#ckStatus').prop('checked', data.Status === 1);
+                    $('#hidId').val(data.id);
+                    $('#txtFullName').val(data.fullName);
+                    $('#txtUserName').val(data.userName);
+                    $('#txtEmail').val(data.email);
+                    $('#txtPhoneNumber').val(data.phoneNumber);
+                    $('#ckStatus').prop('checked', data.status === 1);
 
-                    initRoleList(data.Roles);
+                    initRoleList(data.roles);
 
                     disableFieldEdit(true);
                     $('#modal-add-edit').modal('show');
@@ -194,12 +194,12 @@
                 var render = '';
                 $.each(data, function (i, item) {
                     var checked = '';
-                    if (selectedRoles !== undefined && selectedRoles.indexOf(item.Name) !== -1)
+                    if (selectedRoles !== undefined && selectedRoles.indexOf(item.name) !== -1)
                         checked = 'checked';
                     render += Mustache.render(template,
                         {
-                            Name: item.Name,
-                            Description: item.Description,
+                            Name: item.name,
+                            Description: item.description,
                             Checked: checked
                         });
                 });

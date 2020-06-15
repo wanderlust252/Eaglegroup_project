@@ -14,6 +14,7 @@ namespace Eaglegroup_project.Application.AutoMapper
             CreateMap<AppUser, AppUserViewModel>();
             CreateMap<AppRole, AppRoleViewModel>();
             CreateMap<Function, FunctionViewModel>();
+            CreateMap<Customer, CustomerViewModel>();
         }
     }
 }

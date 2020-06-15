@@ -1,35 +1,14 @@
-﻿using Eaglegroup_project.Data.Enums;
-using Eaglegroup_project.Data.Interfaces;
-using Eaglegroup_project.Infrastructure.SharedKernel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Eaglegroup_project.Data.Entities
-{ 
-    [Table("Customer")]
-    public class Customer : DomainEntity<int>, IDateTracking
+namespace Eaglegroup_project.Application.ViewModels.System
+{
+    public class CustomerViewModel
     {
-        public Customer()
-        {
-
-        }
-
-        public Customer(string fullName, string creatorNote, string staffNote, Guid staffId, DateTime? deal, decimal price, DateTime? dateSendbycustomer)
-        {
-
-            this.FullName = fullName;
-            this.CreatorNote = creatorNote;
-            this.StaffNote = staffNote;
-            this.StaffId = staffId;
-            this.Price = price;
-            this.Deal = deal;
-            this.DateSendByCustomer = dateSendbycustomer;
-        }
-
+        public int Id { get; set; }
         public string FullName { get; set; }
         public string CreatorNote { get; set; }//note cua ng tao
         public string StaffNote { get; set; }//note cua sale

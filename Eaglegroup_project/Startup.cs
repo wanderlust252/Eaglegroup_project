@@ -79,15 +79,18 @@ namespace Eaglegroup_project
             services.AddTransient(typeof(IRepository<,>), typeof(EFRepository<,>));
             services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
             services.AddScoped<IPermissionRepository, PermissionRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
             //Services
+            services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IFunctionService, FunctionService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
+
             services.AddTransient<IAuthorizationHandler, BaseResourceAuthorizationHandler>();
+            
             // Seeding data
             services.AddTransient<DbInitializer>();
            
-
             services.AddRecaptcha(new RecaptchaOptions()
             {
                 SiteKey = Configuration["Recaptcha:SiteKey"],
@@ -117,9 +120,9 @@ namespace Eaglegroup_project
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
-                options.LoginPath = "/Account/Login";
-                options.AccessDeniedPath = "/Account/AccessDenied";
-                options.SlidingExpiration = true;
+                options.LoginPath = $"/Admin/Account/Login";
+                options.LogoutPath = $"/Admin/Account/Logout";
+                options.AccessDeniedPath = $"/Admin/Account/AccessDenied";
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

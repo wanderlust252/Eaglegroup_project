@@ -42,7 +42,16 @@ namespace Eaglegroup_project.Application.Implementation
                 query = query.Where(x => x.FullName.Contains(filter));
             return query.OrderBy(x => x.DateCreated).ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider).ToListAsync();
         }
-
+        public List<CustomerViewModel> GetByMarketingId(Guid id)
+        {
+            var customer = _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(id)).ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider);
+            return customer.ToList();
+        }
+        public List<CustomerViewModel> GetByStaffId(Guid id)
+        {
+            var customer = _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(id)).ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider);
+            return customer.ToList();
+        }
         public CustomerViewModel GetById(int id)
         {
             var customer = _customerRepository.FindSingle(x => x.Id == id);
@@ -52,7 +61,8 @@ namespace Eaglegroup_project.Application.Implementation
         public void Update(CustomerViewModel customerVm)
         {
             var customerDb = _customerRepository.FindById(customerVm.Id);
-            var customer = _mapper.Map<Customer>(customerVm);
+            var customer = _mapper.Map<CustomerViewModel,Customer>(customerVm);
+            _customerRepository.Update(customer);
         }
 
         public void Delete(int id)

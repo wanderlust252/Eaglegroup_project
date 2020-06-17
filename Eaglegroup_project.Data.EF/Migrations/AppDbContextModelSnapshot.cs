@@ -115,6 +115,8 @@ namespace Eaglegroup_project.Data.EF.Migrations
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(50);
 
+                    b.Property<Guid>("CreatorId");
+
                     b.Property<string>("CreatorNote");
 
                     b.Property<DateTime>("DateCreated");

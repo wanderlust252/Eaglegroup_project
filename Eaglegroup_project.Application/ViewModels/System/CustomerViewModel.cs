@@ -28,7 +28,8 @@ namespace Eaglegroup_project.Application.ViewModels.System
         public string ModifiedBy { get; set; }
 
         public DateTime? DateModified { get; set; }
-
+        [DefaultValue(false)]
+        public bool isDelete { get; set; }
         public int Status { get; set; } //status chot don, chua chot,...
     }
 }

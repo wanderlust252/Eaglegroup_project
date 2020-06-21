@@ -18,7 +18,7 @@ namespace Eaglegroup_project.Data.Entities
 
         }
 
-        public Customer(string fullName, string creatorNote, string staffNote, Guid? staffId, DateTime? deal, decimal price, DateTime? dateSendbycustomer, Guid creatorId)
+        public Customer(string fullName, string creatorNote, string staffNote, Guid? staffId, DateTime? deal, decimal price, DateTime? dateSendbycustomer, Guid creatorId,bool isDelete)
         {
 
             this.FullName = fullName;
@@ -29,6 +29,7 @@ namespace Eaglegroup_project.Data.Entities
             this.Deal = deal;
             this.DateSendByCustomer = dateSendbycustomer;
             this.CreatorId = creatorId;
+            this.isDelete = isDelete;
         }
 
         public string FullName { get; set; }
@@ -50,7 +51,8 @@ namespace Eaglegroup_project.Data.Entities
         public string ModifiedBy { get; set; }
 
         public DateTime? DateModified { get; set; }
-
+        [DefaultValue(false)]
+        public bool isDelete { get; set; }
         public int Status { get; set; } //status chot don, chua chot,...
     }
 }

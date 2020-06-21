@@ -47,7 +47,7 @@ namespace Eaglegroup_project.Data.EF
 
             if (!_userManager.Users.Any())
             {
-                
+
                 await _userManager.CreateAsync(new AppUser()
                 {
                     UserName = "admin",
@@ -60,8 +60,8 @@ namespace Eaglegroup_project.Data.EF
                 }, "12345678");
                 var user = await _userManager.FindByNameAsync("admin");
                 await _userManager.AddToRoleAsync(user, "Admin");
-            }          
-          
+            }
+
             if (_context.Functions.Count() == 0)
             {
                 _context.Functions.AddRange(new List<Function>()
@@ -96,14 +96,21 @@ namespace Eaglegroup_project.Data.EF
                     new Function() {Id = "READER",Name = "Báo cáo độc giả",ParentId = "REPORT",SortOrder = 3,Status = Status.Active,URL = "/admin/report/reader",IconCss = "fa-bar-chart-o"  },
                 });
             }
-            //if (_context.Customer.Count() == 0)
-            //{
-            //    _context.Customer.AddRange(new List<Customer>()
-            //    {
-            //        new Customer({})
-            //        });
-            //}
-            await _context.SaveChangesAsync();
+            if (_context.Customer.Count() == 0)
+            {
+                var user = await _userManager.FindByNameAsync("admin");
+                _context.Customer.AddRange(new List<Customer>()
+                {
+                     new Customer(){FullName="Lê Đình Hiếu",CreatorId=user.Id,CreatorNote="Note cái nhẹ",Price=1000,DateSendByCustomer=DateTime.Now,PhoneNumber="039373309",CreatedBy="admin",DateCreated=DateTime.Now,Status=1},
+                     new Customer(){FullName="Lê Đình 1",CreatorId=user.Id,CreatorNote="Note cái nhẹ0",Price=1000,DateSendByCustomer=DateTime.Now,PhoneNumber="039373309",CreatedBy="admin",DateCreated=DateTime.Now,Status=2},
+                     new Customer(){FullName="Lê Đình 2",CreatorId=user.Id,CreatorNote="Note cái nhẹ1",Price=1000,DateSendByCustomer=DateTime.Now,PhoneNumber="039373309",CreatedBy="admin",DateCreated=DateTime.Now,Status=0},
+                     new Customer(){FullName="Lê Đình 3",CreatorId=user.Id,CreatorNote="Note cái nhẹ2",Price=1000,DateSendByCustomer=DateTime.Now,PhoneNumber="039373309",CreatedBy="admin",DateCreated=DateTime.Now,Status=1},
+                     new Customer(){FullName="Lê Đình 4",CreatorId=user.Id,CreatorNote="Note cái nhẹ3",Price=1000,DateSendByCustomer=DateTime.Now,PhoneNumber="039373309",CreatedBy="admin",DateCreated=DateTime.Now,Status=1},
+                     new Customer(){FullName="Lê Đình 5",CreatorId=user.Id,CreatorNote="Note cái nhẹ4",Price=1000,DateSendByCustomer=DateTime.Now,PhoneNumber="039373309",CreatedBy="admin",DateCreated=DateTime.Now,Status=1},
+                });
+
+            }
+        await _context.SaveChangesAsync();
         }
     }
 }

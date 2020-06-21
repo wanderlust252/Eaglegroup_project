@@ -96,6 +96,13 @@ namespace Eaglegroup_project.Data.EF
                     new Function() {Id = "READER",Name = "Báo cáo độc giả",ParentId = "REPORT",SortOrder = 3,Status = Status.Active,URL = "/admin/report/reader",IconCss = "fa-bar-chart-o"  },
                 });
             }
+            //if (_context.Customer.Count() == 0)
+            //{
+            //    _context.Customer.AddRange(new List<Customer>()
+            //    {
+            //        new Customer({})
+            //        });
+            //}
             await _context.SaveChangesAsync();
         }
     }

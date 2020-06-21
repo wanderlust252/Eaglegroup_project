@@ -13,6 +13,8 @@ namespace Eaglegroup_project.Application.Interfaces
 
         Task<List<CustomerViewModel>> GetAll(string filter);
 
+        PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize);
+
         CustomerViewModel GetById(int id);
 
         void Update(CustomerViewModel function);

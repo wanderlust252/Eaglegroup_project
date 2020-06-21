@@ -112,6 +112,16 @@
         else
             return '<span class="badge bg-red">Khoá</span>';
     },
+    getCustomerStatus: function (status) {
+        if (status == 1) {
+            return '<span class="badge bg-green">Đã chốt</span>';
+        }
+        else if (status == 2) {
+            return '<span class="badge bg-yellow">Chưa chốt</span>';
+        } else if (status == 3) {
+            return '<span class="badge bg-red"></span>';
+        }          
+    },
     formatNumber: function (number, precision) {
         if (!isFinite(number)) {
             return number.toString();

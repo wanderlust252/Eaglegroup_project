@@ -1,6 +1,4 @@
-﻿@using Microsoft.AspNetCore.Authorization
-@using Eaglegroup_project.Authorization
-@inject IAuthorizationService AuthorizationService
+﻿@inject IAuthorizationService AuthorizationService;
 @{
     ViewData["Title"] = "User List";
 }
@@ -21,10 +19,7 @@
 
         <div class="title_right">
             <div class="col-md-2 col-sm-2 col-xs-12 form-group pull-right top_search">
-                @{
-                    var result = await AuthorizationService.AuthorizeAsync(User, "Admin", Operations.Create);
-                }
-                @if (result.Succeeded)
+                @if ((await AuthorizationService.AuthorizeAsync(User, "Admin", Operations.Create)).Succeeded)
                 {
                     <button class="btn btn-success" id="btn-create" type="button">Create</button>
                 }
@@ -98,13 +93,13 @@
             <td>{{{DateCreated}}}</td>
             <td>{{{Status}}}</td>
             <td>
-                @if ((await AuthorizationService.AuthorizeAsync(User, "ADMIN", Operations.Update)).Succeeded)
+                @if ((await AuthorizationService.AuthorizeAsync(User, "Admin", Operations.Update)).Succeeded)
                 {
                     <a href="#" data-id="{{Id}}" class="btn-edit"><i class="fa fa-pencil-square-o"></i></a>
                 }
             </td>
             <td>
-                @if ((await AuthorizationService.AuthorizeAsync(User, "ADMIN", Operations.Delete)).Succeeded)
+                @if ((await AuthorizationService.AuthorizeAsync(User, "Admin", Operations.Delete)).Succeeded)
                 {
                     <a href="#" data-id="{{Id}}" class="btn-delete"><i class="fa fa-trash-o"></i></a>
 
@@ -114,6 +109,7 @@
     </script>
 
 </div>
+
 <script id="role-template" type="x-tmpl-mustache">
     <div class="checkbox">
         <label>
@@ -122,4 +118,5 @@
         </label>
     </div>
 </script>
+
 @await Html.PartialAsync("_AddEditModal.cshtml")

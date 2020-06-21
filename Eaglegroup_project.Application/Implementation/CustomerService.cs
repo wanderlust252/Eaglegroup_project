@@ -42,16 +42,19 @@ namespace Eaglegroup_project.Application.Implementation
                 query = query.Where(x => x.FullName.Contains(filter));
             return query.OrderBy(x => x.DateCreated).ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider).ToListAsync();
         }
+
         public List<CustomerViewModel> GetByMarketingId(Guid id)
         {
             var customer = _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(id)).ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider);
             return customer.ToList();
         }
+
         public List<CustomerViewModel> GetByStaffId(Guid id)
         {
             var customer = _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(id)).ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider);
             return customer.ToList();
         }
+
         public CustomerViewModel GetById(int id)
         {
             var customer = _customerRepository.FindSingle(x => x.Id == id);
@@ -73,6 +76,47 @@ namespace Eaglegroup_project.Application.Implementation
         public void Save()
         {
             _unitOfWork.Commit();
+        }
+
+        public PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize)
+        {
+            var query = _customerRepository.FindAllAsNoTracking();
+            if (!string.IsNullOrEmpty(keyword))
+                query = query.Where(x => x.FullName.Contains(keyword)
+                || x.FullName.Contains(keyword));
+
+            int totalRow = query.Count();
+            query = query.Skip((page - 1) * pageSize)
+               .Take(pageSize);
+
+            var data = query.Select(x => new CustomerViewModel()
+            {
+                FullName = x.FullName,
+                Id = x.Id,
+                PhoneNumber = x.PhoneNumber,
+                Status = x.Status,
+                DateCreated = x.DateCreated,
+                CreatedBy = x.CreatedBy,
+                CreatorId = x.CreatorId, 
+                CreatorNote = x.CreatorNote,
+                DateSendByCustomer = x.DateSendByCustomer,
+                StaffId = x.StaffId,
+                StaffNote = x.StaffNote,
+                DateModified = x.DateModified,
+                Deal = x.Deal,
+                ModifiedBy = x.ModifiedBy,
+                Price = x.Price
+            }).ToList();
+
+            var paginationSet = new PagedResult<CustomerViewModel>()
+            {
+                Results = data,
+                CurrentPage = page,
+                RowCount = totalRow,
+                PageSize = pageSize
+            };
+
+            return paginationSet;
         }
     }
 }

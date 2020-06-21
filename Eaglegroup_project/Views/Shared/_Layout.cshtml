@@ -415,8 +415,6 @@
         </div>
     </div>
 
-
-
     <!-- Mainly scripts -->
     <script src="~/lib/js/jquery-3.1.1.min.js"></script>
     <script src="~/lib/js/popper.min.js"></script>
@@ -424,13 +422,36 @@
     <script src="~/lib/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="~/lib/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-    <!-- Custom and plugin javascript -->
+    <script src="~/lib/mustache/mustache.js"></script>
+    <script src="~/lib/twbs-pagination/jquery.twbsPagination.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/app/shared/eagle.js"></script>
+    <script src="~/app/shared/base.js"></script>
+    <script src="~/app/shared/javi.js"></script>
+    <!-- jQuery Sparklines -->
+    <script src="~/lib/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="~/lib/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="~/lib/js/inspinia.js"></script>
     <script src="~/lib/js/plugins/pace/pace.min.js"></script>
+    <script src="~/lib/js/popper.min.js"></script>
+    <script src="~/lib/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="~/lib/js/plugins/"></script>
+    <!-- jQuery Sparklines -->
+    <!-- bootstrap-daterangepicker -->
+    <script src="~/lib/bootbox/bootbox.js"></script>
+    <script src="~/lib/moment/moment.js"></script>
+    <script src="~/lib/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="~/lib/notifyjs/dist/notify.js"></script>
+    <script src="~/lib/notifyjs/dist/styles/metro/notify-metro.js"></script>
+    <script src="~/lib/js/plugins/pace/pace.min.js"></script>
+    <!-- bootstrap-daterangepicker -->
 
-    <script src="~/lib/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script>
+        var baseObj = new BaseController();
+        baseObj.initialize();
+    </script>
+    @RenderSection("Scripts", required: false)
 </body>
 
 </html>

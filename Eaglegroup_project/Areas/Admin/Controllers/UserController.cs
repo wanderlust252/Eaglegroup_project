@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 namespace Eaglegroup_project.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, SaleStaff")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;

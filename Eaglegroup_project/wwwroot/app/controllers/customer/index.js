@@ -1,7 +1,9 @@
-﻿var UserController = function () {
+﻿var customerController = function () {
     this.initialize = function () {
-        loadData();
-        registerEvents();
+
+        $(document).ready(function () {
+            registerEvents();
+        });
     }
 
     function registerEvents() {
@@ -9,21 +11,9 @@
         $('#frmMaintainance').validate({
             errorClass: 'red',
             ignore: [],
-            lang: 'en',
+            lang: 'vi',
             rules: {
-                txtFullName: { required: true },
-                txtUserName: { required: true },
-                txtPassword: {
-                    required: true,
-                    minlength: 6
-                },
-                txtConfirmPassword: {
-                    equalTo: "#txtPassword"
-                },
-                txtEmail: {
-                    required: true,
-                    email: true
-                }
+
             }
         });
 
@@ -44,7 +34,6 @@
 
         $("#btn-create").on('click', function () {
             resetFormMaintainance();
-            initRoleList();
             $('#modal-add-edit').modal('show');
 
         });
@@ -54,7 +43,7 @@
             var that = $(this).data('id');
             $.ajax({
                 type: "GET",
-                url: "/Admin/User/GetById",
+                url: "/Customer/GetById",
                 data: { id: that },
                 dataType: "json",
                 beforeSend: function () {
@@ -62,14 +51,7 @@
                 },
                 success: function (response) {
                     var data = response;
-                    $('#hidId').val(data.id);
-                    $('#txtFullName').val(data.fullName);
-                    $('#txtUserName').val(data.userName);
-                    $('#txtEmail').val(data.email);
-                    $('#txtPhoneNumber').val(data.phoneNumber);
-                    $('#ckStatus').prop('checked', data.status === 1);
-
-                    initRoleList(data.roles);
+                    console.log(data);
 
                     disableFieldEdit(true);
                     $('#modal-add-edit').modal('show');
@@ -158,60 +140,22 @@
             });
         });
 
-    };
-
+    }
 
     function disableFieldEdit(disabled) {
-        $('#txtUserName').prop('disabled', disabled);
-        $('#txtPassword').prop('disabled', disabled);
-        $('#txtConfirmPassword').prop('disabled', disabled);
 
     }
 
     function resetFormMaintainance() {
         disableFieldEdit(false);
         $('#hidId').val('');
-        initRoleList();
         $('#txtFullName').val('');
-        $('#txtUserName').val('');
-        $('#txtPassword').val('');
-        $('#txtConfirmPassword').val('');
-        $('input[name="ckRoles"]').removeAttr('checked');
-        $('#txtEmail').val('');
-        $('#txtPhoneNumber').val('');
-        $('#ckStatus').prop('checked', true);
-    }
-
-    function initRoleList(selectedRoles) {
-        $.ajax({
-            url: "/Admin/Role/GetAll",
-            type: 'GET',
-            dataType: 'json',
-            async: false,
-            success: function (response) {
-                var template = $('#role-template').html();
-                var data = response;
-                var render = '';
-                $.each(data, function (i, item) {
-                    var checked = '';
-                    if (selectedRoles !== undefined && selectedRoles.indexOf(item.name) !== -1)
-                        checked = 'checked';
-                    render += Mustache.render(template,
-                        {
-                            Name: item.name,
-                            Description: item.description,
-                            Checked: checked
-                        });
-                });
-                $('#list-roles').html(render);
-            }
-        });
     }
 
     function loadData(isPageChanged) {
         $.ajax({
             type: "GET",
-            url: "/admin/user/GetAllPaging",
+            url: "/Customer/GetAllPaging",
             data: {
                 categoryId: $('#ddl-category-search').val(),
                 keyword: $('#txt-search-keyword').val(),
@@ -229,11 +173,14 @@
                     $.each(response.results, function (i, item) {
                         render += Mustache.render(template, {
                             FullName: item.fullName,
-                            Id: item.id,
-                            UserName: item.userName,
-                            Avatar: item.avatar === undefined ? '<img src="/admin-side/images/user.png" width=25 />' : '<img src="' + item.avatar + '" width=25 />',
+                            CreatorNote: item.creatorNote,
+                            StaffId: item.staffId,
+                            StaffNote: item.staffNote,
+                            Price: item.price,
+                            Deal: item.deal,
+                            DateSendByCustomer: eagle.dateTimeFormatJson(item.dateSendbycustomer),
+                            Status: eagle.getCustomerStatus(item.status),
                             DateCreated: eagle.dateTimeFormatJson(item.dateCreated),
-                            Status: eagle.getStatus(item.status)
                         });
                     });
                     $("#lbl-total-records").text(response.rowCount);

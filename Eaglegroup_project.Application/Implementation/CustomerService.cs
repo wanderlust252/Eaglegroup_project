@@ -66,7 +66,7 @@ namespace Eaglegroup_project.Application.Implementation
             _unitOfWork.Commit();
         }
 
-        public PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize,int checkR,Guid userGet)
+        public PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize,int checkR,Guid? userGet)
         {
             var query = (checkR==1)?_customerRepository.FindAllAsNoTracking(x=>x.CreatorId.Equals(userGet))
                 :(checkR==2)? _customerRepository.FindAllAsNoTracking(x => x.StaffId.Equals(userGet)) 
@@ -96,7 +96,7 @@ namespace Eaglegroup_project.Application.Implementation
                 CreatorId = x.CreatorId, 
                 CreatorNote = x.CreatorNote,
                 DateSendByCustomer = x.DateSendByCustomer,
-                StaffId = x.StaffId,
+                StaffId = x.StaffId.GetValueOrDefault(),
                 StaffNote = x.StaffNote,
                 DateModified = x.DateModified,
                 Deal = x.Deal,

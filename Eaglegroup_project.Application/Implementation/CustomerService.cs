@@ -43,18 +43,6 @@ namespace Eaglegroup_project.Application.Implementation
             return query.OrderBy(x => x.DateCreated).ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
-        public List<CustomerViewModel> GetByMarketingId(Guid id)
-        {
-            var customer = _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(id)).ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider);
-            return customer.ToList();
-        }
-
-        public List<CustomerViewModel> GetByStaffId(Guid id)
-        {
-            var customer = _customerRepository.FindAllAsNoTracking(x => x.StaffId.Equals(id)).ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider);
-            return customer.ToList();
-        }
-
         public CustomerViewModel GetById(int id)
         {
             var customer = _customerRepository.FindSingle(x => x.Id == id);
@@ -78,9 +66,17 @@ namespace Eaglegroup_project.Application.Implementation
             _unitOfWork.Commit();
         }
 
-        public PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize)
+        public PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize,int checkR,Guid userGet)
         {
-            var query = _customerRepository.FindAllAsNoTracking();
+            var query = (checkR==1)?_customerRepository.FindAllAsNoTracking(x=>x.CreatorId.Equals(userGet))
+                :(checkR==2)? _customerRepository.FindAllAsNoTracking(x => x.StaffId.Equals(userGet)) 
+                : _customerRepository.FindAllAsNoTracking();
+            //neu marketing thi where theo marketing 
+            //checkR 1 la marketing
+
+            //neu sale thi where theo sale 
+            //checkR 2 la sale
+
             if (!string.IsNullOrEmpty(keyword))
                 query = query.Where(x => x.FullName.Contains(keyword)
                 || x.FullName.Contains(keyword));

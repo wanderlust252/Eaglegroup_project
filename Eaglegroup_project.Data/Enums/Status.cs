@@ -6,7 +6,8 @@ namespace Eaglegroup_project.Data.Enums
 {
     public enum Status
     {
-        InActive,
-        Active
+        NullActive,
+        Active,
+        InActive
     }
 }

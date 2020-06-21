@@ -51,7 +51,7 @@ namespace Eaglegroup_project.Application.Implementation
 
         public List<CustomerViewModel> GetByStaffId(Guid id)
         {
-            var customer = _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(id)).ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider);
+            var customer = _customerRepository.FindAllAsNoTracking(x => x.StaffId.Equals(id)).ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider);
             return customer.ToList();
         }
 

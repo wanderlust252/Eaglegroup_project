@@ -18,7 +18,7 @@ namespace Eaglegroup_project.Data.Entities
 
         }
 
-        public Customer(string fullName, string creatorNote, string staffNote, Guid? staffId, DateTime? deal, decimal price, DateTime? dateSendbycustomer)
+        public Customer(string fullName, string creatorNote, string staffNote, Guid? staffId, DateTime? deal, decimal price, DateTime? dateSendbycustomer, Guid creatorId)
         {
 
             this.FullName = fullName;
@@ -28,6 +28,7 @@ namespace Eaglegroup_project.Data.Entities
             this.Price = price;
             this.Deal = deal;
             this.DateSendByCustomer = dateSendbycustomer;
+            this.CreatorId = creatorId;
         }
 
         public string FullName { get; set; }

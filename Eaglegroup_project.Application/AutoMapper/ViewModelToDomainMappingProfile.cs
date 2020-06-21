@@ -25,7 +25,7 @@ namespace Eaglegroup_project.Application.AutoMapper
           .ConstructUsing(c => new Function(c.Name, c.URL, c.ParentId, c.IconCss, c.SortOrder));
 
             CreateMap<CustomerViewModel, Customer>()
-        .ConstructUsing(c => new Customer(c.FullName, c.CreatorNote, c.StaffNote, c.StaffId, c.Deal, c.Price, c.DateSendByCustomer));
+        .ConstructUsing(c => new Customer(c.FullName, c.CreatorNote, c.StaffNote, c.StaffId, c.Deal, c.Price, c.DateSendByCustomer, c.CreatorId));
         }
     }
 }

@@ -118,11 +118,11 @@ namespace Eaglegroup_project
             {
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                options.ExpireTimeSpan = TimeSpan.FromHours(1);
 
-                options.LoginPath = $"/Admin/Account/Login";
-                options.LogoutPath = $"/Admin/Account/Logout";
-                options.AccessDeniedPath = $"/Admin/Account/AccessDenied";
+                options.LoginPath = $"/Account/Login";
+                options.LogoutPath = $"/Account/Logout";
+                options.AccessDeniedPath = $"/Account/AccessDenied";
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

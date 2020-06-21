@@ -136,7 +136,7 @@ namespace Eaglegroup_project.Data.EF.Migrations
 
                     b.Property<decimal>("Price");
 
-                    b.Property<Guid>("StaffId");
+                    b.Property<Guid?>("StaffId");
 
                     b.Property<string>("StaffNote");
 

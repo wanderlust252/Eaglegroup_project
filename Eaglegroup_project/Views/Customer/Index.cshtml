@@ -21,7 +21,7 @@
 
     <div class="title_right">
         <div class="col-md-2 col-sm-2 col-xs-12 form-group pull-right top_search">
-            @if ((await AuthorizationService.AuthorizeAsync(User, "Admin;Marketing", Operations.Create)).Succeeded)
+            @if ((await AuthorizationService.AuthorizeAsync(User, "CUSTOMER", Operations.Create)).Succeeded)
             {
                 <button class="btn btn-success" id="btn-create" type="button">Create</button>
             }
@@ -98,13 +98,13 @@
         <td>{{{Deal}}}</td>
         <td>{{{DateSendByCustomer}}}</td>
         <td>
-            @if ((await AuthorizationService.AuthorizeAsync(User, "Admin;Marketing", Operations.Update)).Succeeded)
+            @if ((await AuthorizationService.AuthorizeAsync(User, "CUSTOMER", Operations.Update)).Succeeded)
             {
                 <a href="#" data-id="{{Id}}" class="btn-edit"><i class="fa fa-pencil-square-o"></i></a>
             }
         </td>
         <td>
-            @if ((await AuthorizationService.AuthorizeAsync(User, "SaleStaff", Operations.Delete)).Succeeded)
+            @if ((await AuthorizationService.AuthorizeAsync(User, "CUSTOMER", Operations.Delete)).Succeeded)
             {
                 <a href="#" data-id="{{Id}}" class="btn-delete"><i class="fa fa-trash-o"></i></a>
 

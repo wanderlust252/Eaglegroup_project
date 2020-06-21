@@ -2,6 +2,7 @@
     this.initialize = function () {
 
         $(document).ready(function () {
+            loadData();
             registerEvents();
         });
     }
@@ -157,7 +158,6 @@
             type: "GET",
             url: "/Customer/GetAllPaging",
             data: {
-                categoryId: $('#ddl-category-search').val(),
                 keyword: $('#txt-search-keyword').val(),
                 page: eagle.configs.pageIndex,
                 pageSize: eagle.configs.pageSize

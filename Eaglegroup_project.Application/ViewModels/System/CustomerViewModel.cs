@@ -8,7 +8,7 @@ namespace Eaglegroup_project.Application.ViewModels.System
 {
     public class CustomerViewModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string FullName { get; set; }
         public string CreatorNote { get; set; }//note cua ng tao
         public Guid CreatorId { get; set; }//id cua nguoi tao

@@ -12,10 +12,11 @@ namespace Eaglegroup_project.Application.Interfaces
         void Add(CustomerViewModel function);
 
         Task<List<CustomerViewModel>> GetAll(string filter);
+        CustomerViewModel GetRandomCustomer(int checkR, Guid userGet);
 
-        PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize,int checkR, Guid? userGet);
+        PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize,int checkR, Guid userGet);
 
-        CustomerViewModel GetById(int id);
+        CustomerViewModel GetById(int id, int checkR, Guid userGet);
 
         void Update(CustomerViewModel function);
 

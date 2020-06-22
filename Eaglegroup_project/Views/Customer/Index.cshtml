@@ -21,10 +21,19 @@
 
     <div class="title_right">
         <div class="col-md-2 col-sm-2 col-xs-12 form-group pull-right top_search">
-            @if ((await AuthorizationService.AuthorizeAsync(User, "CUSTOMER", Operations.Create)).Succeeded)
+            @if (User.IsInRole("SaleStaff"))
+            {
+                <button class="btn btn-success" id="btn-get-customer" type="button">Get Customer</button>
+            }
+            else
             {
                 <button class="btn btn-success" id="btn-create" type="button">Create</button>
             }
+            @*@if ((await AuthorizationService.AuthorizeAsync(User, "CUSTOMER", Operations.Create)).Succeeded)
+        {
+
+        }*@
+
         </div>
         <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
             <div class="input-group">
@@ -51,12 +60,10 @@
                             <th>FullName</th>
                             <th>CreatorNote</th>
                             <th>StaffNote</th>
-                            <th>StaffId</th>
                             <th>Price</th>
                             <th>Deal</th>
                             <th>DateSendByCustomer</th>
-                            <th></th>
-                            <th></th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody id="tbl-content"></tbody>
@@ -92,11 +99,11 @@
     <tr>
         <td>{{FullName}}</td>
         <td>{{CreatorNote}}</td>
-        <td>{{{StaffId}}}</td>
         <td>{{{StaffNote}}}</td>
         <td>{{{Price}}}</td>
         <td>{{{Deal}}}</td>
         <td>{{{DateSendByCustomer}}}</td>
+        <td>{{{Status}}}</td>
         <td>
             @if ((await AuthorizationService.AuthorizeAsync(User, "CUSTOMER", Operations.Update)).Succeeded)
             {
@@ -112,5 +119,7 @@
         </td>
     </tr>
 </script>
+
+@await Html.PartialAsync("_AddEditModal.cshtml")
 
 

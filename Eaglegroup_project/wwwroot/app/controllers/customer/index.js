@@ -24,9 +24,11 @@
                 loadData();
             }
         });
+
         $("#btn-search").on('click', function () {
             loadData();
         });
+
         $("#ddl-show-page").on('change', function () {
             eagle.configs.pageSize = $(this).val();
             eagle.configs.pageIndex = 1;
@@ -36,7 +38,11 @@
         $("#btn-create").on('click', function () {
             resetFormMaintainance();
             $('#modal-add-edit').modal('show');
+        });
 
+        $("#btn-get-customer").on('click', function () {
+            resetFormGetCustomer();
+            $('#modal-get-customer').modal('show');
         });
 
         $('body').on('click', '.btn-edit', function (e) {
@@ -52,7 +58,12 @@
                 },
                 success: function (response) {
                     var data = response;
-                    console.log(data);
+                    $('#hidId').val(data.id);
+                    $('#txtFullName').val(data.fullName);
+                    $('#txtCreatorNote').val(data.creatorNote);
+                    $('#txtPrice').val(data.price);
+                    $('#txtDeal').val(data.deal);
+                    $('#ckStatus').prop('checked', data.status === 1);
 
                     disableFieldEdit(true);
                     $('#modal-add-edit').modal('show');
@@ -141,16 +152,56 @@
             });
         });
 
+        $('body').on('click', '.btn-get-customer', function (e) {
+            e.preventDefault();
+            var that = $(this).data('id');
+            $.ajax({
+                type: "GET",
+                url: "/Customer/GetById",
+                data: { id: that },
+                dataType: "json",
+                beforeSend: function () {
+                    eagle.startLoading();
+                },
+                success: function (response) {
+                    var data = response;
+                    $('#hidId').val(data.id);
+                    $('#txtFullName').val(data.fullName);
+                    $('#txtCreatorNote').val(data.creatorNote);
+                    $('#txtPrice').val(data.price);
+                    $('#txtDeal').val(data.deal);
+                    $('#ckStatus').prop('checked', data.status === 1);
+
+                    disableFieldEdit(true);
+                    $('#modal-add-edit').modal('show');
+                    eagle.stopLoading();
+
+                },
+                error: function () {
+                    eagle.notify('Có lỗi xảy ra', 'error');
+                    eagle.stopLoading();
+                }
+            });
+        });
+
     }
 
     function disableFieldEdit(disabled) {
 
     }
 
+    function disableFieldCustomer(disabled) {
+
+    }
+
     function resetFormMaintainance() {
         disableFieldEdit(false);
         $('#hidId').val('');
-        $('#txtFullName').val('');
+    }
+
+    function resetFormGetCustomer() {
+        disableFieldCustomer(false);
+        $('#hidId').val('');
     }
 
     function loadData(isPageChanged) {
@@ -172,9 +223,9 @@
                 if (response.rowCount > 0) {
                     $.each(response.results, function (i, item) {
                         render += Mustache.render(template, {
+                            Id: item.id,
                             FullName: item.fullName,
                             CreatorNote: item.creatorNote,
-                            StaffId: item.staffId,
                             StaffNote: item.staffNote,
                             Price: item.price,
                             Deal: item.deal,

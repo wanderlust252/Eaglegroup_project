@@ -58,8 +58,38 @@ namespace Eaglegroup_project.Data.EF
                     DateModified = DateTime.Now,
                     Status = Status.Active
                 }, "12345678");
+
+
+
+                await _userManager.CreateAsync(new AppUser()
+                {
+                    UserName = "marketing",
+                    FullName = "Marketing",
+                    Email = "marketing@gmail.com",
+                    CreatedBy = "admin",
+                    DateCreated = DateTime.Now,
+                    DateModified = DateTime.Now,
+                    Status = Status.Active
+                }, "123456");
+
+                await _userManager.CreateAsync(new AppUser()
+                {
+                    UserName = "salestaff",
+                    FullName = "SaleStaff",
+                    Email = "SaleStaff@gmail.com",
+                    CreatedBy = "admin",
+                    DateCreated = DateTime.Now,
+                    DateModified = DateTime.Now,
+                    Status = Status.Active
+                }, "123456");
+
                 var user = await _userManager.FindByNameAsync("admin");
+                var user2 = await _userManager.FindByNameAsync("marketing");
+                var user3 = await _userManager.FindByNameAsync("salestaff");
+
                 await _userManager.AddToRoleAsync(user, "Admin");
+                await _userManager.AddToRoleAsync(user2, "Marketing");
+                await _userManager.AddToRoleAsync(user3, "SaleStaff");
             }
 
             if (_context.Functions.Count() == 0)
@@ -94,8 +124,11 @@ namespace Eaglegroup_project.Data.EF
                     new Function() {Id = "REVENUES",Name = "Báo cáo doanh thu",ParentId = "REPORT",SortOrder = 1,Status = Status.Active,URL = "/admin/report/revenues",IconCss = "fa-bar-chart-o"  },
                     new Function() {Id = "ACCESS",Name = "Báo cáo truy cập",ParentId = "REPORT",SortOrder = 2,Status = Status.Active,URL = "/admin/report/visitor",IconCss = "fa-bar-chart-o"  },
                     new Function() {Id = "READER",Name = "Báo cáo độc giả",ParentId = "REPORT",SortOrder = 3,Status = Status.Active,URL = "/admin/report/reader",IconCss = "fa-bar-chart-o"  },
+                     new Function() {Id = "CUSTOMER",Name = "Khách hàng",ParentId = "SYSTEM",SortOrder = 1,Status = Status.Active,URL = "/customer/index",IconCss = "fa-clone"  },
                 });
+                await _context.SaveChangesAsync();
             }
+
             if (_context.Customer.Count() == 0)
             {
                 var user = await _userManager.FindByNameAsync("admin");
@@ -108,9 +141,21 @@ namespace Eaglegroup_project.Data.EF
                      new Customer(){FullName="Lê Đình 4",CreatorId=user.Id,CreatorNote="Note cái nhẹ3",Price=1000,DateSendByCustomer=DateTime.Now,PhoneNumber="039373309",CreatedBy="admin",DateCreated=DateTime.Now,Status=1},
                      new Customer(){FullName="Lê Đình 5",CreatorId=user.Id,CreatorNote="Note cái nhẹ4",Price=1000,DateSendByCustomer=DateTime.Now,PhoneNumber="039373309",CreatedBy="admin",DateCreated=DateTime.Now,Status=1},
                 });
-
             }
-        await _context.SaveChangesAsync();
+
+            if (!_context.Permissions.Any())
+            {
+                var roles = _context.AppRoles.ToList();
+
+                _context.Permissions.AddRange(new List<Permission>()
+                    {
+                        new Permission() { FunctionId = "SYSTEM", RoleId = roles[1].Id, CanRead = true, CanCreate = false, CanUpdate = true, CanDelete = false},
+                        new Permission() { FunctionId = "CUSTOMER", RoleId = roles[1].Id, CanRead = true, CanCreate = false, CanUpdate = true, CanDelete = false},
+                        new Permission() { FunctionId = "SYSTEM", RoleId = roles[2].Id, CanRead = true, CanCreate = true, CanUpdate = true, CanDelete = false},
+                        new Permission() { FunctionId = "CUSTOMER", RoleId = roles[2].Id, CanRead = true, CanCreate = true, CanUpdate = true, CanDelete = false}
+                    });
+            }
+            await _context.SaveChangesAsync();
         }
     }
 }

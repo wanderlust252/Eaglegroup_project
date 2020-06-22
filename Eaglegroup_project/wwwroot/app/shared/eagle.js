@@ -114,10 +114,10 @@
     },
     getCustomerStatus: function (status) {
         if (status == 1) {
-            return '<span class="badge bg-green">Đã chốt</span>';
+            return '<span class="badge badge-primary">Đã chốt</span>';
         }
         else if (status == 2) {
-            return '<span class="badge bg-yellow">Chưa chốt</span>';
+            return '<span class="badge badge-secondary">Chưa chốt</span>';
         } else if (status == 3) {
             return '<span class="badge bg-red"></span>';
         }          

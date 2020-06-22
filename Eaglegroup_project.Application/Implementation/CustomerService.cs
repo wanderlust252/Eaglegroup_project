@@ -43,16 +43,19 @@ namespace Eaglegroup_project.Application.Implementation
             return query.OrderBy(x => x.DateCreated).ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
-        public CustomerViewModel GetById(int id)
+        public CustomerViewModel GetById(int id, int checkR, Guid userGet)
         {
+            var query = (checkR == 1) ? _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(userGet))
+                : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.StaffId.Equals(userGet))
+                : _customerRepository.FindAllAsNoTracking();
             var customer = _customerRepository.FindSingle(x => x.Id == id);
             return _mapper.Map<Customer, CustomerViewModel>(customer);
         }
 
         public void Update(CustomerViewModel customerVm)
         {
-            var customerDb = _customerRepository.FindById(customerVm.Id);
-            var customer = _mapper.Map<CustomerViewModel,Customer>(customerVm);
+            var customerDb = _customerRepository.FindById(customerVm.Id.Value);
+            var customer = _mapper.Map<CustomerViewModel, Customer>(customerVm);
             _customerRepository.Update(customer);
         }
 
@@ -66,10 +69,10 @@ namespace Eaglegroup_project.Application.Implementation
             _unitOfWork.Commit();
         }
 
-        public PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize,int checkR,Guid? userGet)
+        public PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize, int checkR, Guid userGet)
         {
-            var query = (checkR == 1)?_customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(userGet))
-                :(checkR == 2)? _customerRepository.FindAllAsNoTracking(x => x.StaffId.Equals(userGet)) 
+            var query = (checkR == 1) ? _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(userGet))
+                : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.StaffId.Equals(userGet))
                 : _customerRepository.FindAllAsNoTracking();
             //neu marketing thi where theo marketing 
             //checkR 1 la marketing
@@ -93,7 +96,7 @@ namespace Eaglegroup_project.Application.Implementation
                 Status = x.Status,
                 DateCreated = x.DateCreated,
                 CreatedBy = x.CreatedBy,
-                CreatorId = x.CreatorId, 
+                CreatorId = x.CreatorId,
                 CreatorNote = x.CreatorNote,
                 DateSendByCustomer = x.DateSendByCustomer,
                 StaffId = x.StaffId.GetValueOrDefault(),
@@ -113,6 +116,20 @@ namespace Eaglegroup_project.Application.Implementation
             };
 
             return paginationSet;
+        }
+
+        public CustomerViewModel GetRandomCustomer(int checkR, Guid userId)
+        {
+            if (checkR == 2)
+            {
+                var query = _customerRepository.FindAllAsNoTracking();
+                var randomCustomer = query.Where(x => x.StaffId == null).FirstOrDefault();
+                randomCustomer.StaffId = userId;
+                _customerRepository.Update(randomCustomer);
+                return _mapper.Map<Customer, CustomerViewModel>(randomCustomer);
+            }
+            
+            return null;
         }
     }
 }

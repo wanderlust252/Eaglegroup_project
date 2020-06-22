@@ -17,10 +17,15 @@ namespace Eaglegroup_project.Controllers
     public class CustomerController : Controller
     {
         ICustomerService _customerService;
+        private int _checkR;
+        private Guid _userId;
 
         public CustomerController(ICustomerService customerService)
-        {
+        {           
             _customerService = customerService;
+
+            _userId = User.GetUserId();
+            _checkR = RoleCheck(User.GetRoles().Split(";"));
         }
 
         public IActionResult Index()
@@ -31,32 +36,22 @@ namespace Eaglegroup_project.Controllers
         [HttpGet]
         public IActionResult GetById(int id)
         {
-            var listRole = User.GetRoles().Split(";");
-            var userId = User.GetUserId();
-            int checkR = RoleCheck(listRole);
+    
 
-            var model = _customerService.GetById(id, checkR, userId);
+            var model = _customerService.GetById(id, _checkR, _userId);
             return new OkObjectResult(model);
         }
 
         [HttpGet]
         public IActionResult GetRandomCustomer()
         {
-            var listRole = User.GetRoles().Split(";");
-            var userId = User.GetUserId();
-            int checkR = RoleCheck(listRole);
-
-            var model = _customerService.GetRandomCustomer(checkR, userId);
+            var model = _customerService.GetRandomCustomer(_checkR, _userId);
             return new OkObjectResult(model);
         }
 
         public IActionResult GetAllPaging(string keyword, int page, int pageSize)
         {
-            var listRole = User.GetRoles().Split(";");
-            var userId = User.GetUserId();
-            int checkR = RoleCheck(listRole);  
-
-            var model = _customerService.GetAllPaging(keyword, page, pageSize, checkR, userId);
+            var model = _customerService.GetAllPaging(keyword, page, pageSize, _checkR, _userId);
             return new OkObjectResult(model);
         }
 
@@ -78,11 +73,11 @@ namespace Eaglegroup_project.Controllers
             {
                 if (cusVm.Id == null)
                 {
-                    _customerService.Add(cusVm);
+                    _customerService.Add(cusVm, _checkR, _userId);
                 }
                 else
                 {
-                    _customerService.Update(cusVm);
+                    _customerService.Update(cusVm, _checkR, _userId);
                 }
             }
             return new OkObjectResult(cusVm);

@@ -154,10 +154,9 @@
 
         $('body').on('click', '.btn-get-customer', function (e) {
             e.preventDefault();
-            var that = $(this).data('id');
             $.ajax({
                 type: "GET",
-                url: "/Customer/GetById",
+                url: "/Customer/GetRandomCustomer",
                 data: { id: that },
                 dataType: "json",
                 beforeSend: function () {
@@ -172,7 +171,7 @@
                     $('#txtDeal').val(data.deal);
                     $('#ckStatus').prop('checked', data.status === 1);
 
-                    disableFieldEdit(true);
+                    disableFieldCustomer(true);
                     $('#modal-add-edit').modal('show');
                     eagle.stopLoading();
 

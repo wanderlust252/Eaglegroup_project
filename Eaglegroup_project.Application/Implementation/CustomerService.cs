@@ -29,10 +29,14 @@ namespace Eaglegroup_project.Application.Implementation
             _mapper = mapper;
         }
 
-        public void Add(CustomerViewModel customerVm)
+        public void Add(CustomerViewModel customerVm, int checkR, Guid userAdd)
         {
-            var customer = _mapper.Map<Customer>(customerVm);
-            _customerRepository.Add(customer);
+            if (checkR == 0 || checkR == 1)
+            {
+                var customer = _mapper.Map<Customer>(customerVm);
+                _customerRepository.Add(customer);
+            }
+
         }
 
         public Task<List<CustomerViewModel>> GetAll(string filter)
@@ -48,20 +52,35 @@ namespace Eaglegroup_project.Application.Implementation
             var query = (checkR == 1) ? _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(userGet))
                 : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.StaffId.Equals(userGet))
                 : _customerRepository.FindAllAsNoTracking();
+
             var customer = _customerRepository.FindSingle(x => x.Id == id);
             return _mapper.Map<Customer, CustomerViewModel>(customer);
         }
 
-        public void Update(CustomerViewModel customerVm)
+        public void Update(CustomerViewModel customerVm, int checkR, Guid userUpdate)
         {
-            var customerDb = _customerRepository.FindById(customerVm.Id.Value);
-            var customer = _mapper.Map<CustomerViewModel, Customer>(customerVm);
-            _customerRepository.Update(customer);
+            if (checkR == 2)
+            {
+                var customerDb = _customerRepository.FindAllAsNoTracking(x => x.StaffId.Equals(userUpdate) && x.Id == customerVm.Id.Value).FirstOrDefault();
+                customerDb.CreatorNote = customerVm.CreatorNote;
+                customerDb.Deal = customerVm.Deal;
+                customerDb.DateSendByCustomer = customerVm.DateSendByCustomer;
+                _customerRepository.Update(customerDb);
+            }
+            else
+            {
+                var customerDb = _customerRepository.FindById(customerVm.Id.Value);
+                var customer = _mapper.Map<CustomerViewModel, Customer>(customerVm);
+                _customerRepository.Update(customer);
+            }
         }
 
-        public void Delete(int id)
+        public void Delete(int id, int checkR, Guid userDelete)
         {
-            _customerRepository.Remove(id);
+            if (checkR == 0)
+            {
+                _customerRepository.Remove(id);
+            }
         }
 
         public void Save()
@@ -128,7 +147,7 @@ namespace Eaglegroup_project.Application.Implementation
                 _customerRepository.Update(randomCustomer);
                 return _mapper.Map<Customer, CustomerViewModel>(randomCustomer);
             }
-            
+
             return null;
         }
     }

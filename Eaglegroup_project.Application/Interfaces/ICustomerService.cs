@@ -9,7 +9,7 @@ namespace Eaglegroup_project.Application.Interfaces
 {
     public interface ICustomerService
     {
-        void Add(CustomerViewModel function);
+        void Add(CustomerViewModel function, int checkR, Guid userAdd);
 
         Task<List<CustomerViewModel>> GetAll(string filter);
         CustomerViewModel GetRandomCustomer(int checkR, Guid userGet);
@@ -18,9 +18,9 @@ namespace Eaglegroup_project.Application.Interfaces
 
         CustomerViewModel GetById(int id, int checkR, Guid userGet);
 
-        void Update(CustomerViewModel function);
+        void Update(CustomerViewModel function, int checkR, Guid userUpdate);
 
-        void Delete(int id);
+        void Delete(int id, int checkR, Guid userDelete);
 
         void Save();
 

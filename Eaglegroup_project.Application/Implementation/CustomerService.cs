@@ -137,13 +137,14 @@ namespace Eaglegroup_project.Application.Implementation
             return paginationSet;
         }
 
-        public CustomerViewModel GetRandomCustomer(int checkR, Guid userId)
+        public CustomerViewModel GetCustomerForSale(int checkR, Guid userId)
         {
             if (checkR == 2)
             {
                 var query = _customerRepository.FindAllAsNoTracking();
                 var randomCustomer = query.Where(x => x.StaffId == null).FirstOrDefault();
-                randomCustomer.StaffId = userId;
+                randomCustomer.StaffId = userId;//chua duoc gan' luon
+                randomCustomer.Status = 3;//pending
                 _customerRepository.Update(randomCustomer);
                 return _mapper.Map<Customer, CustomerViewModel>(randomCustomer);
             }

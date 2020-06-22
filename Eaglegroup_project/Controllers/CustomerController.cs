@@ -43,9 +43,9 @@ namespace Eaglegroup_project.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetRandomCustomer()
+        public IActionResult GetCustomerForSale()
         {
-            var model = _customerService.GetRandomCustomer(_checkR, _userId);
+            var model = _customerService.GetCustomerForSale(_checkR, _userId);
             return new OkObjectResult(model);
         }
 

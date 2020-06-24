@@ -146,6 +146,8 @@ namespace Eaglegroup_project.Application.Implementation
                 randomCustomer.StaffId = userId;//chua duoc gan' luon
                 randomCustomer.Status = 3;//pending
                 _customerRepository.Update(randomCustomer);
+                Save();
+                randomCustomer.FullName = string.Empty;
                 return _mapper.Map<Customer, CustomerViewModel>(randomCustomer);
             }
 

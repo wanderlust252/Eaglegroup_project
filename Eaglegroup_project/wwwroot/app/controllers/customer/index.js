@@ -96,7 +96,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/Admin/User/SaveEntity",
+                    url: "/Customer/SaveEntity",
                     data: {
                         Id: id,
                         FullName: fullName,
@@ -112,7 +112,7 @@
                         eagle.startLoading();
                     },
                     success: function () {
-                        eagle.notify('Save user succesful', 'success');
+                        eagle.notify('Lưu thành công', 'success');
                         $('#modal-add-edit').modal('hide');
                         resetFormMaintainance();
 
@@ -120,7 +120,7 @@
                         loadData(true);
                     },
                     error: function () {
-                        eagle.notify('Has an error', 'error');
+                        eagle.notify('Có lỗi xảy ra', 'error');
                         eagle.stopLoading();
                     }
                 });
@@ -131,33 +131,32 @@
         $('body').on('click', '.btn-delete', function (e) {
             e.preventDefault();
             var that = $(this).data('id');
-            eagle.confirm('Are you sure to delete?', function () {
+            eagle.confirm('Xóa khách hàng này?', function () {
                 $.ajax({
                     type: "POST",
-                    url: "/Admin/User/Delete",
+                    url: "/Customer/Delete",
                     data: { id: that },
                     beforeSend: function () {
                         eagle.startLoading();
                     },
                     success: function () {
-                        eagle.notify('Delete successful', 'success');
+                        eagle.notify('Xóa bản ghi thành công', 'success');
                         eagle.stopLoading();
                         loadData();
                     },
                     error: function () {
-                        eagle.notify('Has an error', 'error');
+                        eagle.notify('Có lỗi xảy ra', 'error');
                         eagle.stopLoading();
                     }
                 });
             });
         });
 
-        $('body').on('click', '.btn-get-customer', function (e) {
+        $('body').on('click', '#btn-get-customer', function (e) {
             e.preventDefault();
             $.ajax({
                 type: "GET",
-                url: "/Customer/GetRandomCustomer",
-                data: { id: that },
+                url: "/Customer/GetCustomerForSale",
                 dataType: "json",
                 beforeSend: function () {
                     eagle.startLoading();
@@ -165,11 +164,11 @@
                 success: function (response) {
                     var data = response;
                     $('#hidId').val(data.id);
+                    $('#txtPhoneNumber').val(data.phoneNumber);
                     $('#txtFullName').val(data.fullName);
                     $('#txtCreatorNote').val(data.creatorNote);
                     $('#txtPrice').val(data.price);
                     $('#txtDeal').val(data.deal);
-                    $('#ckStatus').prop('checked', data.status === 1);
 
                     disableFieldCustomer(true);
                     $('#modal-add-edit').modal('show');

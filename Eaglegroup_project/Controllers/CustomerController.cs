@@ -9,6 +9,7 @@ using Eaglegroup_project.Extensions;
 using Eaglegroup_project.Utilities.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Eaglegroup_project.Controllers
@@ -22,8 +23,12 @@ namespace Eaglegroup_project.Controllers
 
         public CustomerController(ICustomerService customerService)
         {           
-            _customerService = customerService;
+            _customerService = customerService;    
+        }
 
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            //Get user id   
             _userId = User.GetUserId();
             _checkR = RoleCheck(User.GetRoles().Split(";"));
         }
@@ -79,6 +84,7 @@ namespace Eaglegroup_project.Controllers
                 {
                     _customerService.Update(cusVm, _checkR, _userId);
                 }
+                _customerService.Save();
             }
             return new OkObjectResult(cusVm);
         }

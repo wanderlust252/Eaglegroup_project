@@ -89,6 +89,14 @@ namespace Eaglegroup_project.Controllers
             return new OkObjectResult(cusVm);
         }
 
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            _customerService.Delete(id, _checkR, _userId);
+
+            return new OkObjectResult(id);
+        }
+
         [NonAction]
         public int RoleCheck(string[] listRole)
         {
@@ -102,6 +110,8 @@ namespace Eaglegroup_project.Controllers
             }
             return 0;
         }
+
+     
 
 
     }

@@ -81,18 +81,14 @@
             if ($('#frmMaintainance').valid()) {
                 e.preventDefault();
 
-                var id = $('#hidId').val();
-                var fullName = $('#txtFullName').val();
-                var userName = $('#txtUserName').val();
-                var password = $('#txtPassword').val();
-                var email = $('#txtEmail').val();
-                var phoneNumber = $('#txtPhoneNumber').val();
-                var roles = [];
-                $.each($('input[name="ckRoles"]'), function (i, item) {
-                    if ($(item).prop('checked') === true)
-                        roles.push($(item).prop('value'));
-                });
-                var status = $('#ckStatus').prop('checked') === true ? 1 : 0;
+                let id = $('#hidId').val();
+                let fullName = $('#txtFullName').val();
+                let phoneNumber = $('#txtPhoneNumber').val();
+                let creatorNote = $('#txtCreatorNote').val();
+                let staffNote = $('#txtStaffNote').val();
+                let price = $('#txtPrice').val();
+                let deal = $('#txtDeal').val();
+                let dateSend = $('#txtDateSendByCustomer').val();
 
                 $.ajax({
                     type: "POST",
@@ -100,12 +96,12 @@
                     data: {
                         Id: id,
                         FullName: fullName,
-                        UserName: userName,
-                        Password: password,
-                        Email: email,
                         PhoneNumber: phoneNumber,
-                        Status: status,
-                        Roles: roles
+                        CreatorNote: creatorNote,
+                        StaffNote: staffNote,
+                        Deal: deal,
+                        Price: price,
+                        DateSendByCustomer: dateSend
                     },
                     dataType: "json",
                     beforeSend: function () {

@@ -107,24 +107,48 @@ namespace Eaglegroup_project.Application.Implementation
             query = query.Skip((page - 1) * pageSize)
                .Take(pageSize);
 
-            var data = query.Select(x => new CustomerViewModel()
+            var data = new List<CustomerViewModel>();
+            if (checkR == 2)
             {
-                FullName = x.FullName,
-                Id = x.Id,
-                PhoneNumber = x.PhoneNumber,
-                Status = x.Status,
-                DateCreated = x.DateCreated,
-                CreatedBy = x.CreatedBy,
-                CreatorId = x.CreatorId,
-                CreatorNote = x.CreatorNote,
-                DateSendByCustomer = x.DateSendByCustomer,
-                StaffId = x.StaffId.GetValueOrDefault(),
-                StaffNote = x.StaffNote,
-                DateModified = x.DateModified,
-                Deal = x.Deal,
-                ModifiedBy = x.ModifiedBy,
-                Price = x.Price
-            }).ToList();
+                data = query.Select(x => new CustomerViewModel()
+                {
+                    Id = x.Id,
+                    PhoneNumber = x.PhoneNumber,
+                    Status = x.Status,
+                    DateCreated = x.DateCreated,
+                    CreatedBy = x.CreatedBy,
+                    CreatorId = x.CreatorId,
+                    CreatorNote = x.CreatorNote,
+                    DateSendByCustomer = x.DateSendByCustomer,
+                    StaffId = x.StaffId.GetValueOrDefault(),
+                    StaffNote = x.StaffNote,
+                    DateModified = x.DateModified,
+                    Deal = x.Deal,
+                    ModifiedBy = x.ModifiedBy,
+                    Price = x.Price
+                }).ToList();
+            }
+            else
+            {
+                data = query.Select(x => new CustomerViewModel()
+                {
+                    FullName = x.FullName,
+                    Id = x.Id,
+                    PhoneNumber = x.PhoneNumber,
+                    Status = x.Status,
+                    DateCreated = x.DateCreated,
+                    CreatedBy = x.CreatedBy,
+                    CreatorId = x.CreatorId,
+                    CreatorNote = x.CreatorNote,
+                    DateSendByCustomer = x.DateSendByCustomer,
+                    StaffId = x.StaffId.GetValueOrDefault(),
+                    StaffNote = x.StaffNote,
+                    DateModified = x.DateModified,
+                    Deal = x.Deal,
+                    ModifiedBy = x.ModifiedBy,
+                    Price = x.Price
+                }).ToList();
+            }            
 
             var paginationSet = new PagedResult<CustomerViewModel>()
             {

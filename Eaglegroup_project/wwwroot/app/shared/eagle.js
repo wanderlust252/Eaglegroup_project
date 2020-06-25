@@ -78,7 +78,7 @@
     dateTimeFormatJson: function (datetime) {
         if (datetime == null || datetime == '')
             return '';
-        var newdate = new Date(parseInt(datetime.substr(6)));
+        var newdate = new Date(datetime);
         var month = newdate.getMonth() + 1;
         var day = newdate.getDate();
         var year = newdate.getFullYear();
@@ -96,6 +96,11 @@
         if (ss < 10)
             ss = "0" + ss;
         return day + "/" + month + "/" + year + " " + hh + ":" + mm + ":" + ss;
+    },
+    dateTimeFormat: function (datetime) {
+        var dateParts = datetime.split("/");
+         date = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
+        return (date.getMonth() + 1) + "-" + date.getDate() + "-" + date.getFullYear();
     },
     startLoading: function () {
         if ($('.dv-loading').length > 0)

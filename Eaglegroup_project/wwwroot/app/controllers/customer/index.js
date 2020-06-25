@@ -18,6 +18,11 @@
             }
         });
 
+        $('#txtDateSendByCustomer, #txtDeal').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+        });
+
         $('#txt-search-keyword').keypress(function (e) {
             if (e.which === 13) {
                 e.preventDefault();
@@ -40,9 +45,8 @@
             $('#modal-add-edit').modal('show');
         });
 
-        $("#btn-get-customer").on('click', function () {
-            resetFormGetCustomer();
-            $('#modal-get-customer').modal('show');
+        $("#modal-add-edit").on("hidden.bs.modal", function () {
+            location.reload();
         });
 
         $('body').on('click', '.btn-edit', function (e) {
@@ -87,8 +91,10 @@
                 let creatorNote = $('#txtCreatorNote').val();
                 let staffNote = $('#txtStaffNote').val();
                 let price = $('#txtPrice').val();
-                let deal = $('#txtDeal').val();
-                let dateSend = $('#txtDateSendByCustomer').val();
+                let deal = eagle.dateTimeFormat($('#txtDeal').val());
+                let dateSend = eagle.dateTimeFormat($('#txtDateSendByCustomer').val());
+                let staffId = $('#txtStaffId').val();
+                let creatorId = $('#txtCreatorId').val();
 
                 $.ajax({
                     type: "POST",
@@ -101,7 +107,9 @@
                         StaffNote: staffNote,
                         Deal: deal,
                         Price: price,
-                        DateSendByCustomer: dateSend
+                        DateSendByCustomer: dateSend,
+                        CreatorId: creatorId,
+                        StaffId: staffId
                     },
                     dataType: "json",
                     beforeSend: function () {
@@ -165,8 +173,11 @@
                     $('#txtCreatorNote').val(data.creatorNote);
                     $('#txtPrice').val(data.price);
                     $('#txtDeal').val(data.deal);
+                    $('#txtStaffId').val(data.staffId);
+                    $('#txtCreatorId').val(data.creatorId)
+                    $('#txtDateCreated').val(eagle.dateTimeFormatJson(data.dateCreated)),
 
-                    disableFieldCustomer(true);
+                        disableFieldCustomer(true);
                     $('#modal-add-edit').modal('show');
                     eagle.stopLoading();
 
@@ -177,6 +188,8 @@
                 }
             });
         });
+
+
 
     }
 
@@ -222,10 +235,10 @@
                             CreatorNote: item.creatorNote,
                             StaffNote: item.staffNote,
                             Price: item.price,
-                            Deal: item.deal,
-                            DateSendByCustomer: eagle.dateTimeFormatJson(item.dateSendbycustomer),
+                            Deal: eagle.dateTimeFormatJson(item.deal),
+                            DateSendByCustomer: eagle.dateTimeFormatJson(item.dateSendByCustomer),
                             Status: eagle.getCustomerStatus(item.status),
-                            DateCreated: eagle.dateTimeFormatJson(item.dateCreated),
+
                         });
                     });
                     $("#lbl-total-records").text(response.rowCount);

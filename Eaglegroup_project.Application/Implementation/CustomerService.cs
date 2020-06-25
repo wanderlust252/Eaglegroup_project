@@ -62,7 +62,7 @@ namespace Eaglegroup_project.Application.Implementation
             if (checkR == 2)
             {
                 var customerDb = _customerRepository.FindAllAsNoTracking(x => x.StaffId.Equals(userUpdate) && x.Id == customerVm.Id.Value).FirstOrDefault();
-                customerDb.CreatorNote = customerVm.CreatorNote;
+                customerDb.StaffNote = customerVm.StaffNote;
                 customerDb.Deal = customerVm.Deal;
                 customerDb.DateSendByCustomer = customerVm.DateSendByCustomer;
                 _customerRepository.Update(customerDb);

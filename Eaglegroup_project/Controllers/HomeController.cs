@@ -14,11 +14,12 @@ namespace Eaglegroup_project.Controllers
 
     public class HomeController : Controller
     {
-        [Authorize]
+        [AllowAnonymous]
         public IActionResult Index()
         {
             //var email = User.GetSpecificClaim("FullName");
-            return View();
+            return new RedirectResult("/Admin/Account");
+            //return View();
         }
 
         public IActionResult Privacy()

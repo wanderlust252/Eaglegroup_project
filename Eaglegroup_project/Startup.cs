@@ -153,12 +153,13 @@ namespace Eaglegroup_project
                 //routes.MapRoute(
                 //    name: "default",
                 //    template: "{controller=Home}/{action=Index}/{id?}");
+               
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Login}/{action=Index}/{Id?}");
-
+                    template: "{controller=Home}/{action=Index}");
                 routes.MapRoute(name: "areaRoute",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
             });
         }
     }

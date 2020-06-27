@@ -66,28 +66,28 @@ namespace Eaglegroup_project.Controllers
             return new OkObjectResult(model);
         }
 
-        [HttpPost]
-        public IActionResult SaveEntity(CustomerViewModel cusVm)
-        {
-            if (!ModelState.IsValid)
-            {
-                IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new BadRequestObjectResult(allErrors);
-            }
-            else
-            {
-                if (cusVm.Id == null)
-                {
-                    _customerService.Add(cusVm, _checkR, _userId);
-                }
-                else
-                {
-                    _customerService.Update(cusVm, _checkR, _userId);
-                }
-                _customerService.Save();
-            }
-            return new OkObjectResult(cusVm);
-        }
+        //[HttpPost]
+        //public IActionResult SaveEntity(CustomerViewModel cusVm)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+        //        return new BadRequestObjectResult(allErrors);
+        //    }
+        //    else
+        //    {
+        //        if (cusVm.Id == null)
+        //        {
+        //            _customerService.Add(cusVm, _checkR, _userId);
+        //        }
+        //        else
+        //        {
+        //            _customerService.Update(cusVm, _checkR, _userId);
+        //        }
+        //        _customerService.Save();
+        //    }
+        //    return new OkObjectResult(cusVm);
+        //}
 
         [HttpPost]
         public IActionResult Delete(int id)

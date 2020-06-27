@@ -98,7 +98,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/Customer/SaveEntity",
+                    url: "Customer/SaveEntity",
                     data: {
                         Id: id,
                         FullName: fullName,

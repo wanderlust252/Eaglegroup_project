@@ -81,7 +81,7 @@ namespace Eaglegroup_project.Areas.Admin.Controllers
                 if (cusVm.Id == null || cusVm.Id==0)
                 {
                     cusVm.CreatedBy = User.Identity.Name;
-                    //cusVm.CreatorId=User.Identity.
+                    cusVm.CreatorId = Guid.Parse(User.GetSpecificClaim("UserId"));
                     cusVm.DateCreated = DateTime.Now;
                     cusVm.Status = 1;
                     _customerService.Add(cusVm, _checkR, _userId);

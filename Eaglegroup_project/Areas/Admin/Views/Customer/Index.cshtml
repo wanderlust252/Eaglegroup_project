@@ -2,10 +2,11 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 @section Scripts{
-    
+
     <script src="~/app/controllers/customer/index.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
     <script>
@@ -23,8 +24,18 @@
         <h3>Customer</h3>
     </div>
 
+    <div class="row">
+        <div class="col-md-5 col-sm-5 form-group">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-success" id="btn-advanced-filter" type="button">Advanced Filter</button>
+                </span>
+            </div>
+        </div>
+    </div>
     <div class="title_right">
-        <div class="col-md-2 col-sm-2 col-xs-12 form-group pull-right top_search">
+
+        <div class="col-md-1 col-sm-1 form-group pull-right top_search">
             @if (User.IsInRole("SaleStaff"))
             {
                 <button class="btn btn-success" id="btn-get-customer" type="button">Get Customer</button>
@@ -37,16 +48,16 @@
                 {
 
                 }*@
-
         </div>
-        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+
+        <div class="col-md-5 col-sm-5 form-group pull-right top_search">
             <div class="input-group">
                 <input type="text" id="txt-search-keyword" class="form-control" placeholder="Search...">
+
                 <span class="input-group-btn">
                     <button class="btn btn-default" id="btn-search" type="button">Search!</button>
                 </span>
             </div>
-
         </div>
 
     </div>
@@ -114,19 +125,24 @@
         <td>{{{Deal}}}</td>
         <td>{{{DateSendByCustomer}}}</td>
         <td>{{{Status}}}</td>
-        <td>
-            @if ((await AuthorizationService.AuthorizeAsync(User, "CUSTOMER", Operations.Update)).Succeeded)
-            {
+
+        @if ((await AuthorizationService.AuthorizeAsync(User, "CUSTOMER", Operations.Update)).Succeeded)
+        {
+            <td>
                 <a href="#" data-id="{{Id}}" class="btn-edit"><i class="fa fa-pencil-square-o"></i></a>
-            }
-        </td>
-        <td>
-            @if ((await AuthorizationService.AuthorizeAsync(User, "CUSTOMER", Operations.Delete)).Succeeded)
-            {
+
+            </td>
+        }
+        @if ((await AuthorizationService.AuthorizeAsync(User, "CUSTOMER", Operations.Delete)).Succeeded)
+        {
+            <td>
+
                 <a href="#" data-id="{{Id}}" class="btn-delete"><i class="fa fa-trash-o"></i></a>
 
-            }
-        </td>
+
+            </td>
+
+        }
     </tr>
 </script>
 

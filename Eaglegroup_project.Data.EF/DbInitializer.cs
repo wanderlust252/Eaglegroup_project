@@ -96,13 +96,13 @@ namespace Eaglegroup_project.Data.EF
             {
                 _context.Functions.AddRange(new List<Function>()
                 {
-                    new Function() {Id = "SYSTEM", Name = "Hệ thống",ParentId = null,SortOrder = 1,Status = Status.InActive,URL = "/",IconCss = "fa-desktop"  },
-                    new Function() {Id = "ROLE", Name = "Nhóm",ParentId = "SYSTEM",SortOrder = 1,Status = Status.InActive,URL = "/admin/role/index",IconCss = "fa-home"  },
-                    new Function() {Id = "FUNCTION", Name = "Chức năng",ParentId = "SYSTEM",SortOrder = 2,Status = Status.InActive,URL = "/admin/function/index",IconCss = "fa-home"  },
-                    new Function() {Id = "USER", Name = "Người dùng",ParentId = "SYSTEM",SortOrder =3,Status = Status.Active,URL = "/admin/user/index",IconCss = "fa-home"  },
-                    new Function() {Id = "ACTIVITY", Name = "Nhật ký",ParentId = "SYSTEM",SortOrder = 4,Status = Status.InActive,URL = "/admin/activity/index",IconCss = "fa-home"  },
-                    new Function() {Id = "ERROR", Name = "Lỗi",ParentId = "SYSTEM",SortOrder = 5,Status = Status.InActive,URL = "/admin/error/index",IconCss = "fa-home"  },
-                    new Function() {Id = "SETTING", Name = "Cấu hình",ParentId = "SYSTEM",SortOrder = 6,Status = Status.InActive,URL = "/admin/setting/index",IconCss = "fa-home"  },
+                    new Function() {Id = "SYSTEM", Name = "Hệ thống", ParentId = null, SortOrder = 1, Status = Status.Active, URL = "/",IconCss = "fa-desktop"  },
+                    new Function() {Id = "ROLE", Name = "Nhóm", ParentId = "SYSTEM", SortOrder = 1, Status = Status.InActive, URL = "/admin/role/index",IconCss = "fa-home"  },
+                    new Function() {Id = "FUNCTION", Name = "Chức năng", ParentId = "SYSTEM", SortOrder = 2, Status = Status.InActive,URL = "/admin/function/index",IconCss = "fa-home"  },
+                    new Function() {Id = "USER", Name = "Người dùng", ParentId = "SYSTEM", SortOrder =3, Status = Status.Active,URL = "/admin/user/index",IconCss = "fa-home"  },
+                    new Function() {Id = "ACTIVITY", Name = "Nhật ký", ParentId = "SYSTEM", SortOrder = 4,Status = Status.InActive,URL = "/admin/activity/index",IconCss = "fa-home"  },
+                    new Function() {Id = "ERROR", Name = "Lỗi", ParentId = "SYSTEM", SortOrder = 5, Status = Status.InActive,URL = "/admin/error/index",IconCss = "fa-home"  },
+                    new Function() {Id = "SETTING", Name = "Cấu hình", ParentId = "SYSTEM",SortOrder = 6,Status = Status.InActive,URL = "/admin/setting/index",IconCss = "fa-home"  },
                     //new Function() {Id = "PRODUCT",Name = "Sản phẩm",ParentId = null,SorOrder = 2,Status = Status.InActive,URL = "/",IconCss = "fa-chevron-down"  },
                     //new Function() {Id = "PRODUCT_CATEGORY",Name = "Danh mục",ParentId = "PRODUCT",SorOrder =1,Status = Status.InActive,URL = "/admin/productcategory/index",IconCss = "fa-chevron-down"  },
                     //new Function() {Id = "PRODUCT_LIST",Name = "Sản phẩm",ParentId = "PRODUCT",SorOrder = 2,Status = Status.InActive,URL = "/admin/product/index",IconCss = "fa-chevron-down"  },

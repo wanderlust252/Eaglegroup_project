@@ -54,7 +54,7 @@
             var that = $(this).data('id');
             $.ajax({
                 type: "GET",
-                url: "/Customer/GetById",
+                url: "GetById",
                 data: { id: that },
                 dataType: "json",
                 beforeSend: function () {
@@ -98,7 +98,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "Customer/SaveEntity",
+                    url: "SaveEntity",
                     data: {
                         Id: id,
                         FullName: fullName,
@@ -139,7 +139,7 @@
             eagle.confirm('Xóa khách hàng này?', function () {
                 $.ajax({
                     type: "POST",
-                    url: "Customer/Delete",
+                    url: "Delete",
                     data: { id: that },
                     beforeSend: function () {
                         eagle.startLoading();
@@ -161,7 +161,7 @@
             e.preventDefault();
             $.ajax({
                 type: "GET",
-                url: "Customer/GetCustomerForSale",
+                url: "GetCustomerForSale",
                 dataType: "json",
                 beforeSend: function () {
                     eagle.startLoading();
@@ -215,7 +215,7 @@
     function loadData(isPageChanged) {
         $.ajax({
             type: "GET",
-            url: "Customer/GetAllPaging",
+            url: "GetAllPaging",
             data: {
                 keyword: $('#txt-search-keyword').val(),
                 page: eagle.configs.pageIndex,

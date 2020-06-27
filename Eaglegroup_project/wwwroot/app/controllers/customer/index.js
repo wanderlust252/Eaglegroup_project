@@ -93,8 +93,8 @@
                 let price = $('#txtPrice').val();
                 let deal = eagle.dateTimeFormat($('#txtDeal').val());
                 let dateSend = eagle.dateTimeFormat($('#txtDateSendByCustomer').val());
-                let staffId = $('#txtStaffId').val();
-                let creatorId = $('#txtCreatorId').val();
+                //let staffId = $('#txtStaffId').val();
+                //let creatorId = $('#txtCreatorId').val(;
 
                 $.ajax({
                     type: "POST",
@@ -108,8 +108,8 @@
                         Deal: deal,
                         Price: price,
                         DateSendByCustomer: dateSend,
-                        CreatorId: creatorId,
-                        StaffId: staffId
+                        //CreatorId: creatorId,
+                        //StaffId: staffId
                     },
                     dataType: "json",
                     beforeSend: function () {
@@ -123,8 +123,9 @@
                         eagle.stopLoading();
                         loadData(true);
                     },
-                    error: function () {
+                    error: function (e) {
                         eagle.notify('Có lỗi xảy ra', 'error');
+                        console.log("e ", e)
                         eagle.stopLoading();
                     }
                 });
@@ -138,7 +139,7 @@
             eagle.confirm('Xóa khách hàng này?', function () {
                 $.ajax({
                     type: "POST",
-                    url: "/Customer/Delete",
+                    url: "Customer/Delete",
                     data: { id: that },
                     beforeSend: function () {
                         eagle.startLoading();
@@ -160,7 +161,7 @@
             e.preventDefault();
             $.ajax({
                 type: "GET",
-                url: "/Customer/GetCustomerForSale",
+                url: "Customer/GetCustomerForSale",
                 dataType: "json",
                 beforeSend: function () {
                     eagle.startLoading();
@@ -214,7 +215,7 @@
     function loadData(isPageChanged) {
         $.ajax({
             type: "GET",
-            url: "/Customer/GetAllPaging",
+            url: "Customer/GetAllPaging",
             data: {
                 keyword: $('#txt-search-keyword').val(),
                 page: eagle.configs.pageIndex,

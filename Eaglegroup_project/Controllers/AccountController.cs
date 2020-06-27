@@ -262,7 +262,7 @@ namespace Eaglegroup_project.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            return RedirectToAction(nameof(AccountController.Login), "Home");
+            return RedirectToAction(nameof(AccountController.Login), "Account/Index");
         }
 
         [HttpPost]

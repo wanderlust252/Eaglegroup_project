@@ -36,7 +36,7 @@ namespace Eaglegroup_project.Areas.Admin.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return Redirect("/Account/Login");
+            return Redirect("/Account/Index");
         }
 
         [HttpPost]

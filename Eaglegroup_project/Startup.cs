@@ -43,8 +43,7 @@ namespace Eaglegroup_project
         {
             services.AddDbContextPool<AppDbContext>(options =>
                options.UseSqlServer(
-                   Configuration.GetConnectionString("DefaultConnection"),
-                   o => o.MigrationsAssembly("Delta.Data.EF")));
+                   Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<AppUser, AppRole>()
                  .AddEntityFrameworkStores<AppDbContext>()
                  .AddDefaultTokenProviders();

@@ -72,13 +72,13 @@
                 <table id="tbl-product" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
                     <thead>
                         <tr>
-                            @if (!User.IsInRole("SaleStaff"))
-                            {
-                                <th>FullName</th>
-                            }
+                            <th>FullName</th>
                             <th>CreatorNote</th>
-                            <th>StaffNote</th>
-                            <th>Price</th>
+                            @if (!User.IsInRole("Marketing"))
+                            {
+                                <th>StaffNote</th>
+                                <th>Price</th>
+                            }
                             <th>Deal</th>
                             <th>DateSendByCustomer</th>
                             <th>Status</th>
@@ -116,13 +116,13 @@
 
 <script id="table-template" type="x-tmpl-mustache">
     <tr>
-        @if (!User.IsInRole("SaleStaff"))
-        {
-            <td>{{FullName}}</td>
-        }
+        <td>{{FullName}}</td>
         <td>{{CreatorNote}}</td>
-        <td>{{{StaffNote}}}</td>
-        <td>{{{Price}}}</td>
+        @if (!User.IsInRole("Marketing"))
+        {
+            <td>{{{StaffNote}}}</td>
+            <td>{{{Price}}}</td>
+        }
         <td>{{{Deal}}}</td>
         <td>{{{DateSendByCustomer}}}</td>
         <td>{{{Status}}}</td>

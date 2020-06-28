@@ -8,6 +8,7 @@
     }
 
     function registerEvents() {
+        let userRole = $('#user-role').val();
         //Init validation
         $('#frmMaintainance').validate({
             errorClass: 'red',
@@ -66,7 +67,7 @@
                     $('#txtFullName').val(data.fullName);
                     $('#txtCreatorNote').val(data.creatorNote);
                     $('#txtStaffNote').val(data.staffNote);
-                    $('#txtPrice').val(data.price);
+                    $('#txtPrice').val(eagle.formatNumber(data.price, 3));
                     $('#txtDeal').val(eagle.dateFormatJson(data.deal));
                     $('#txtDateSendByCustomer').val(eagle.dateFormatJson(data.dateSendByCustomer));
                     $('#txtPhoneNumber').val(data.phoneNumber);
@@ -175,7 +176,7 @@
                     $('#txtPhoneNumber').val(data.phoneNumber);
                     $('#txtFullName').val(data.fullName);
                     $('#txtCreatorNote').val(data.creatorNote);
-                    $('#txtPrice').val(data.price);
+                    $('#txtPrice').val(eagle.formatNumber(data.price, 3));
                     $('#txtDeal').val(data.deal);
                     $('#txtStaffId').val(data.staffId);
                     $('#txtCreatorId').val(data.creatorId)
@@ -198,7 +199,9 @@
     }
 
     function disableFieldEdit(disabled) {
-        $('#txtCreatorNote').prop('disabled', disabled);
+        if (userRole == 'SaleStaff') {
+            $('#txtCreatorNote').prop('disabled', disabled);
+        }   
     }
 
     function disableFieldCustomer(disabled) {
@@ -238,7 +241,7 @@
                             FullName: item.fullName,
                             CreatorNote: item.creatorNote,
                             StaffNote: item.staffNote,
-                            Price: item.price,
+                            Price: eagle.formatNumber(item.price, 3),
                             Deal: eagle.dateFormatJson(item.deal),
                             DateSendByCustomer: eagle.dateFormatJson(item.dateSendByCustomer),
                             Status: eagle.getCustomerStatus(item.status),

@@ -65,8 +65,11 @@
                     $('#hidId').val(data.id);
                     $('#txtFullName').val(data.fullName);
                     $('#txtCreatorNote').val(data.creatorNote);
+                    $('#txtStaffNote').val(data.staffNote);
                     $('#txtPrice').val(data.price);
-                    $('#txtDeal').val(data.deal);
+                    $('#txtDeal').val(eagle.dateFormatJson(data.deal));
+                    $('#txtDateSendByCustomer').val(eagle.dateFormatJson(data.dateSendByCustomer));
+                    $('#txtPhoneNumber').val(data.phoneNumber);
                     $('#ckStatus').prop('checked', data.status === 1);
 
                     disableFieldEdit(true);
@@ -195,7 +198,7 @@
     }
 
     function disableFieldEdit(disabled) {
-
+        $('#txtCreatorNote').prop('disabled', disabled);
     }
 
     function disableFieldCustomer(disabled) {
@@ -236,8 +239,8 @@
                             CreatorNote: item.creatorNote,
                             StaffNote: item.staffNote,
                             Price: item.price,
-                            Deal: eagle.dateTimeFormatJson(item.deal),
-                            DateSendByCustomer: eagle.dateTimeFormatJson(item.dateSendByCustomer),
+                            Deal: eagle.dateFormatJson(item.deal),
+                            DateSendByCustomer: eagle.dateFormatJson(item.dateSendByCustomer),
                             Status: eagle.getCustomerStatus(item.status),
 
                         });

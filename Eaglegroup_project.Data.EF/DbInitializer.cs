@@ -124,7 +124,7 @@ namespace Eaglegroup_project.Data.EF
                     new Function() {Id = "REVENUES",Name = "Báo cáo doanh thu",ParentId = "REPORT",SortOrder = 1,Status = Status.InActive,URL = "/admin/report/revenues",IconCss = "fa-bar-chart-o"  },
                     new Function() {Id = "ACCESS",Name = "Báo cáo truy cập",ParentId = "REPORT",SortOrder = 2,Status = Status.InActive,URL = "/admin/report/visitor",IconCss = "fa-bar-chart-o"  },
                     new Function() {Id = "READER",Name = "Báo cáo độc giả",ParentId = "REPORT",SortOrder = 3,Status = Status.InActive,URL = "/admin/report/reader",IconCss = "fa-bar-chart-o"  },
-                     new Function() {Id = "CUSTOMER",Name = "Khách hàng",ParentId = "SYSTEM",SortOrder = 1,Status = Status.Active,URL = "/customer/index",IconCss = "fa-clone"  },
+                     new Function() {Id = "CUSTOMER",Name = "Khách hàng",ParentId = "SYSTEM",SortOrder = 1,Status = Status.Active,URL = "/admin/customer/index",IconCss = "fa-clone"  },
                 });
                 await _context.SaveChangesAsync();
             }

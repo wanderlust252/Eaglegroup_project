@@ -1,6 +1,6 @@
 ﻿@model List<Eaglegroup_project.Application.ViewModels.System.FunctionViewModel>
 <div class="sidebar-collapse">
-    <ul class="nav metismenu">
+    <ul class="nav metismenu" id="side-menu">
         <li class="nav-header">
             <div class="dropdown profile-element">
                 <img alt="image" class="rounded-circle" src="@User.GetSpecificClaim("Avatar")">
@@ -30,7 +30,7 @@
                 </a>
                 @if (Model.Any(x => x.ParentId == item.Id))
                 {
-                    <ul class="nav nav-second-level collapse in" aria-expanded="false">
+                    <ul id="" class="nav nav-second-level collapse" aria-expanded="false">
                         @foreach (var jitem in Model.Where(x => x.ParentId == item.Id))
                         {
                             <li>

@@ -95,7 +95,7 @@
                 let creatorNote = $('#txtCreatorNote').val();
                 let saleNote = $('#txtSaleNote').val();
                 let price = $('#txtPrice').val();
-                let deal = eagle.dateTimeFormat($('#txtDeal').val());
+                let deal = $('#txtDeal').val()? eagle.dateTimeFormat($('#txtDeal').val()):null;
                 let dateSend = eagle.dateTimeFormat($('#txtDateSendByCustomer').val());
                 //let staffId = $('#txtStaffId').val();
                 //let creatorId = $('#txtCreatorId').val(;
@@ -171,19 +171,24 @@
                     eagle.startLoading();
                 },
                 success: function (response) {
-                    var data = response;
-                    $('#hidId').val(data.id);
-                    $('#txtPhoneNumber').val(data.phoneNumber);
-                    $('#txtFullName').val(data.fullName);
-                    $('#txtCreatorNote').val(data.creatorNote);
-                    $('#txtPrice').val(eagle.formatNumber(data.price, 3));
-                    $('#txtDeal').val(data.deal);
-                    $('#txtSaleId').val(data.saleId); 
-                    $('#txtCreatorId').val(data.creatorId)
-                    $('#txtDateCreated').val(eagle.dateTimeFormatJson(data.dateCreated)),
+                    if (!response) {
+                        eagle.notify('Hết số có thể nhận', 'error');
+                    } else {
+                        var data = response;
+                        $('#hidId').val(data.id);
+                        $('#txtPhoneNumber').val(data.phoneNumber);
+                        $('#txtFullName').val(data.fullName);
+                        $('#txtCreatorNote').val(data.creatorNote);
+                        $('#txtPrice').val(eagle.formatNumber(data.price, 3));
+                        $('#txtDeal').val(data.deal);
+                        $('#txtSaleId').val(data.saleId);
+                        $('#txtCreatorId').val(data.creatorId)
+                        $('#txtDateCreated').val(eagle.dateTimeFormatJson(data.dateCreated)),
 
-                        disableFieldCustomer(true);
-                    $('#modal-add-edit').modal('show');
+                            disableFieldCustomer(true);
+                        $('#modal-add-edit').modal('show');
+                    }
+                    
                     eagle.stopLoading();
 
                 },
@@ -201,11 +206,17 @@
     function disableFieldEdit(disabled) {
         if (userRole == 'SaleStaff') {
             $('#txtCreatorNote').prop('disabled', disabled);
+            $('#txtPhoneNumber').prop('disabled', disabled);
+            $('#txtFullName').prop('disabled', disabled);
         }   
     }
 
     function disableFieldCustomer(disabled) {
-
+        if (userRole == 'SaleStaff') {
+            $('#txtCreatorNote').prop('disabled', disabled);
+            $('#txtPhoneNumber').prop('disabled', disabled);
+            $('#txtFullName').prop('disabled', disabled);
+        }   
     }
 
     function resetFormMaintainance() {
@@ -239,6 +250,7 @@
                         render += Mustache.render(template, {
                             Id: item.id,
                             FullName: item.fullName,
+                            PhoneNumber: item.phoneNumber,
                             CreatorNote: item.creatorNote,
                             SaleNote: item.saleNote,
                             Price: eagle.formatNumber(item.price, 3),

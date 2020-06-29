@@ -117,6 +117,7 @@ namespace Eaglegroup_project.Application.Implementation
                 data = query.Select(x => new CustomerViewModel()
                 {
                     Id = x.Id,
+                    FullName = x.FullName,
                     PhoneNumber = x.PhoneNumber,
                     Status = x.Status,
                     DateCreated = x.DateCreated,
@@ -171,12 +172,16 @@ namespace Eaglegroup_project.Application.Implementation
             {
                 var query = _customerRepository.FindAllAsNoTracking();
                 var randomCustomer = query.Where(x => x.SaleId == null).FirstOrDefault();
-                randomCustomer.SaleId = userId;//chua duoc gan' luon
-                randomCustomer.Status = 3;//pending
-                _customerRepository.Update(randomCustomer);
-                Save();
-                randomCustomer.FullName = string.Empty;
-                return _mapper.Map<Customer, CustomerViewModel>(randomCustomer);
+                if (randomCustomer != null)
+                {
+                    randomCustomer.SaleId = userId;//chua duoc gan' luon
+                    randomCustomer.Status = 3;//pending
+                    _customerRepository.Update(randomCustomer);
+                    Save();
+                    //randomCustomer.FullName = string.Empty;
+                    return _mapper.Map<Customer, CustomerViewModel>(randomCustomer);
+                }
+               
             }
 
             return null;

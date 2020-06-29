@@ -21,7 +21,7 @@
 <input type="hidden" id="hid-category-id" value="0" />
 <div class="page-title">
     <div class="title_left">
-        <h3>Customer</h3>
+        <h3>Quản lý khách hàng</h3>
     </div>
 
     <div class="row">
@@ -38,11 +38,11 @@
         <div class="col-md-1 col-sm-1 form-group pull-right top_search">
             @if (User.IsInRole("SaleStaff"))
             {
-                <button class="btn btn-success" id="btn-get-customer" type="button">Get Customer</button>
+                <button class="btn btn-success" id="btn-get-customer" type="button">Lấy số</button>
             }
             else
             {
-                <button class="btn btn-success" id="btn-create" type="button">Create</button>
+                <button class="btn btn-success" id="btn-create" type="button">Tạo mới</button>
             }
             @*@if ((await AuthorizationService.AuthorizeAsync(User, "CUSTOMER", Operations.Create)).Succeeded)
                 {
@@ -52,10 +52,10 @@
 
         <div class="col-md-5 col-sm-5 form-group pull-right top_search">
             <div class="input-group">
-                <input type="text" id="txt-search-keyword" class="form-control" placeholder="Search...">
+                <input type="text" id="txt-search-keyword" class="form-control" placeholder="Nhập từ khóa...">
 
                 <span class="input-group-btn">
-                    <button class="btn btn-default" id="btn-search" type="button">Search!</button>
+                    <button class="btn btn-default" id="btn-search" type="button">Tìm kiếm</button>
                 </span>
             </div>
         </div>
@@ -72,16 +72,16 @@
                 <table id="tbl-product" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>FullName</th>
-                            <th>CreatorNote</th>
+                            <th>Họ tên khách hàng</th>
+                            <th>Ghi chú đầu</th>
                             @if (!User.IsInRole("Marketing"))
                             {
-                                <th>StaffNote</th>
-                                <th>Price</th>
+                                <th>Ghi chú của Sale</th>
+                                <th>Tổng giá</th>
                             }
-                            <th>Deal</th>
-                            <th>DateSendByCustomer</th>
-                            <th>Status</th>
+                            <th>Ngày chốt đơn</th>
+                            <th>Ngày khách để lại số</th>
+                            <th>Trạng thái</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -98,9 +98,9 @@
                                 <option value="50">50</option>
                             </select>
                             <span class="item-per-page">
-                                record/page.
+                                bản ghi trên trang.
                             </span>
-                            Total record count: <strong id="lbl-total-records"></strong>
+                            Tổng số trang: <strong id="lbl-total-records"></strong>
                         </div>
                     </div><div class="col-sm-7">
                         <div class="dataTables_paginate" id="datatable-checkbox_paginate">
@@ -120,7 +120,7 @@
         <td>{{CreatorNote}}</td>
         @if (!User.IsInRole("Marketing"))
         {
-            <td>{{{StaffNote}}}</td>
+            <td>{{{SaleNote}}}</td>
             <td>{{{Price}}}</td>
         }
         <td>{{{Deal}}}</td>

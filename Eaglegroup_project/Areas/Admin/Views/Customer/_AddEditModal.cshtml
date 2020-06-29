@@ -11,59 +11,59 @@
                 <div id="horizontal-form">
                     <form class="form-horizontal" role="form" id="frmMaintainance">
                         <input type="hidden" id="hidId" value="" />
-                        <input type="hidden" name="txtStaffId" id="txtStaffId" />
+                        <input type="hidden" name="txtSaleId" id="txtSaleId" />
                         <input type="hidden" name="txtCreatorId" id="txtCreatorId" />
-                        <input type="hidden" id="user-role" value="@User.GetSpecificClaim("Roles")" />
+                        <input type="hidden" id="user_role" value="@User.GetSpecificClaim("Roles")" />
                        
                         <div class="form-group row">
-                            <label for="txtFullName" class="col-sm-4 control-label">Full name</label>
+                            <label for="txtFullName" class="col-sm-4 control-label">Tên khách hàng</label>
                             <div class="col-sm-8">
                                 <input type="text" name="txtFullName" class="form-control" id="txtFullName">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="txtPhoneNumber" class="col-sm-4 control-label">Phone Number</label>
+                            <label for="txtPhoneNumber" class="col-sm-4 control-label">Số điện thoại</label>
                             <div class="col-sm-8">
                                 <input type="text" name="txtPhoneNumber" class="form-control" id="txtPhoneNumber">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="txtCreatorNote" class="col-sm-4 control-label">CreatorNote</label>
+                            <label for="txtCreatorNote" class="col-sm-4 control-label">Ghi chú đầu</label>
                             <div class="col-sm-8">
                                 <input type="text" name="txtCreatorNote" class="form-control" id="txtCreatorNote" />
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="txtStaffNote" class="col-sm-4 control-label">StaffNote</label>
+                            <label for="txtSaleNote" class="col-sm-4 control-label">Ghi chú sale</label>
                             <div class="col-sm-8">
-                                <input type="text" name="txtStaffNote" class="form-control" id="txtStaffNote" />
+                                <input type="text" name="txtSaleNote" class="form-control" id="txtSaleNote" />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="txtPrice" class="col-sm-4 control-label">Price</label>
+                            <label for="txtPrice" class="col-sm-4 control-label">Giá chốt</label>
                             <div class="col-sm-8">
                                 <input type="text" name="txtPrice" class="form-control" id="txtPrice">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="txtDeal" class="col-sm-4 control-label ">Deal</label>
+                            <label for="txtDeal" class="col-sm-4 control-label ">Ngày chốt đơn</label>
                             <div class="col-sm-8">
                                 <input type="text" name="txtDeal" class="form-control" id="txtDeal">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="txtDateSendByCustomer" class="col-sm-4 control-label">DateSendByCustomer</label>
+                            <label for="txtDateSendByCustomer" class="col-sm-4 control-label">Ngày khách để lại số</label>
                             <div class="col-sm-8">
                                 <input type="text" name="txtDateSendByCustomer" class="form-control" id="txtDateSendByCustomer">
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="button" id="btnSave" class="btn btn-success">Save</button>
-                                <button type="button" id="btnCancel" data-dismiss="modal" class="btn btn-default">Close</button>
+                                <button type="button" id="btnSave" class="btn btn-success">Lưu</button>
+                                <button type="button" id="btnCancel" data-dismiss="modal" class="btn btn-default">Đóng</button>
                             </div>
                         </div>
                     </form>

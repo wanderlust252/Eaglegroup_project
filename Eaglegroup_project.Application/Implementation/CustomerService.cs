@@ -50,7 +50,7 @@ namespace Eaglegroup_project.Application.Implementation
         public CustomerViewModel GetById(int id, int checkR, Guid userGet)
         {
             var query = (checkR == 1) ? _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(userGet))
-                : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.StaffId.Equals(userGet))
+                : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.SaleId.Equals(userGet))
                 : _customerRepository.FindAllAsNoTracking();
 
             var customer = _customerRepository.FindSingle(x => x.Id == id);
@@ -61,8 +61,8 @@ namespace Eaglegroup_project.Application.Implementation
         {
             if (checkR == 2)
             {
-                var customerDb = _customerRepository.FindAllAsNoTracking(x => x.StaffId.Equals(userUpdate) && x.Id == customerVm.Id.Value).FirstOrDefault();
-                customerDb.StaffNote = customerVm.StaffNote;
+                var customerDb = _customerRepository.FindAllAsNoTracking(x => x.SaleId.Equals(userUpdate) && x.Id == customerVm.Id.Value).FirstOrDefault();
+                customerDb.SaleNote = customerVm.SaleNote;
                 customerDb.Deal = customerVm.Deal;
                 customerDb.DateSendByCustomer = customerVm.DateSendByCustomer;
                 _customerRepository.Update(customerDb);
@@ -78,7 +78,7 @@ namespace Eaglegroup_project.Application.Implementation
         public void Delete(int id, int checkR, Guid userDelete)
         {
             var query = (checkR == 1) ? _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(userDelete))
-               : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.StaffId.Equals(userDelete))
+               : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.SaleId.Equals(userDelete))
                : _customerRepository.FindAllAsNoTracking();
 
             var customer = query.Where(x => x.Id == id).FirstOrDefault();
@@ -94,7 +94,7 @@ namespace Eaglegroup_project.Application.Implementation
         public PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize, int checkR, Guid userGet)
         {
             var query = (checkR == 1) ? _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(userGet))
-                : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.StaffId.Equals(userGet))
+                : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.SaleId.Equals(userGet))
                 : _customerRepository.FindAllAsNoTracking();
             //neu marketing thi where theo marketing 
             //checkR 1 la marketing
@@ -124,8 +124,8 @@ namespace Eaglegroup_project.Application.Implementation
                     CreatorId = x.CreatorId,
                     CreatorNote = x.CreatorNote,
                     DateSendByCustomer = x.DateSendByCustomer,
-                    StaffId = x.StaffId.GetValueOrDefault(),
-                    StaffNote = x.StaffNote,
+                    SaleId = x.SaleId.GetValueOrDefault(),
+                    SaleNote = x.SaleNote,
                     DateModified = x.DateModified,
                     Deal = x.Deal,
                     ModifiedBy = x.ModifiedBy,
@@ -145,8 +145,8 @@ namespace Eaglegroup_project.Application.Implementation
                     CreatorId = x.CreatorId,
                     CreatorNote = x.CreatorNote,
                     DateSendByCustomer = x.DateSendByCustomer,
-                    StaffId = x.StaffId.GetValueOrDefault(),
-                    StaffNote = x.StaffNote,
+                    SaleId = x.SaleId.GetValueOrDefault(),
+                    SaleNote = x.SaleNote,
                     DateModified = x.DateModified,
                     Deal = x.Deal,
                     ModifiedBy = x.ModifiedBy,
@@ -170,8 +170,8 @@ namespace Eaglegroup_project.Application.Implementation
             if (checkR == 2)
             {
                 var query = _customerRepository.FindAllAsNoTracking();
-                var randomCustomer = query.Where(x => x.StaffId == null).FirstOrDefault();
-                randomCustomer.StaffId = userId;//chua duoc gan' luon
+                var randomCustomer = query.Where(x => x.SaleId == null).FirstOrDefault();
+                randomCustomer.SaleId = userId;//chua duoc gan' luon
                 randomCustomer.Status = 3;//pending
                 _customerRepository.Update(randomCustomer);
                 Save();

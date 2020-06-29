@@ -12,8 +12,8 @@ namespace Eaglegroup_project.Application.ViewModels.System
         public string FullName { get; set; }
         public string CreatorNote { get; set; }//note cua ng tao
         public Guid CreatorId { get; set; }//id cua nguoi tao
-        public string StaffNote { get; set; }//note cua sale
-        public Guid StaffId { get; set; }//id sale
+        public string SaleNote { get; set; }//note cua sale
+        public Guid SaleId { get; set; }//id sale
         public DateTime? Deal { get; set; }//thoi gian chot deal
         [DefaultValue(0)]
         public decimal Price { get; set; }//don gia

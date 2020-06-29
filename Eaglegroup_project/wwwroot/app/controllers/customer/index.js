@@ -6,9 +6,9 @@
             registerEvents();
         });
     }
-
+    var userRole = $('#user_role').val();
     function registerEvents() {
-        let userRole = $('#user-role').val();
+       
         //Init validation
         $('#frmMaintainance').validate({
             errorClass: 'red',
@@ -66,7 +66,7 @@
                     $('#hidId').val(data.id);
                     $('#txtFullName').val(data.fullName);
                     $('#txtCreatorNote').val(data.creatorNote);
-                    $('#txtStaffNote').val(data.staffNote);
+                    $('#txtSaleNote').val(data.saleNote);
                     $('#txtPrice').val(eagle.formatNumber(data.price, 3));
                     $('#txtDeal').val(eagle.dateFormatJson(data.deal));
                     $('#txtDateSendByCustomer').val(eagle.dateFormatJson(data.dateSendByCustomer));
@@ -93,7 +93,7 @@
                 let fullName = $('#txtFullName').val();
                 let phoneNumber = $('#txtPhoneNumber').val();
                 let creatorNote = $('#txtCreatorNote').val();
-                let staffNote = $('#txtStaffNote').val();
+                let saleNote = $('#txtSaleNote').val();
                 let price = $('#txtPrice').val();
                 let deal = eagle.dateTimeFormat($('#txtDeal').val());
                 let dateSend = eagle.dateTimeFormat($('#txtDateSendByCustomer').val());
@@ -108,7 +108,7 @@
                         FullName: fullName,
                         PhoneNumber: phoneNumber,
                         CreatorNote: creatorNote,
-                        StaffNote: staffNote,
+                        SaleNote: saleNote,
                         Deal: deal,
                         Price: price,
                         DateSendByCustomer: dateSend,
@@ -178,7 +178,7 @@
                     $('#txtCreatorNote').val(data.creatorNote);
                     $('#txtPrice').val(eagle.formatNumber(data.price, 3));
                     $('#txtDeal').val(data.deal);
-                    $('#txtStaffId').val(data.staffId);
+                    $('#txtSaleId').val(data.saleId); 
                     $('#txtCreatorId').val(data.creatorId)
                     $('#txtDateCreated').val(eagle.dateTimeFormatJson(data.dateCreated)),
 
@@ -240,7 +240,7 @@
                             Id: item.id,
                             FullName: item.fullName,
                             CreatorNote: item.creatorNote,
-                            StaffNote: item.staffNote,
+                            SaleNote: item.saleNote,
                             Price: eagle.formatNumber(item.price, 3),
                             Deal: eagle.dateFormatJson(item.deal),
                             DateSendByCustomer: eagle.dateFormatJson(item.dateSendByCustomer),

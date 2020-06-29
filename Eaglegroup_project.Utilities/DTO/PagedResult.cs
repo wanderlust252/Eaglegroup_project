@@ -12,4 +12,13 @@ namespace Eaglegroup_project.Utilities.DTO
         }
         public IList<T> Results { get; set; }
     }
+
+    public class PageResultCustomer<T> : PagedResult<T> where T : class
+    {
+        public PageResultCustomer()
+        {
+            Results = new List<T>();
+        }
+        public int TotalCustomer { get; set; }
+    }
 }

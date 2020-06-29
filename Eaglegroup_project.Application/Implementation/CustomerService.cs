@@ -112,54 +112,35 @@ namespace Eaglegroup_project.Application.Implementation
                .Take(pageSize);
 
             var data = new List<CustomerViewModel>();
-            if (checkR == 2)
-            {
-                data = query.Select(x => new CustomerViewModel()
-                {
-                    Id = x.Id,
-                    PhoneNumber = x.PhoneNumber,
-                    Status = x.Status,
-                    DateCreated = x.DateCreated,
-                    CreatedBy = x.CreatedBy,
-                    CreatorId = x.CreatorId,
-                    CreatorNote = x.CreatorNote,
-                    DateSendByCustomer = x.DateSendByCustomer,
-                    SaleId = x.SaleId.GetValueOrDefault(),
-                    SaleNote = x.SaleNote,
-                    DateModified = x.DateModified,
-                    Deal = x.Deal,
-                    ModifiedBy = x.ModifiedBy,
-                    Price = x.Price
-                }).ToList();
-            }
-            else
-            {
-                data = query.Select(x => new CustomerViewModel()
-                {
-                    FullName = x.FullName,
-                    Id = x.Id,
-                    PhoneNumber = x.PhoneNumber,
-                    Status = x.Status,
-                    DateCreated = x.DateCreated,
-                    CreatedBy = x.CreatedBy,
-                    CreatorId = x.CreatorId,
-                    CreatorNote = x.CreatorNote,
-                    DateSendByCustomer = x.DateSendByCustomer,
-                    SaleId = x.SaleId.GetValueOrDefault(),
-                    SaleNote = x.SaleNote,
-                    DateModified = x.DateModified,
-                    Deal = x.Deal,
-                    ModifiedBy = x.ModifiedBy,
-                    Price = x.Price
-                }).ToList();
-            }
 
-            var paginationSet = new PagedResult<CustomerViewModel>()
+            data = query.Select(x => new CustomerViewModel()
+            {
+                FullName = x.FullName,
+                Id = x.Id,
+                PhoneNumber = x.PhoneNumber,
+                Status = x.Status,
+                DateCreated = x.DateCreated,
+                CreatedBy = x.CreatedBy,
+                CreatorId = x.CreatorId,
+                CreatorNote = x.CreatorNote,
+                DateSendByCustomer = x.DateSendByCustomer,
+                SaleId = x.SaleId.GetValueOrDefault(),
+                SaleNote = x.SaleNote,
+                DateModified = x.DateModified,
+                Deal = x.Deal,
+                ModifiedBy = x.ModifiedBy,
+                Price = x.Price
+            }).ToList();
+
+            var countCustomer = _customerRepository.FindAllAsNoTracking().Where(x => x.SaleId == null).Count();
+
+            var paginationSet = new PageResultCustomer<CustomerViewModel>()
             {
                 Results = data,
                 CurrentPage = page,
                 RowCount = totalRow,
-                PageSize = pageSize
+                PageSize = pageSize,
+                TotalCustomer = countCustomer
             };
 
             return paginationSet;
@@ -175,7 +156,6 @@ namespace Eaglegroup_project.Application.Implementation
                 randomCustomer.Status = 3;//pending
                 _customerRepository.Update(randomCustomer);
                 Save();
-                randomCustomer.FullName = string.Empty;
                 return _mapper.Map<Customer, CustomerViewModel>(randomCustomer);
             }
 

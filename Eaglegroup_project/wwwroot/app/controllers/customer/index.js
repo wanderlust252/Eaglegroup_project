@@ -94,7 +94,7 @@
                 let phoneNumber = $('#txtPhoneNumber').val();
                 let creatorNote = $('#txtCreatorNote').val();
                 let saleNote = $('#txtSaleNote').val();
-                let price = $('#txtPrice').val();
+                let price = eagle.unformatNumber($('#txtPrice').val());
                 let deal = eagle.dateTimeFormat($('#txtDeal').val());
                 let dateSend = eagle.dateTimeFormat($('#txtDateSendByCustomer').val());
                 //let staffId = $('#txtStaffId').val();
@@ -234,6 +234,7 @@
             success: function (response) {
                 var template = $('#table-template').html();
                 var render = "";
+                $('#total-customer').val(response.totalCustomer);
                 if (response.rowCount > 0) {
                     $.each(response.results, function (i, item) {
                         render += Mustache.render(template, {

@@ -136,6 +136,11 @@
         a[0] = a[0].replace(/\d(?=(\d{3})+$)/g, '$&.');
         return a.join(',');
     },
+    unformatNumber: function (number) {
+        number = number.replace(',', '.');
+        number = number.replace('.', '');
+        return number;
+    },
     unflattern: function (arr) {
         var map = {};
         var roots = [];

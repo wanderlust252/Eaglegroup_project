@@ -82,6 +82,7 @@
                     <thead>
                         <tr>
                             <th>Họ tên khách hàng</th>
+                            <th>Số điện thoại</th>
                             <th>Ghi chú đầu</th>
                             @if (!User.IsInRole("Marketing"))
                             {
@@ -109,7 +110,7 @@
                             <span class="item-per-page">
                                 bản ghi trên trang.
                             </span>
-                            Tổng số trang: <strong id="lbl-total-records"></strong>
+                            Tổng số bản ghi: <strong id="lbl-total-records"></strong>
                         </div>
                     </div><div class="col-sm-7">
                         <div class="dataTables_paginate" id="datatable-checkbox_paginate">
@@ -126,6 +127,7 @@
 <script id="table-template" type="x-tmpl-mustache">
     <tr>
         <td>{{FullName}}</td>
+        <td>{{PhoneNumber}}</td>
         <td>{{CreatorNote}}</td>
         @if (!User.IsInRole("Marketing"))
         {

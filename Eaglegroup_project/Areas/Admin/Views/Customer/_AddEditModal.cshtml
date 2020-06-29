@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title">Add/edit user</h4>
+                <h4 class="modal-title">Thêm/Sửa thông tin khách hàng</h4>
             </div>
             <div class="modal-body">
                 <div id="horizontal-form">
@@ -14,7 +14,7 @@
                         <input type="hidden" name="txtSaleId" id="txtSaleId" />
                         <input type="hidden" name="txtCreatorId" id="txtCreatorId" />
                         <input type="hidden" id="user_role" value="@User.GetSpecificClaim("Roles")" />
-                       
+
                         <div class="form-group row">
                             <label for="txtFullName" class="col-sm-4 control-label">Tên khách hàng</label>
                             <div class="col-sm-8">
@@ -35,25 +35,29 @@
                                 <input type="text" name="txtCreatorNote" class="form-control" id="txtCreatorNote" />
                             </div>
                         </div>
+                        @if (!User.IsInRole("Marketing"))
+                        {
+                            <div class="form-group row">
+                                <label for="txtSaleNote" class="col-sm-4 control-label">Ghi chú sale</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="txtSaleNote" class="form-control" id="txtSaleNote" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="txtPrice" class="col-sm-4 control-label">Giá chốt</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="txtPrice" class="form-control" id="txtPrice">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="txtDeal" class="col-sm-4 control-label ">Ngày chốt đơn</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="txtDeal" class="form-control" id="txtDeal">
+                                </div>
+                            </div>
+                        }
 
-                        <div class="form-group row">
-                            <label for="txtSaleNote" class="col-sm-4 control-label">Ghi chú sale</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="txtSaleNote" class="form-control" id="txtSaleNote" />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="txtPrice" class="col-sm-4 control-label">Giá chốt</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="txtPrice" class="form-control" id="txtPrice">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="txtDeal" class="col-sm-4 control-label ">Ngày chốt đơn</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="txtDeal" class="form-control" id="txtDeal">
-                            </div>
-                        </div>
+
                         <div class="form-group row">
                             <label for="txtDateSendByCustomer" class="col-sm-4 control-label">Ngày khách để lại số</label>
                             <div class="col-sm-8">

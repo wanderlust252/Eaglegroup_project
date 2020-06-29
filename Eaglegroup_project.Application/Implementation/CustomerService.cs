@@ -132,6 +132,26 @@ namespace Eaglegroup_project.Application.Implementation
                 Price = x.Price
             }).ToList();
 
+
+            data = query.Select(x => new CustomerViewModel()
+            {
+                FullName = x.FullName,
+                Id = x.Id,
+                PhoneNumber = x.PhoneNumber,
+                Status = x.Status,
+                DateCreated = x.DateCreated,
+                CreatedBy = x.CreatedBy,
+                CreatorId = x.CreatorId,
+                CreatorNote = x.CreatorNote,
+                DateSendByCustomer = x.DateSendByCustomer,
+                SaleId = x.SaleId.GetValueOrDefault(),
+                SaleNote = x.SaleNote,
+                DateModified = x.DateModified,
+                Deal = x.Deal,
+                ModifiedBy = x.ModifiedBy,
+                Price = x.Price
+            }).ToList();
+
             var countCustomer = _customerRepository.FindAllAsNoTracking().Where(x => x.SaleId == null).Count();
 
             var paginationSet = new PageResultCustomer<CustomerViewModel>()
@@ -152,11 +172,16 @@ namespace Eaglegroup_project.Application.Implementation
             {
                 var query = _customerRepository.FindAllAsNoTracking();
                 var randomCustomer = query.Where(x => x.SaleId == null).FirstOrDefault();
-                randomCustomer.SaleId = userId;//chua duoc gan' luon
-                randomCustomer.Status = 3;//pending
-                _customerRepository.Update(randomCustomer);
-                Save();
-                return _mapper.Map<Customer, CustomerViewModel>(randomCustomer);
+                if (randomCustomer != null)
+                {
+                    randomCustomer.SaleId = userId;//chua duoc gan' luon
+                    randomCustomer.Status = 3;//pending
+                    _customerRepository.Update(randomCustomer);
+                    Save();
+                    //randomCustomer.FullName = string.Empty;
+                    return _mapper.Map<Customer, CustomerViewModel>(randomCustomer);
+                }
+
             }
 
             return null;

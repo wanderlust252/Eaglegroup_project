@@ -77,10 +77,13 @@ namespace Eaglegroup_project.Application.Implementation
 
         public void Delete(int id, int checkR, Guid userDelete)
         {
-            if (checkR == 0)
-            {
-                _customerRepository.Remove(id);
-            }
+            var query = (checkR == 1) ? _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(userDelete))
+               : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.StaffId.Equals(userDelete))
+               : _customerRepository.FindAllAsNoTracking();
+
+            var customer = query.Where(x => x.Id == id).FirstOrDefault();
+            customer.isDelete = true;
+            _customerRepository.Update(customer);
         }
 
         public void Save()
@@ -104,6 +107,7 @@ namespace Eaglegroup_project.Application.Implementation
                 || x.FullName.Contains(keyword));
 
             int totalRow = query.Count();
+
             query = query.Skip((page - 1) * pageSize)
                .Take(pageSize);
 
@@ -148,7 +152,7 @@ namespace Eaglegroup_project.Application.Implementation
                     ModifiedBy = x.ModifiedBy,
                     Price = x.Price
                 }).ToList();
-            }            
+            }
 
             var paginationSet = new PagedResult<CustomerViewModel>()
             {

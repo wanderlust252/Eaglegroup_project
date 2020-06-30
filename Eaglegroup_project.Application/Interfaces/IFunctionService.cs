@@ -10,7 +10,7 @@ namespace Eaglegroup_project.Application.Interfaces
     {
         void Add(FunctionViewModel function);
 
-        Task<List<FunctionViewModel>> GetAll(string filter);
+        Task<List<FunctionViewModel>> GetAll(string filter, Guid roleId);
 
         IEnumerable<FunctionViewModel> GetAllWithParentId(string parentId);
 

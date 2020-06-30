@@ -93,9 +93,9 @@ namespace Eaglegroup_project.Application.Implementation
 
         public PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize, int checkR, Guid userGet)
         {
-            var query = (checkR == 1) ? _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(userGet))
-                : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.SaleId.Equals(userGet))
-                : _customerRepository.FindAllAsNoTracking();
+            var query = (checkR == 1) ? _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(userGet) && x.isDelete == false)
+                : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.SaleId.Equals(userGet) && x.isDelete == false)
+                : _customerRepository.FindAllAsNoTracking(x => x.isDelete == false);
             //neu marketing thi where theo marketing 
             //checkR 1 la marketing
 

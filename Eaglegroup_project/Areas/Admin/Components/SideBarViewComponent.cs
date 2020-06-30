@@ -14,24 +14,28 @@ namespace Eaglegroup_project.Areas.Admin.Components
     public class SideBarViewComponent : ViewComponent
     {
         private IFunctionService _functionService;
+        private readonly IRoleService _roleService;
 
-        public SideBarViewComponent(IFunctionService functionService)
+        public SideBarViewComponent(IFunctionService functionService, IRoleService roleService)
         {
             _functionService = functionService;
+            _roleService = roleService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var roles = ((ClaimsPrincipal)User).GetSpecificClaim("Roles");
             List<FunctionViewModel> functions;
+            
             if (roles.Split(";").Contains(CommonConstants.AppRole.AdminRole))
             {
-                functions = await _functionService.GetAll(string.Empty);
+                functions = await _functionService.GetAll(string.Empty, Guid.Empty);
             }
             else
             {
+                var roleId = await _roleService.GetRoleIdByName(roles);
                 //TODO: Get by permission
-                functions = await _functionService.GetAll(string.Empty);
+                functions = await _functionService.GetAll(string.Empty, roleId);
             }
             return View(functions);
         }

@@ -132,7 +132,6 @@ namespace Eaglegroup_project.Application.Implementation
                 Price = x.Price
             }).ToList();
 
-
             data = query.Select(x => new CustomerViewModel()
             {
                 FullName = x.FullName,

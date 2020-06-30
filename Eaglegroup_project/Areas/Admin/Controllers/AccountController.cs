@@ -36,7 +36,7 @@ namespace Eaglegroup_project.Areas.Admin.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return Redirect("/Account/Index");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -68,5 +68,12 @@ namespace Eaglegroup_project.Areas.Admin.Controllers
             // If we got this far, something failed, redisplay form
             return new ObjectResult(new GenericResult(false, model));
         }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
     }
 }

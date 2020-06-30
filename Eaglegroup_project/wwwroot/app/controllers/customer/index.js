@@ -99,7 +99,7 @@
 
                 let dateSend = eagle.dateTimeFormat($('#txtDateSendByCustomer').val());
                 //let staffId = $('#txtStaffId').val();
-                //let creatorId = $('#txtCreatorId').val(;
+                //let creatorId = $('#txtCreatorId').val();
 
                 $.ajax({
                     type: "POST",

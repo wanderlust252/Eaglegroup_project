@@ -4,6 +4,7 @@ using Eaglegroup_project.Application.Interfaces;
 using Eaglegroup_project.Application.ViewModels.System;
 using Eaglegroup_project.Data.Entities;
 using Eaglegroup_project.Data.Enums;
+using Eaglegroup_project.Data.IRepositories;
 using Eaglegroup_project.Infrastructure.Interfaces;
 using Eaglegroup_project.Utilities.DTO;
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +18,11 @@ namespace Eaglegroup_project.Application.Implementation
 {
     public class CustomerService : ICustomerService
     {
-        private IRepository<Customer, int> _customerRepository;
+        private ICustomerRepository _customerRepository;
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CustomerService(IMapper mapper, IRepository<Customer, int> customerRepository,
+        public CustomerService(IMapper mapper, ICustomerRepository customerRepository,
             IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -61,15 +62,14 @@ namespace Eaglegroup_project.Application.Implementation
         {
             if (checkR == 2)
             {
-                var customerDb = _customerRepository.FindAllAsNoTracking(x => x.SaleId.Equals(userUpdate) && x.Id == customerVm.Id.Value).FirstOrDefault();
-                customerDb.SaleNote = customerVm.SaleNote;
-                customerDb.Deal = customerVm.Deal;
-                customerDb.DateSendByCustomer = customerVm.DateSendByCustomer;
-                _customerRepository.Update(customerDb);
+                customerVm.SaleId = userUpdate;
+                var customer = _mapper.Map<CustomerViewModel, Customer>(customerVm);
+                _customerRepository.Update(customer); 
             }
             else
             {
-                var customerDb = _customerRepository.FindById(customerVm.Id.Value);
+                //var customerDb = _customerRepository.FindById(customerVm.Id.Value);
+                customerVm.SaleId = userUpdate;
                 var customer = _mapper.Map<CustomerViewModel, Customer>(customerVm);
                 _customerRepository.Update(customer);
             }
@@ -152,7 +152,7 @@ namespace Eaglegroup_project.Application.Implementation
                 Price = x.Price
             }).ToList();
 
-            var countCustomer = _customerRepository.FindAllAsNoTracking().Where(x => x.SaleId == null).Count();
+            var countCustomer = _customerRepository.FindAllAsNoTracking().Where(x => x.SaleId == Guid.Empty).Count();
 
             var paginationSet = new PageResultCustomer<CustomerViewModel>()
             {
@@ -171,11 +171,12 @@ namespace Eaglegroup_project.Application.Implementation
             if (checkR == 2)
             {
                 var query = _customerRepository.FindAllAsNoTracking();
-                var randomCustomer = query.Where(x => x.SaleId == null).FirstOrDefault();
+                var randomCustomer = query.Where(x => x.SaleId==Guid.Empty).FirstOrDefault();
                 if (randomCustomer != null)
                 {
                     randomCustomer.SaleId = userId;//chua duoc gan' luon
                     randomCustomer.Status = 3;//pending
+                    randomCustomer.SaleId = userId;
                     _customerRepository.Update(randomCustomer);
                     Save();
                     //randomCustomer.FullName = string.Empty;

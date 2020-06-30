@@ -98,6 +98,7 @@
         return day + "/" + month + "/" + year + " " + hh + ":" + mm + ":" + ss;
     },
     dateTimeFormat: function (datetime) {
+        if (!datetime) return null;
         var dateParts = datetime.split("/");
          date = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
         return (date.getMonth() + 1) + "-" + date.getDate() + "-" + date.getFullYear();
@@ -137,9 +138,11 @@
         return a.join(',');
     },
     unformatNumber: function (number) {
-        number = number.replace(',', '.');
-        number = number.replace('.', '');
-        return number;
+        if (!number) return;
+        number = number.substring(0,number.indexOf(','))
+        /*number = number.replaceAll(".", '');*/
+        var resnumber = Number(number.replace(/[^0-9,-]+/g, ""));
+        return resnumber;
     },
     unflattern: function (arr) {
         var map = {};

@@ -32,14 +32,18 @@
                 </span>
             </div>
         </div>
-        <div class="col-md-7 col-sm-5 form-group ">
-            <div class="input-group">
-                <span class="input-group-btn">
-                    Tổng số khách hàng có sẵn: <input class="btn btn-success" id="total-customer" type="button">
-                </span>
+        @if (User.IsInRole("SaleStaff"))
+        {
+            <div class="col-md-7 col-sm-5 form-group ">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        Tổng số khách hàng có sẵn: <input class="btn btn-success" id="total-customer" type="button">
+                    </span>
+                </div>
+
             </div>
-            
-        </div>
+        }
+
     </div>
     <div class="title_right">
 

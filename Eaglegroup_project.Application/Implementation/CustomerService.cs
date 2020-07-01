@@ -18,8 +18,8 @@ namespace Eaglegroup_project.Application.Implementation
 {
     public class CustomerService : ICustomerService
     {
-        private ICustomerRepository _customerRepository;
-        private IUnitOfWork _unitOfWork;
+        private readonly ICustomerRepository _customerRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public CustomerService(IMapper mapper, ICustomerRepository customerRepository,
@@ -62,16 +62,43 @@ namespace Eaglegroup_project.Application.Implementation
         {
             if (checkR == 2)
             {
-                customerVm.SaleId = userUpdate;
-                var customer = _mapper.Map<CustomerViewModel, Customer>(customerVm);
-                _customerRepository.Update(customer); 
+                //customerVm.SaleId = userUpdate;
+                var customerDb = _customerRepository.FindById(customerVm.Id.Value);
+                //customerDb.SaleId = customerVm.SaleId;
+                customerDb.Deal = customerVm.Deal;
+                customerDb.SaleNote = customerVm.SaleNote;
+                customerDb.DateSendByCustomer = customerVm.DateSendByCustomer;
+                customerDb.Price = customerVm.Price;
+                //customerDb.DateCreated = customerVm.DateCreated;
+                //customerDb.CreatedBy = customerVm.CreatedBy;
+                //customerDb.Status = customerVm.Status;
+                //customerDb.isDelete = customerVm.isDelete;
+                //customerDb.CreatorId = customerVm.CreatorId;
+                //var customer = _mapper.Map<CustomerViewModel, Customer>(customerVm);
+                _customerRepository.Update(customerDb); 
+            }
+            else if(checkR==1)
+            {
+                var customerDb = _customerRepository.FindById(customerVm.Id.Value);
+                customerDb.CreatorNote = customerVm.CreatorNote;
+                customerDb.DateSendByCustomer = customerVm.DateSendByCustomer;
+                customerDb.PhoneNumber = customerVm.PhoneNumber;
+                customerDb.FullName = customerVm.FullName;
+                //var customer = _mapper.Map<CustomerViewModel, Customer>(customerVm);
+                _customerRepository.Update(customerDb);
             }
             else
             {
-                //var customerDb = _customerRepository.FindById(customerVm.Id.Value);
-                customerVm.SaleId = userUpdate;
-                var customer = _mapper.Map<CustomerViewModel, Customer>(customerVm);
-                _customerRepository.Update(customer);
+                var customerDb = _customerRepository.FindById(customerVm.Id.Value);
+                customerDb.CreatorNote = customerVm.CreatorNote;
+                customerDb.DateSendByCustomer = customerVm.DateSendByCustomer;
+                customerDb.PhoneNumber = customerVm.PhoneNumber;
+                customerDb.FullName = customerVm.FullName;
+                customerDb.Deal = customerVm.Deal;
+                customerDb.SaleNote = customerVm.SaleNote;
+                customerDb.Price = customerVm.Price;
+                //var customer = _mapper.Map<CustomerViewModel, Customer>(customerVm);
+                _customerRepository.Update(customerDb);
             }
         }
 
@@ -93,9 +120,9 @@ namespace Eaglegroup_project.Application.Implementation
 
         public PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize, int checkR, Guid userGet)
         {
-            var query = (checkR == 1) ? _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(userGet))
-                : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.SaleId.Equals(userGet))
-                : _customerRepository.FindAllAsNoTracking();
+            var query = (checkR == 1) ? _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(userGet) && x.isDelete==false)
+                : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.SaleId.Equals(userGet) && x.isDelete == false)
+                : _customerRepository.FindAllAsNoTracking(x => x.isDelete == false);
             //neu marketing thi where theo marketing 
             //checkR 1 la marketing
 
@@ -174,7 +201,7 @@ namespace Eaglegroup_project.Application.Implementation
                 var randomCustomer = query.Where(x => x.SaleId==Guid.Empty).FirstOrDefault();
                 if (randomCustomer != null)
                 {
-                    randomCustomer.SaleId = userId;//chua duoc gan' luon
+                    //randomCustomer.SaleId = userId;//chua duoc gan' luon
                     randomCustomer.Status = 3;//pending
                     randomCustomer.SaleId = userId;
                     _customerRepository.Update(randomCustomer);

@@ -88,7 +88,8 @@ namespace Eaglegroup_project.Areas.Admin.Controllers
                 }
                 else
                 {
-                    
+                    cusVm.DateModified = DateTime.Now;
+                    cusVm.ModifiedBy= User.Identity.Name;
                     _customerService.Update(cusVm, _checkR, _userId);
                 }
                 _customerService.Save();
@@ -100,7 +101,7 @@ namespace Eaglegroup_project.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             _customerService.Delete(id, _checkR, _userId);
-
+            _customerService.Save();
             return new OkObjectResult(id);
         }
 

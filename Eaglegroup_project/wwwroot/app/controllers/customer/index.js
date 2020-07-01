@@ -65,7 +65,9 @@
                     var data = response;
                     $('#hidId').val(data.id);
                     $('#txtFullName').val(data.fullName);
+                    $('#txtCreatorId').val(data.creatorId)
                     $('#txtCreatorNote').val(data.creatorNote);
+                    $('#txtSaleId').val(data.saleId)
                     $('#txtSaleNote').val(data.saleNote);
                     $('#txtPrice').val(eagle.formatNumber(data.price, 3));
                     $('#txtDeal').val(eagle.dateFormatJson(data.deal));
@@ -93,13 +95,13 @@
                 let fullName = $('#txtFullName').val();
                 let phoneNumber = $('#txtPhoneNumber').val();
                 let creatorNote = $('#txtCreatorNote').val();
-                let saleNote = $('#txtSaleNote').val();
+                let saleNote = $('#txtSaleNote').val()||"";
                 let price = eagle.unformatNumber($('#txtPrice').val());
                 let deal = $('#txtDeal').val()? eagle.dateTimeFormat($('#txtDeal').val()):null;
 
                 let dateSend = eagle.dateTimeFormat($('#txtDateSendByCustomer').val());
                 //let staffId = $('#txtStaffId').val();
-                //let creatorId = $('#txtCreatorId').val(;
+                //let creatorId = $('#txtCreatorId').val();
 
                 $.ajax({
                     type: "POST",
@@ -117,21 +119,21 @@
                         //StaffId: staffId
                     },
                     dataType: "json",
-                    //beforeSend: function () {
-                    //    eagle.startLoading();
-                    //},
+                    beforeSend: function () {
+                        eagle.startLoading();
+                    },
                     success: function () {
                         eagle.notify('Lưu thành công', 'success');
                         $('#modal-add-edit').modal('hide');
                         resetFormMaintainance();
 
-                        //eagle.stopLoading();
+                        eagle.stopLoading();
                         loadData(true);
                     },
                     error: function (e) {
                         eagle.notify('Có lỗi xảy ra', 'error');
                         console.log("e ", e)
-                        //eagle.stopLoading();
+                        eagle.stopLoading();
                     }
                 });
             }
@@ -168,9 +170,9 @@
                 type: "GET",
                 url: "GetCustomerForSale",
                 dataType: "json",
-                //beforeSend: function () {
-                //    eagle.startLoading();
-                //},
+                beforeSend: function () {
+                    eagle.startLoading();
+                },
                 success: function (response) {
                     if (!response) {
                         eagle.notify('Hết số có thể nhận', 'error');
@@ -190,12 +192,12 @@
                         $('#modal-add-edit').modal('show');
                     }
                     
-                    //eagle.stopLoading();
+                    eagle.stopLoading();
 
                 },
                 error: function () {
                     eagle.notify('Có lỗi xảy ra', 'error');
-                    //eagle.stopLoading();
+                    eagle.stopLoading();
                 }
             });
         });

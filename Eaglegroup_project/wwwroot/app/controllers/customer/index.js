@@ -189,7 +189,7 @@
                         $('#txtDateCreated').val(eagle.dateTimeFormatJson(data.dateCreated)),
 
                             disableFieldCustomer(true);
-                        $('#modal-add-edit').modal('show');
+                        $('#modal-add-edit').modal({ backdrop: 'static', keyboard: false, show: true })
                     }
                     
                     eagle.stopLoading();

@@ -94,7 +94,14 @@
                             <th>Ngày chốt đơn</th>
                             <th>Ngày khách để lại số</th>
                             <th>Trạng thái</th>
-                            <th></th>
+                            @if ((await AuthorizationService.AuthorizeAsync(User, "CUSTOMER", Operations.Update)).Succeeded)
+                            {
+                                <th></th>
+                            }
+                            @if ((await AuthorizationService.AuthorizeAsync(User, "CUSTOMER", Operations.Delete)).Succeeded)
+                            {
+                                <th></th>
+                            }
                         </tr>
                     </thead>
                     <tbody id="tbl-content"></tbody>

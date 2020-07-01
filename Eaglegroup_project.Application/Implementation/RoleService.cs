@@ -76,6 +76,12 @@ namespace Eaglegroup_project.Application.Implementation
             return query.AnyAsync();
         }
 
+        public async Task<Guid> GetRoleIdByName(string name)
+        {
+            var role = await _roleManager.FindByNameAsync(name);
+            return role.Id;
+        }
+
         public async Task DeleteAsync(Guid id)
         {
             var role = await _roleManager.FindByIdAsync(id.ToString());

@@ -119,9 +119,9 @@ namespace Eaglegroup_project
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromHours(1);
 
-                options.LoginPath = $"/Account/Login";
-                options.LogoutPath = $"/Account/Logout";
-                options.AccessDeniedPath = $"/Account/AccessDenied";
+                options.LoginPath = $"/Admin/Account/Login";
+                options.LogoutPath = $"/Admin/Account/Logout";
+                options.AccessDeniedPath = $"/Admin/Account/AccessDenied";
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

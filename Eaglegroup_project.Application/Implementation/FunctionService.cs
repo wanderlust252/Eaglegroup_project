@@ -18,14 +18,17 @@ namespace Eaglegroup_project.Application.Implementation
     public class FunctionService : IFunctionService
     {
         private IRepository<Function, string> _functionRepository;
+        private IRepository<Permission, int> _permissionRepository;
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public FunctionService(IMapper mapper,
             IRepository<Function, string> functionRepository,
+            IRepository<Permission, int> permissionRepository,
             IUnitOfWork unitOfWork)
         {
             _functionRepository = functionRepository;
+            _permissionRepository = permissionRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -50,14 +53,35 @@ namespace Eaglegroup_project.Application.Implementation
         {
             var function = _functionRepository.FindSingle(x => x.Id == id);
             return _mapper.Map<Function, FunctionViewModel>(function);
-        }   
+        }
 
-        public Task<List<FunctionViewModel>> GetAll(string filter)
+        public Task<List<FunctionViewModel>> GetAll(string filter, Guid roleId)
         {
-            var query = _functionRepository.FindAll(x => x.Status == Status.Active);
-            if (!string.IsNullOrEmpty(filter))
-                query = query.Where(x => x.Name.Contains(filter));
-            return query.OrderBy(x => x.ParentId).ProjectTo<FunctionViewModel>(_mapper.ConfigurationProvider).ToListAsync();
+            if (roleId == Guid.Empty)
+            {
+                var query = _functionRepository.FindAll(x => x.Status == Status.Active);
+                if (!string.IsNullOrEmpty(filter))
+                    query = query.Where(x => x.Name.Contains(filter));
+                return query.OrderBy(x => x.ParentId).ProjectTo<FunctionViewModel>(_mapper.ConfigurationProvider).ToListAsync();
+            }
+            else
+            {
+                var functionQuery = _functionRepository.FindAll(x => x.Status == Status.Active);
+                var permissionQuery = _permissionRepository.FindAll(x => x.RoleId == roleId);
+                var query = from f in functionQuery
+                            join p in permissionQuery on f.Id equals p.FunctionId
+                            select new FunctionViewModel()
+                            {
+                                Id = f.Id,
+                                Name = f.Name,
+                                URL = f.URL,
+                                ParentId = f.ParentId,
+                                IconCss = f.IconCss,
+                                SortOrder = f.SortOrder,
+                                Status = f.Status
+                            };
+                return query.ToListAsync();
+            }
         }
 
         public IEnumerable<FunctionViewModel> GetAllWithParentId(string parentId)

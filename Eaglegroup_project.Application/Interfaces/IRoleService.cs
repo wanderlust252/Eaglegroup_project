@@ -24,6 +24,7 @@ namespace Eaglegroup_project.Application.Interfaces
         PagedResult<AppRoleViewModel> GetAllPagingAsync(int? moduleId, string keyword, int page, int pageSize);
 
         Task<AppRoleViewModel> GetById(Guid id);
+        Task<Guid> GetRoleIdByName(string name);
 
 
         Task UpdateAsync(AppRoleViewModel userVm);

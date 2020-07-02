@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\app\admin\" />
+    <Folder Include="wwwroot\keys\" />
   </ItemGroup>
 
 

@@ -17,7 +17,7 @@ namespace Eaglegroup_project.Application.Interfaces
 
         PagedResult<AppUserViewModel> GetAllPagingAsync(string keyword, int page, int pageSize);
 
-        Task<AppUserViewModel> GetById(string id);
+        Task<AppUserViewModel> GetById(Guid id);
 
 
         Task UpdateAsync(AppUserViewModel userVm);

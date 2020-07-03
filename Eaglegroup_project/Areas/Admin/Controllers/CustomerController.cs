@@ -19,12 +19,14 @@ namespace Eaglegroup_project.Areas.Admin.Controllers
     public class CustomerController : Controller
     {
         ICustomerService _customerService;
+        IUserService _userService;
         private int _checkR;
         private Guid _userId;
 
-        public CustomerController(ICustomerService customerService)
+        public CustomerController(ICustomerService customerService, IUserService userService)
         {
             _customerService = customerService;
+            _userService = userService;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
@@ -52,12 +54,15 @@ namespace Eaglegroup_project.Areas.Admin.Controllers
         public IActionResult GetCustomerForSale()
         {
             var model = _customerService.GetCustomerForSale(_checkR, _userId);
+            //model.SaleName = User.Identity.Name;
+            //model.CreatorName = _userService.GetById(model.CreatorId).Result.UserName;
             return new OkObjectResult(model);
         }
 
         public IActionResult GetAllPaging(string keyword, int page, int pageSize)
         {
             var model = _customerService.GetAllPaging(keyword, page, pageSize, _checkR, _userId);
+
             return new OkObjectResult(model);
         }
 

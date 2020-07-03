@@ -265,6 +265,8 @@
                             PhoneNumber: item.phoneNumber,
                             CreatorNote: item.creatorNote,
                             SaleNote: item.saleNote,
+                            CreatorName: item.creatorName,
+                            SaleName:item.saleName,
                             Price: eagle.formatNumber(item.price, 3),
                             Deal: eagle.dateFormatJson(item.deal),
                             DateSendByCustomer: eagle.dateFormatJson(item.dateSendByCustomer),

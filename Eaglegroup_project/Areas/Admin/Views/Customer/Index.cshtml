@@ -85,12 +85,11 @@
                         <tr>
                             <th>Họ tên khách hàng</th>
                             <th>Số điện thoại</th>
+                            <th>Tên người tạo số</th>
                             <th>Ghi chú đầu</th>
-                            @if (!User.IsInRole("Marketing"))
-                            {
-                                <th>Ghi chú của Sale</th>
-                                <th>Tổng giá</th>
-                            }
+                            <th>Tên nhân viên Sale</th>
+                            <th>Ghi chú của Sale</th>
+                            <th>Tổng giá</th>
                             <th>Ngày chốt đơn</th>
                             <th>Ngày khách để lại số</th>
                             <th>Trạng thái</th>
@@ -137,12 +136,11 @@
     <tr>
         <td>{{FullName}}</td>
         <td>{{PhoneNumber}}</td>
+        <td>{{CreatorName}}</td>
         <td>{{CreatorNote}}</td>
-        @if (!User.IsInRole("Marketing"))
-        {
-            <td>{{{SaleNote}}}</td>
-            <td>{{{Price}}}</td>
-        }
+        <td>{{SaleName}}</td>
+        <td>{{{SaleNote}}}</td>
+        <td>{{{Price}}}</td>
         <td>{{{Deal}}}</td>
         <td>{{{DateSendByCustomer}}}</td>
         <td>{{{Status}}}</td>

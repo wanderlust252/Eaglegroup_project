@@ -31,7 +31,7 @@ namespace Eaglegroup_project.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetById(string id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var model = await _userService.GetById(id);
 

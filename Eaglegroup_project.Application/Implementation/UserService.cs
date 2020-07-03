@@ -93,9 +93,9 @@ namespace Eaglegroup_project.Application.Implementation
             return paginationSet;
         }
 
-        public async Task<AppUserViewModel> GetById(string id)
+        public async Task<AppUserViewModel> GetById(Guid id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id.ToString());
             var roles = await _userManager.GetRolesAsync(user);
             var userVm = _mapper.Map<AppUser, AppUserViewModel>(user);
             userVm.Roles = roles.ToList();

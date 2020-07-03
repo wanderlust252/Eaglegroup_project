@@ -7,6 +7,7 @@ using Eaglegroup_project.Data.Enums;
 using Eaglegroup_project.Data.IRepositories;
 using Eaglegroup_project.Infrastructure.Interfaces;
 using Eaglegroup_project.Utilities.DTO;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,14 +20,16 @@ namespace Eaglegroup_project.Application.Implementation
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly UserManager<AppUser> _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CustomerService(IMapper mapper, ICustomerRepository customerRepository,
+        public CustomerService(IMapper mapper, ICustomerRepository customerRepository, UserManager<AppUser> userManager,
             IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _customerRepository = customerRepository;
+            _userManager = userManager;
             _mapper = mapper;
         }
 
@@ -120,7 +123,7 @@ namespace Eaglegroup_project.Application.Implementation
 
         public PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize, int checkR, Guid userGet)
         {
-            var query = (checkR == 1) ? _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(userGet) && x.isDelete==false)
+            var query = (checkR == 1) ? _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(userGet) && x.isDelete == false)
                 : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.SaleId.Equals(userGet) && x.isDelete == false)
                 : _customerRepository.FindAllAsNoTracking(x => x.isDelete == false);
             //neu marketing thi where theo marketing 
@@ -128,6 +131,7 @@ namespace Eaglegroup_project.Application.Implementation
 
             //neu sale thi where theo sale 
             //checkR 2 la sale
+            var queryAppUser = _userManager.Users.ToList();
 
             if (!string.IsNullOrEmpty(keyword))
                 query = query.Where(x => x.FullName.Contains(keyword)
@@ -148,10 +152,12 @@ namespace Eaglegroup_project.Application.Implementation
                 Status = x.Status,
                 DateCreated = x.DateCreated,
                 CreatedBy = x.CreatedBy,
+                CreatorName=queryAppUser.Where(s=>s.Id==x.CreatorId).SingleOrDefault().FullName,
                 CreatorId = x.CreatorId,
                 CreatorNote = x.CreatorNote,
                 DateSendByCustomer = x.DateSendByCustomer,
                 SaleId = x.SaleId.GetValueOrDefault(),
+                SaleName = queryAppUser.Where(s => s.Id == x.SaleId).SingleOrDefault().FullName,
                 SaleNote = x.SaleNote,
                 DateModified = x.DateModified,
                 Deal = x.Deal,
@@ -184,8 +190,11 @@ namespace Eaglegroup_project.Application.Implementation
                     //randomCustomer.SaleId = userId;//chua duoc gan' luon
                     randomCustomer.Status = 3;//pending
                     randomCustomer.SaleId = userId;
+                    //randomCustomer.SaleId
                     _customerRepository.Update(randomCustomer);
                     Save();
+                    //CustomerViewModel resCus = _mapper.Map<Customer, CustomerViewModel>(randomCustomer);
+                    //resCus.SaleName=User
                     //randomCustomer.FullName = string.Empty;
                     return _mapper.Map<Customer, CustomerViewModel>(randomCustomer);
                 }

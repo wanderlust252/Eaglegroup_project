@@ -26,6 +26,7 @@ namespace Eaglegroup_project.Application.AutoMapper
 
             CreateMap<CustomerViewModel, Customer>()
         .ConstructUsing(c => new Customer(c.FullName, c.CreatorNote, c.SaleNote, c.SaleId, c.Deal, c.Price, c.DateSendByCustomer, c.CreatorId,c.isDelete));
+            
         }
     }
 }

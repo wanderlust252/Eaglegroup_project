@@ -159,7 +159,7 @@ namespace Eaglegroup_project.Application.Implementation
                 Price = x.Price
             }).ToList();
 
-            var countCustomer = _customerRepository.FindAllAsNoTracking().Where(x => x.SaleId == Guid.Empty).Count();
+            var countCustomer = _customerRepository.FindAllAsNoTracking().Where(x => x.SaleId == Guid.Empty&&x.isDelete==false).Count();
 
             var paginationSet = new PageResultCustomer<CustomerViewModel>()
             {
@@ -177,7 +177,7 @@ namespace Eaglegroup_project.Application.Implementation
         {
             if (checkR == 2)
             {
-                var query = _customerRepository.FindAllAsNoTracking();
+                var query = _customerRepository.FindAllAsNoTracking(x=>x.isDelete==false);
                 var randomCustomer = query.Where(x => x.SaleId == Guid.Empty || x.SaleId == null).FirstOrDefault();
                 if (randomCustomer != null)
                 {

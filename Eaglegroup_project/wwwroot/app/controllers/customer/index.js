@@ -183,7 +183,8 @@
                         $('#txtFullName').val(data.fullName);
                         $('#txtCreatorNote').val(data.creatorNote);
                         $('#txtPrice').val(eagle.formatNumber(data.price, 3));
-                        $('#txtDeal').val(eagle.dateFormatJson(data.deal));
+                        $('#txtDeal').val(eagle.dateFormatJson(data.deal));//LeHieu
+                        $('#txtDateSendByCustomer').val(eagle.dateFormatJson(data.dateSendByCustomer));
                         $('#txtSaleId').val(data.saleId);
                         $('#txtCreatorId').val(data.creatorId)
                         $('#txtDateCreated').val(eagle.dateTimeFormatJson(data.dateCreated)),

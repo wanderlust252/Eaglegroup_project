@@ -45,7 +45,7 @@ namespace Eaglegroup_project.Application.Implementation
 
         public Task<List<CustomerViewModel>> GetAll(string filter)
         {
-            var query = _customerRepository.FindAll();
+            var query = _customerRepository.FindAllAsNoTracking();
             if (!string.IsNullOrEmpty(filter))
                 query = query.Where(x => x.FullName.Contains(filter));
             return query.OrderBy(x => x.DateCreated).ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider).ToListAsync();
@@ -79,9 +79,9 @@ namespace Eaglegroup_project.Application.Implementation
                 //customerDb.isDelete = customerVm.isDelete;
                 //customerDb.CreatorId = customerVm.CreatorId;
                 //var customer = _mapper.Map<CustomerViewModel, Customer>(customerVm);
-                _customerRepository.Update(customerDb); 
+                _customerRepository.Update(customerDb);
             }
-            else if(checkR==1)
+            else if (checkR == 1)
             {
                 var customerDb = _customerRepository.FindById(customerVm.Id.Value);
                 customerDb.CreatorNote = customerVm.CreatorNote;
@@ -108,13 +108,13 @@ namespace Eaglegroup_project.Application.Implementation
 
         public void Delete(int id, int checkR, Guid userDelete)
         {
-            var query = (checkR == 1) ? _customerRepository.FindAllAsNoTracking(x => x.CreatorId.Equals(userDelete))
-               : (checkR == 2) ? _customerRepository.FindAllAsNoTracking(x => x.SaleId.Equals(userDelete))
-               : _customerRepository.FindAllAsNoTracking();
+            var query = (checkR == 1) ? _customerRepository.FindAll(x => x.CreatorId.Equals(userDelete))
+               : (checkR == 2) ? _customerRepository.FindAll(x => x.SaleId.Equals(userDelete))
+               : _customerRepository.FindAll();
 
             var customer = query.Where(x => x.Id == id).FirstOrDefault();
             customer.isDelete = true;
-            _customerRepository.Update(customer);
+            _unitOfWork.Commit();
         }
 
         public void Save()
@@ -153,7 +153,7 @@ namespace Eaglegroup_project.Application.Implementation
                 Status = x.Status,
                 DateCreated = x.DateCreated,
                 CreatedBy = x.CreatedBy,
-                CreatorName=queryAppUser.Where(s=>s.Id==x.CreatorId).SingleOrDefault().FullName,
+                CreatorName = queryAppUser.Where(s => s.Id == x.CreatorId).SingleOrDefault().FullName,
                 CreatorId = x.CreatorId,
                 CreatorNote = x.CreatorNote,
                 DateSendByCustomer = x.DateSendByCustomer,
@@ -166,7 +166,7 @@ namespace Eaglegroup_project.Application.Implementation
                 Price = x.Price
             }).ToList();
 
-            var countCustomer = _customerRepository.FindAllAsNoTracking().Where(x => (x.SaleId == Guid.Empty || x.SaleId == null) && x.isDelete==false).Count();
+            var countCustomer = _customerRepository.FindAllAsNoTracking().Where(x => (x.SaleId == Guid.Empty || x.SaleId == null) && x.isDelete == false).Count();
 
             var paginationSet = new PageResultCustomer<CustomerViewModel>()
             {
@@ -184,25 +184,44 @@ namespace Eaglegroup_project.Application.Implementation
         {
             if (checkR == 2)
             {
-                var query = _customerRepository.FindAllAsNoTracking(x=>x.isDelete==false);
-                var randomCustomer = query.Where(x => x.SaleId == Guid.Empty || x.SaleId == null).FirstOrDefault();
-                if (randomCustomer != null)
+                var query = _customerRepository.FindAll(x => x.isDelete == false);
+
+                var remainingCustomer = query.Where(x => x.SaleId == userId && string.IsNullOrEmpty(x.SaleNote)).FirstOrDefault();
+                if (remainingCustomer != null)
                 {
-                    //randomCustomer.SaleId = userId;//chua duoc gan' luon
-                    randomCustomer.Status = 3;//pending
-                    randomCustomer.SaleId = userId;
-                    //randomCustomer.SaleId
-                    _customerRepository.Update(randomCustomer);
-                    Save();
-                    //CustomerViewModel resCus = _mapper.Map<Customer, CustomerViewModel>(randomCustomer);
-                    //resCus.SaleName=User
-                    //randomCustomer.FullName = string.Empty;
-                    return _mapper.Map<Customer, CustomerViewModel>(randomCustomer);
+                    remainingCustomer.Status = 0;
+                    _unitOfWork.Commit();
+                    return _mapper.Map<Customer, CustomerViewModel>(remainingCustomer);
+                }
+                else
+                {
+                    var randomCustomer = query.Where(x => x.SaleId == Guid.Empty || x.SaleId == null).FirstOrDefault();
+                    if (randomCustomer != null)
+                    {
+                        //randomCustomer.SaleId = userId;//chua duoc gan' luon
+                        randomCustomer.Status = 0;//pending
+                        randomCustomer.SaleId = userId;
+                        //randomCustomer.SaleId
+                        _customerRepository.Update(randomCustomer);
+                        _unitOfWork.Commit();
+                        //CustomerViewModel resCus = _mapper.Map<Customer, CustomerViewModel>(randomCustomer);
+                        //resCus.SaleName=User
+                        //randomCustomer.FullName = string.Empty;
+                        return _mapper.Map<Customer, CustomerViewModel>(randomCustomer);
+                    }
                 }
 
             }
 
             return null;
+        }
+
+        public void AppointCustomer(List<int> listId, Guid userId)
+        {
+            var query = _customerRepository.FindAll(x => listId.Contains(x.Id));
+            var customer = query.ToList();
+            customer.ForEach(x => x.SaleId = userId);
+            _unitOfWork.Commit();
         }
     }
 }

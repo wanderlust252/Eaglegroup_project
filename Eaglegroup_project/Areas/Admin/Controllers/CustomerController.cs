@@ -109,6 +109,13 @@ namespace Eaglegroup_project.Areas.Admin.Controllers
             _customerService.Save();
             return new OkObjectResult(id);
         }
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult AppointCustomer(List<int> listId, Guid userId)
+        {
+            _customerService.AppointCustomer(listId, userId);
+            return new ObjectResult(listId);
+        }
 
         [NonAction]
         public int RoleCheck(string[] listRole)

@@ -17,7 +17,7 @@ namespace Eaglegroup_project.Application.Interfaces
         PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize,int checkR, Guid userGet);
 
         CustomerViewModel GetById(int id, int checkR, Guid userGet);
-
+        void AppointCustomer(List<int> listId, Guid userId);
         void Update(CustomerViewModel function, int checkR, Guid userUpdate);
 
         void Delete(int id, int checkR, Guid userDelete);

@@ -14,8 +14,12 @@ namespace Eaglegroup_project.Data.Enums
 
     public enum CustomerStatus
     {
-        NullActive,
-        Active,
-        InActive
+        Null,
+        CallBack,
+        SendLater,
+        NoAnswer,
+        HaveAdvised,
+        ClosedDeal,
+        Cancel
     }
 }

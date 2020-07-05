@@ -119,14 +119,22 @@
             return '<span class="badge bg-red">Khoá</span>';
     },
     getCustomerStatus: function (status) {
-        if (status == 1) {
-            return '<span class="badge badge-primary">Đã chốt</span>';
+        if (status == 0) {
+            return '<span class="badge badge-primary">Chưa khích hoạt</span>';
         }
-        else if (status == 2) {
-            return '<span class="badge badge-secondary">Chưa chốt</span>';
+        else if (status == 1) {
+            return '<span class="badge badge-light">Hẹn gọi</span>';
+        } else if (status == 2) {
+            return '<span class="badge bg-light">Hẹn gửi</span>';
         } else if (status == 3) {
-            return '<span class="badge bg-warning">Chờ duyệt</span>';
-        }          
+            return '<span class="badge bg-warning">Không nghe máy</span>';
+        } else if (status == 4) {
+            return '<span class="badge bg-info">Đã tư vấn</span>';
+        } else if (status == 5) {
+            return '<span class="badge bg-success">Đã chốt</span>';
+        } else if (status == 6) {
+            return '<span class="badge bg-danger">Hủy</span>';
+        }         
     },
     formatNumber: function (number, precision) {
         if (!isFinite(number)) {

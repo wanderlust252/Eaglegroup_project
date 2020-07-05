@@ -23,29 +23,27 @@
     </div>
 
     <div class="row">
-        <div class="col-md-5 col-sm-5 form-group">
+        <div class="col-md-6 col-sm-6 form-group">
             <div class="input-group">
                 <span class="input-group-btn">
-                    <button class="btn btn-success" id="btn-advanced-filter" type="button">Advanced Filter</button>
+                    <button class="btn btn-success" id="btn-advanced-filter" type="button">Bộ lọc nâng cao</button>
                 </span>
             </div>
         </div>
-        @if (User.IsInRole("SaleStaff"))
-        {
-            <div class="col-md-7 col-sm-5 form-group ">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        Tổng số khách hàng có sẵn: <input class="btn btn-success" id="total-customer" type="button">
-                    </span>
-                </div>
 
-            </div>
-        }
 
     </div>
-    <div class="title_right">
+    <div class="title_right row">
 
-        <div class="col-md-1 col-sm-1 form-group pull-right top_search">
+        <div class="col-md-5 col-sm-5 form-group pull-right top_search">
+            <div class="input-group">
+
+                <input type="text" id="txt-search-keyword" class="form-control" placeholder="Nhập từ khóa...">
+                <button class="btn btn-default" id="btn-search" type="button">Tìm kiếm</button>
+            </div>
+        </div>
+
+        <div class="ml-auto mr-3 form-group pull-right top_search">
             @if (User.IsInRole("SaleStaff"))
             {
                 <button class="btn btn-success" id="btn-get-customer" type="button">Lấy số</button>
@@ -58,17 +56,6 @@
                 {
 
                 }*@
-        </div>
-
-        <div class="col-md-5 col-sm-5 form-group pull-right top_search">
-            <div class="input-group">
-
-                <input type="text" id="txt-search-keyword" class="form-control" placeholder="Nhập từ khóa...">
-
-                <span class="input-group-btn">
-                    <button class="btn btn-default" id="btn-search" type="button">Tìm kiếm</button>
-                </span>
-            </div>
         </div>
 
     </div>
@@ -120,11 +107,24 @@
                             </span>
                             Tổng số bản ghi: <strong id="lbl-total-records"></strong>
                         </div>
-                    </div><div class="col-sm-7">
+
+                    </div>
+                    <div class="col-sm-5">
                         <div class="dataTables_paginate" id="datatable-checkbox_paginate">
                             <ul id="paginationUL"></ul>
                         </div>
                     </div>
+                    @if (User.IsInRole("SaleStaff"))
+                    {
+                        <div class="col-sm-2">
+                            <div class="input-group">
+                                <span id="total-customer" class="input-group-btn">
+
+                                </span>
+                            </div>
+
+                        </div>
+                    }
                 </div>
 
             </div>

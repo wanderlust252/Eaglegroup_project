@@ -50,9 +50,14 @@
             location.reload();
         });
 
+        $('#customer-status-select').change(function () {
+            let selectedStatus = $(this).children('option:selected').val();
+            $('#txtCustomerStatus').val(selectedStatus);
+        });
+
         $('body').on('click', '.btn-edit', function (e) {
             e.preventDefault();
-            var that = $(this).data('id');
+            let that = $(this).data('id');
             $.ajax({
                 type: "GET",
                 url: "GetById",
@@ -97,8 +102,8 @@
                 let creatorNote = $('#txtCreatorNote').val();
                 let saleNote = $('#txtSaleNote').val()||"";
                 let price = eagle.unformatNumber($('#txtPrice').val());
-                let deal = $('#txtDeal').val()? eagle.dateTimeFormat($('#txtDeal').val()):null;
-
+                let deal = $('#txtDeal').val() ? eagle.dateTimeFormat($('#txtDeal').val()) : null;
+                let status = $('#txtCustomerStatus').val() ?? 0;
                 let dateSend = eagle.dateTimeFormat($('#txtDateSendByCustomer').val());
                 //let staffId = $('#txtStaffId').val();
                 //let creatorId = $('#txtCreatorId').val();
@@ -115,6 +120,7 @@
                         Deal: deal,
                         Price: price,
                         DateSendByCustomer: dateSend,
+                        Status: status
                         //CreatorId: creatorId,
                         //StaffId: staffId
                     },
@@ -190,7 +196,7 @@
                         $('#txtDateCreated').val(eagle.dateTimeFormatJson(data.dateCreated)),
 
                             disableFieldCustomer(true);
-                        $('#modal-add-edit').modal({ backdrop: 'static', keyboard: false, show: true })
+                        $('#modal-add-edit').modal({ backdrop: 'static', keyboard: false, show: true });
                     }
                     
                     eagle.stopLoading();
@@ -256,7 +262,7 @@
             success: function (response) {
                 var template = $('#table-template').html();
                 var render = "";
-                $('#total-customer').val(response.totalCustomer);
+                $('#total-customer').html('Tổng số khách hàng có sẵn: ' + response.totalCustomer);
                 if (response.rowCount > 0) {
                     $.each(response.results, function (i, item) {
                         render += Mustache.render(template, {

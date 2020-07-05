@@ -72,6 +72,7 @@ namespace Eaglegroup_project.Application.Implementation
                 customerDb.SaleNote = customerVm.SaleNote;
                 customerDb.DateSendByCustomer = customerVm.DateSendByCustomer;
                 customerDb.Price = customerVm.Price;
+                customerDb.Status = customerVm.Status;
                 //customerDb.DateCreated = customerVm.DateCreated;
                 //customerDb.CreatedBy = customerVm.CreatedBy;
                 //customerDb.Status = customerVm.Status;
@@ -165,7 +166,7 @@ namespace Eaglegroup_project.Application.Implementation
                 Price = x.Price
             }).ToList();
 
-            var countCustomer = _customerRepository.FindAllAsNoTracking().Where(x => x.SaleId == Guid.Empty&&x.isDelete==false).Count();
+            var countCustomer = _customerRepository.FindAllAsNoTracking().Where(x => (x.SaleId == Guid.Empty || x.SaleId == null) && x.isDelete==false).Count();
 
             var paginationSet = new PageResultCustomer<CustomerViewModel>()
             {

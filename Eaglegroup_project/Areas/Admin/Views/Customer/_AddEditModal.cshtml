@@ -11,7 +11,7 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 }
-                </div>
+            </div>
             <div class="modal-body">
                 <div id="horizontal-form">
                     <form class="form-horizontal" role="form" id="frmMaintainance">
@@ -76,7 +76,7 @@
                                         <option value="5">Hủy</option>
                                     </select>
                                 </div>
-                                <input type="hidden" name="txtCustomerStatus" class="form-control" id="txtCustomerStatus">
+                                <input type="hidden" name="txtCustomerStatus" class="form-control" id="txtCustomerStatus" value="0">
                             </div>
 
                             <div class="form-group row">
@@ -93,18 +93,18 @@
                                 <input type="datetime" name="txtDateSendByCustomer" class="form-control" id="txtDateSendByCustomer">
                             </div>
                         </div>
-                        @if (!User.IsInRole("SaleStaff"))
-                        {
-                            <div class="form-group row">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="button" id="btnSave" class="btn btn-success">Lưu</button>
 
+                        <div class="form-group row">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="button" id="btnSave" class="btn btn-success">Lưu</button>
+                                @if (!User.IsInRole("SaleStaff"))
+                                {
                                     <button type="button" id="btnCancel" data-dismiss="modal" class="btn btn-default">Đóng</button>
+                                }
 
-
-                                </div>
                             </div>
-                        }
+                        </div>
+
                     </form>
                 </div>
             </div>

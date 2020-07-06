@@ -13,6 +13,7 @@ namespace Eaglegroup_project.Application.Interfaces
 
         Task<List<CustomerViewModel>> GetAll(string filter);
         CustomerViewModel GetCustomerForSale(int checkR, Guid userGet);
+        Task<List<CustomerViewModel>> GetAllForAppoint();
 
         PagedResult<CustomerViewModel> GetAllPaging(string keyword, int page, int pageSize,int checkR, Guid userGet);
 

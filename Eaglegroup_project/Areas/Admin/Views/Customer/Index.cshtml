@@ -31,6 +31,17 @@
             </div>
         </div>
 
+        <div class="ml-auto mr-3 form-group ">
+            @if (User.IsInRole("SaleStaff"))
+            {
+                <button class="btn btn-success" id="btn-get-customer" type="button">Lấy số</button>
+            }
+            else
+            {
+                <button class="btn btn-success" id="btn-create" type="button">Tạo mới</button>
+            }
+
+        </div>
 
     </div>
     <div class="title_right row">
@@ -43,19 +54,11 @@
             </div>
         </div>
 
-        <div class="ml-auto mr-3 form-group pull-right top_search">
-            @if (User.IsInRole("SaleStaff"))
+        <div class="ml-auto mr-3 form-group pull">
+            @if (User.IsInRole("Admin"))
             {
-                <button class="btn btn-success" id="btn-get-customer" type="button">Lấy số</button>
+                <button class="btn btn-success" id="btn-get-customer" type="button">Chỉ định khách hàng </button>
             }
-            else
-            {
-                <button class="btn btn-success" id="btn-create" type="button">Tạo mới</button>
-            }
-            @*@if ((await AuthorizationService.AuthorizeAsync(User, "CUSTOMER", Operations.Create)).Succeeded)
-                {
-
-                }*@
         </div>
 
     </div>
@@ -165,5 +168,6 @@
 </script>
 
 @await Html.PartialAsync("_AddEditModal.cshtml")
+@await Html.PartialAsync("_AppointCustomer.cshtml")
 
 

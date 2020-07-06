@@ -61,6 +61,12 @@ namespace Eaglegroup_project.Application.Implementation
             return _mapper.Map<Customer, CustomerViewModel>(customer);
         }
 
+        public Task<List<CustomerViewModel>> GetAllForAppoint()
+        {
+            var query = _customerRepository.FindAllAsNoTracking(x => x.SaleId == null && x.SaleId == Guid.Empty);
+            return query.OrderBy(x => x.DateCreated).ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider).ToListAsync();
+        }
+
         public void Update(CustomerViewModel customerVm, int checkR, Guid userUpdate)
         {
             if (checkR == 2)

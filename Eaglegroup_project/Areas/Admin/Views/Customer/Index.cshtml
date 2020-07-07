@@ -21,7 +21,17 @@
     <div class="title_left">
         <h3>Quản lý khách hàng</h3>
     </div>
-
+    <div class="col-lg-3">
+        <div class="ibox ">
+            <div class="ibox-title"> 
+                <h5>Doanh thu</h5>
+            </div>
+            <div class="ibox-content">
+                <h1 class="no-margins" id="txt_income"></h1> 
+                <small>VNĐ</small>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6 col-sm-6 form-group">
             <div class="input-group">
@@ -29,6 +39,12 @@
                     <button class="btn btn-success" id="btn-advanced-filter" type="button">Bộ lọc nâng cao</button>
                 </span>
             </div>
+            <div class="input-daterange input-group" id="datepicker" style="width:380px;margin-right:10px;margin-top:5px">
+                <input style="height:34px;" id="txtBeginDateFilter" type="text" class="form-control-sm form-control datep" value="@string.Format("{0:dd/MM/yyyy}",new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1))" />
+                <span class="input-group-addon" style="margin-left:1px;margin-right:1px;padding-top:7px">đến</span>
+                <input style="height:34px;" id="txtEndDateFilter" type="text" class="form-control-sm form-control datep" value="@string.Format("{0:dd/MM/yyyy}",new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(1).AddDays(-1))" />
+            </div>
+
         </div>
 
         <div class="ml-auto mr-3 form-group ">
@@ -53,7 +69,6 @@
                 <button class="btn btn-default" id="btn-search" type="button">Tìm kiếm</button>
             </div>
         </div>
-
         <div class="ml-auto mr-3 form-group pull">
             @if (User.IsInRole("Admin"))
             {

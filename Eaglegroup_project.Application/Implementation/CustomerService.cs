@@ -230,10 +230,24 @@ namespace Eaglegroup_project.Application.Implementation
             _unitOfWork.Commit();
         }
 
-        public int statistical(DateTime fromDate, DateTime toDate)
+        public int statistical(DateTime from, DateTime to)
         {
+            DateTime fromDate = new DateTime();
+            DateTime toDate = new DateTime();
+            if (from != DateTime.MinValue && to != DateTime.MinValue)
+            {
+                fromDate = from;
+                toDate = to;
+            }
+            else
+            {
+                var date = DateTime.Today;
+                fromDate = new DateTime(date.Year, date.Month, 1);
+                toDate = fromDate.AddMonths(1).AddDays(-1);
+            }
+            int query = (int)_customerRepository.FindAllAsNoTracking(x => x.isDelete != true && (x.DateCreated.Date <= toDate.Date && x.DateCreated.Date >= fromDate.Date)).Sum(e=>e.Price);
 
-            return 0;
+            return query;
         }
     }
 }

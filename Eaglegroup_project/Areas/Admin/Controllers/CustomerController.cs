@@ -137,12 +137,12 @@ namespace Eaglegroup_project.Areas.Admin.Controllers
             }
             return 0;
         } 
-        [HttpPost]
-        public IActionResult Statistical(DateTime fromDate, DateTime toDate)
-        {
+        [HttpGet]
+        public int Statistical(DateTime fromDate, DateTime toDate)
+        {//?fromDate=" + fromD + "&toDate=" + toD
             //_customerService.AppointCustomer(listId, userId);
             //call service
-            return new ObjectResult("A");
+            return _customerService.statistical(fromDate,toDate);
         }
 
 

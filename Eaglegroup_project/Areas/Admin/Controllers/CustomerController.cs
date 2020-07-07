@@ -129,8 +129,14 @@ namespace Eaglegroup_project.Areas.Admin.Controllers
                 return 2;
             }
             return 0;
+        } 
+        [HttpPost]
+        public IActionResult Statistical(DateTime fromDate, DateTime toDate)
+        {
+            //_customerService.AppointCustomer(listId, userId);
+            //call service
+            return new ObjectResult("A");
         }
-
 
 
 

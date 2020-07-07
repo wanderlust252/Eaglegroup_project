@@ -18,6 +18,7 @@ namespace Eaglegroup_project.Application.Interfaces
 
         CustomerViewModel GetById(int id, int checkR, Guid userGet);
         void AppointCustomer(List<int> listId, Guid userId);
+        int statistical(DateTime fromDate, DateTime toDate);
         void Update(CustomerViewModel function, int checkR, Guid userUpdate);
 
         void Delete(int id, int checkR, Guid userDelete);

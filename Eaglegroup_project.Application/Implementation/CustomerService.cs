@@ -73,12 +73,8 @@ namespace Eaglegroup_project.Application.Implementation
                 customerDb.DateSendByCustomer = customerVm.DateSendByCustomer;
                 customerDb.Price = customerVm.Price;
                 customerDb.Status = customerVm.Status;
-                //customerDb.DateCreated = customerVm.DateCreated;
-                //customerDb.CreatedBy = customerVm.CreatedBy;
-                //customerDb.Status = customerVm.Status;
-                //customerDb.isDelete = customerVm.isDelete;
-                //customerDb.CreatorId = customerVm.CreatorId;
-                //var customer = _mapper.Map<CustomerViewModel, Customer>(customerVm);
+                customerDb.DateModified = customerVm.DateModified;
+                customerDb.ModifiedBy = customerVm.ModifiedBy;
                 _customerRepository.Update(customerDb);
             }
             else if (checkR == 1)
@@ -88,6 +84,8 @@ namespace Eaglegroup_project.Application.Implementation
                 customerDb.DateSendByCustomer = customerVm.DateSendByCustomer;
                 customerDb.PhoneNumber = customerVm.PhoneNumber;
                 customerDb.FullName = customerVm.FullName;
+                customerDb.DateModified = customerVm.DateModified;
+                customerDb.ModifiedBy = customerVm.ModifiedBy;
                 //var customer = _mapper.Map<CustomerViewModel, Customer>(customerVm);
                 _customerRepository.Update(customerDb);
             }
@@ -101,6 +99,8 @@ namespace Eaglegroup_project.Application.Implementation
                 customerDb.Deal = customerVm.Deal;
                 customerDb.SaleNote = customerVm.SaleNote;
                 customerDb.Price = customerVm.Price;
+                customerDb.DateModified = customerVm.DateModified;
+                customerDb.ModifiedBy = customerVm.ModifiedBy;
                 //var customer = _mapper.Map<CustomerViewModel, Customer>(customerVm);
                 _customerRepository.Update(customerDb);
             }
@@ -222,6 +222,12 @@ namespace Eaglegroup_project.Application.Implementation
             var customer = query.ToList();
             customer.ForEach(x => x.SaleId = userId);
             _unitOfWork.Commit();
+        }
+
+        public int statistical(DateTime fromDate, DateTime toDate)
+        {
+
+            return 0;
         }
     }
 }

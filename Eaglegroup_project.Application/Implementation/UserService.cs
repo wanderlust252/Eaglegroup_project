@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Eaglegroup_project.Application.Interfaces;
 using Eaglegroup_project.Application.ViewModels.System;
 using Eaglegroup_project.Data.Entities;
+using Eaglegroup_project.Utilities.Constants;
 using Eaglegroup_project.Utilities.DTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace Eaglegroup_project.Application.Implementation
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly RoleManager<AppRole> _roleManager;
         public UserService(UserManager<AppUser> userManager, IMapper mapper)
         {
             _userManager = userManager;
@@ -55,6 +57,25 @@ namespace Eaglegroup_project.Application.Implementation
         public async Task<List<AppUserViewModel>> GetAllAsync()
         {
             return await _userManager.Users.ProjectTo<AppUserViewModel>(_mapper.ConfigurationProvider).ToListAsync();
+        }
+
+        public async Task<List<AppUserViewModel>> GetAllSale()
+        {
+            var users = await _userManager.GetUsersInRoleAsync(CommonConstants.AppRole.SaleStaffRole);
+            var rs = users.Select(x => new AppUserViewModel()
+            {
+                UserName = x.UserName,
+                Avatar = x.Avatar,
+                BirthDay = x.BirthDay.ToString(),
+                Email = x.Email,
+                FullName = x.FullName,
+                Id = x.Id,
+                PhoneNumber = x.PhoneNumber,
+                Status = x.Status,
+                DateCreated = x.DateCreated
+
+            }).ToList();
+            return rs;
         }
 
         public PagedResult<AppUserViewModel> GetAllPagingAsync(string keyword, int page, int pageSize)

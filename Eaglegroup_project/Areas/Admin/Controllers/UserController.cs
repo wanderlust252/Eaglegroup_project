@@ -30,6 +30,12 @@ namespace Eaglegroup_project.Areas.Admin.Controllers
             return new OkObjectResult(model);
         }
 
+        public IActionResult GetAllSale()
+        {
+            var model = _userService.GetAllSale();
+            return new OkObjectResult(model);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetById(Guid id)
         {

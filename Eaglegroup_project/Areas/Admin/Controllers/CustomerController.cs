@@ -58,17 +58,24 @@ namespace Eaglegroup_project.Areas.Admin.Controllers
             //model.CreatorName = _userService.GetById(model.CreatorId).Result.UserName;
             return new OkObjectResult(model);
         }
-
+        [HttpGet]
         public IActionResult GetAllPaging(string keyword, int page, int pageSize)
         {
             var model = _customerService.GetAllPaging(keyword, page, pageSize, _checkR, _userId);
 
             return new OkObjectResult(model);
         }
-
+        [HttpGet]
         public IActionResult GetAll()
         {
             var model = _customerService.GetAll(null);
+            return new OkObjectResult(model);
+        }
+
+        [HttpGet]
+        public IActionResult GetAllForAppoint()
+        {
+            var model = _customerService.GetAllForAppoint();
             return new OkObjectResult(model);
         }
 

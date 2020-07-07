@@ -262,7 +262,7 @@
             success: function (response) {
                 var template = $('#table-template').html();
                 var render = "";
-                $('#total-customer').html('Tổng số khách hàng có sẵn: ' + response.totalCustomer);
+                $('#total-customer').html('Khách hàng có sẵn: ' + response.totalCustomer);
                 if (response.rowCount > 0) {
                     $.each(response.results, function (i, item) {
                         render += Mustache.render(template, {

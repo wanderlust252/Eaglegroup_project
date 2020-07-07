@@ -38,7 +38,7 @@ namespace Eaglegroup_project.Areas.Admin.Components
             {
                 var roleId = await _roleService.GetRoleIdByName(roles);
                 //TODO: Get by permission
-                functions = await _functionService.GetAll(string.Empty, Guid.Empty);
+                functions = await _functionService.GetAll(string.Empty, roleId);
             }
             return View(functions);
         }

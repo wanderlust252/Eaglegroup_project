@@ -172,7 +172,7 @@ namespace Eaglegroup_project.Application.Implementation
                 Price = x.Price
             }).ToList();
 
-            var countCustomer = _customerRepository.FindAllAsNoTracking().Where(x => (x.SaleId == Guid.Empty || x.SaleId == null) && x.isDelete == false).Count();
+            var countCustomer = _customerRepository.FindAllAsNoTracking().Where(x => (x.SaleId == Guid.Empty || x.SaleId == null) && x.isDelete != true).Count();
 
             var paginationSet = new PageResultCustomer<CustomerViewModel>()
             {

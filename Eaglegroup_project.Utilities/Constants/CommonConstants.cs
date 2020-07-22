@@ -18,9 +18,9 @@ namespace Eaglegroup_project.Utilities.Constants
         public const int RecruitmentNews = 2;
         public const string NewsTag = "News";
 
-        public class Module
+        public class CustomerStatus
         {
-            public const int PhanHeTong = 1;
+            public const int HenGoi = 1;
             public const int QuanLyAnToan = 2;
             public const int QuanLyCongNhan = 3;
             public const int QuanLyThiCong = 4;

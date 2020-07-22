@@ -144,6 +144,7 @@ namespace Eaglegroup_project
             //Services
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IFunctionService, FunctionService>();
+            services.AddScoped<IStatisticalService, StatisticalService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IAuthorizationHandler, BaseResourceAuthorizationHandler>();

@@ -141,5 +141,16 @@
                 eagle.notify('Có Lỗi Xảy Ra', 'error');
             }
         });
+        $.ajax({
+            type: "GET",
+            url: "Statistical/GetDealRate",
+            dataType: "json",
+            success: function (response) {
+                $("#txt_tilechot").html(response)
+            },
+            error: function () {
+                eagle.notify('Có Lỗi Xảy Ra', 'error');
+            }
+        });
     }; 
 }

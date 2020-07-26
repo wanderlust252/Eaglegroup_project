@@ -20,6 +20,7 @@ namespace Eaglegroup_project.Data.Enums
         NoAnswer,
         HaveAdvised,
         ClosedDeal,
-        Cancel
+        Cancel,
+        Confirm
     }
 }

@@ -25,88 +25,98 @@
 
 <body>
     <div id="wrapper">
-
-        <div class="col-lg-3">
-            <div class="ibox ">
-                <div class="ibox-title">
-                    <h5>Doanh thu</h5>
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>Tỉ lệ chốt</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins" id="txt_tilechot"></h1>
+                            <small>%</small>
+                        </div>
+                    </div>
                 </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins" id="txt_income"></h1>
-                    <small>VNĐ</small>
+                <div class="col-lg-6">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>Doanh thu</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins" id="txt_income"></h1>
+                            <small>VNĐ</small>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
-            
-            <div class="form-group col-lg-16 col-md-16 col-sm-16  row">
-                <label for="txtDescription" class="col-sm-6 col-form-label">Chọn trạng thái</label>
-                <div class="col-sm-9">
-                    <select id="ddlTaskGroup" class="form-control" data-placeholder="Chọn trạng thái..." required>
-                        <option value='0'>Tất cả</option>
-                        <option value='1'>Hẹn gọi</option>
-                        <option value='2'>Hẹn gửi</option>
-                        <option value='3'>Không nghe máy</option>
-                        <option value='4'>Đã tư vấn</option>
-                        <option value='5'>Đã chốt</option>
-                        <option value='6'>Hủy</option>
-                        <option value='7'>Đã xác nhận</option>
-                    </select>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group col-lg-16 col-md-16 col-sm-16  row">
+                        <label for="txtDescription" class="col-sm-6 col-form-label">Chọn trạng thái</label>
+                        <div class="col-sm-9">
+                            <select id="ddlTaskGroup" class="form-control" data-placeholder="Chọn trạng thái..." required>
+                                <option value='0'>Tất cả</option>
+                                <option value='1'>Hẹn gọi</option>
+                                <option value='2'>Hẹn gửi</option>
+                                <option value='3'>Không nghe máy</option>
+                                <option value='4'>Đã tư vấn</option>
+                                <option value='5'>Đã chốt</option>
+                                <option value='6'>Hủy</option>
+                                <option value='7'>Đã xác nhận</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-daterange input-group" id="datepicker" style="width:600px;margin-right:10px;margin-top:5px">
+                        <input style="height:34px;" id="txtBeginDateFilter" type="text" class="form-control-sm form-control datep" value="@string.Format("{0:dd/MM/yyyy}",new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1))" />
+                        <span class="input-group-addon" style="margin-left:1px;margin-right:1px;padding-top:7px">đến</span>
+                        <input style="height:34px;" id="txtEndDateFilter" type="text" class="form-control-sm form-control datep" value="@string.Format("{0:dd/MM/yyyy}",new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(1).AddDays(-1))" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" id="btn-rangeDate" type="button" style="height:37px;margin-left:5px"><i class="fa fa-search" style="margin-right:6px"></i>Thống kê theo khoảng ngày</button>
+                        </span>
+
+                    </div>
+                    <div class="input-daterange input-group" id="datepicker" style="width:600px;margin-right:10px;margin-top:5px">
+                        <input style="height:34px;" id="txtSpecifyDate" type="text" class="form-control-sm form-control datep" value="@string.Format("{0:dd/MM/yyyy}",new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1))" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" id="btn-specifyDate" type="button" style="height:37px;margin-left:5px"><i class="fa fa-search" style="margin-right:6px"></i>Thống kê theo ngày</button>
+                        </span>
+
+                    </div>
                 </div>
             </div>
-            <div class="input-daterange input-group" id="datepicker" style="width:600px;margin-right:10px;margin-top:5px">
-                <input style="height:34px;" id="txtBeginDateFilter" type="text" class="form-control-sm form-control datep" value="@string.Format("{0:dd/MM/yyyy}",new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1))" />
-                <span class="input-group-addon" style="margin-left:1px;margin-right:1px;padding-top:7px">đến</span>
-                <input style="height:34px;" id="txtEndDateFilter" type="text" class="form-control-sm form-control datep" value="@string.Format("{0:dd/MM/yyyy}",new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(1).AddDays(-1))" />
-                <span class="input-group-btn">
-                    <button class="btn btn-success" id="btn-rangeDate" type="button" style="height:37px;margin-left:5px"><i class="fa fa-search" style="margin-right:6px"></i>Thống kê theo khoảng ngày</button>
-                </span>
-
-            </div>
-            <div class="input-daterange input-group" id="datepicker" style="width:600px;margin-right:10px;margin-top:5px">
-                <input style="height:34px;" id="txtSpecifyDate" type="text" class="form-control-sm form-control datep" value="@string.Format("{0:dd/MM/yyyy}",new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1))" />
-                <span class="input-group-btn">
-                    <button class="btn btn-success" id="btn-specifyDate" type="button" style="height:37px;margin-left:5px"><i class="fa fa-search" style="margin-right:6px"></i>Thống kê theo ngày</button>
-                </span>
-
-            </div> 
         </div>
-        <div class="col-lg-3">
-            <div class="ibox ">
-                <div class="ibox-title">
-                    <h5>Doanh thu</h5>
-                </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins" id="txt_tilechot"></h1>
-                    <small>VNĐ</small>
-                </div>
-            </div>
-        </div> 
+            
 
 
-    </div> 
 
-    <!-- Mainly scripts -->
-    <script src="~/lib/js/jquery-3.1.1.min.js"></script>
-    <script src="~/lib/js/popper.min.js"></script>
-    <script src="~/lib/js/bootstrap.js"></script>
-    <script src="~/lib/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="~/lib/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        </div>
 
-    <!-- Flot -->
-    <script src="~/lib/js/plugins/flot/jquery.flot.js"></script>
-    <script src="~/lib/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
-    <script src="~/lib/js/plugins/flot/jquery.flot.spline.js"></script>
-    <script src="~/lib/js/plugins/flot/jquery.flot.resize.js"></script>
-    <script src="~/lib/js/plugins/flot/jquery.flot.symbol.js"></script>
-    <script src="~/lib/js/plugins/flot/jquery.flot.time.js"></script>
+        <!-- Mainly scripts -->
+        <script src="~/lib/js/jquery-3.1.1.min.js"></script>
+        <script src="~/lib/js/popper.min.js"></script>
+        <script src="~/lib/js/bootstrap.js"></script>
+        <script src="~/lib/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="~/lib/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-    <!-- Peity -->
-    <script src="~/lib/js/plugins/peity/jquery.peity.min.js"></script>
+        <!-- Flot -->
+        <script src="~/lib/js/plugins/flot/jquery.flot.js"></script>
+        <script src="~/lib/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+        <script src="~/lib/js/plugins/flot/jquery.flot.spline.js"></script>
+        <script src="~/lib/js/plugins/flot/jquery.flot.resize.js"></script>
+        <script src="~/lib/js/plugins/flot/jquery.flot.symbol.js"></script>
+        <script src="~/lib/js/plugins/flot/jquery.flot.time.js"></script>
 
-    <!-- Custom and plugin javascript -->
-    <script src="~/lib/js/inspinia.js"></script>
-    <script src="~/lib/js/plugins/pace/pace.min.js"></script>
+        <!-- Peity -->
+        <script src="~/lib/js/plugins/peity/jquery.peity.min.js"></script>
 
-    <!-- jQuery UI -->
-    <script src="~/lib/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+        <!-- Custom and plugin javascript -->
+        <script src="~/lib/js/inspinia.js"></script>
+        <script src="~/lib/js/plugins/pace/pace.min.js"></script>
+
+        <!-- jQuery UI -->
+        <script src="~/lib/js/plugins/jquery-ui/jquery-ui.min.js"></script>
 
 </body> 
